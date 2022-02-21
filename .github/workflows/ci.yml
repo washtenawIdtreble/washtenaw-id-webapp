@@ -1,0 +1,20 @@
+name: CI
+on: [ push ]
+jobs:
+  tests:
+    runs-on: windows-latest
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v2
+
+      # Install Node
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.0
+
+      # Install dependencies
+      - run: npm install
+
+      # Run tests
+      - run: npm test
