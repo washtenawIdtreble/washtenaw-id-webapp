@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import fetchWrapper from "../fetchWrapper";
+import { GET } from "../fetch";
 
 export default function useCategories(): string[] {
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
-        const controller = new AbortController();
+        const result = GET('categories');
 
-        fetchWrapper("categories", {signal: controller.signal})
+        result.response
             .then(async (response: Response) => {
                 setCategories(await response.json());
             })
-            .catch(_e => {
-            });
+            .catch(_e => {});
 
         return () => {
-            controller.abort();
+            result.abort();
         }
     }, []);
     return categories;
