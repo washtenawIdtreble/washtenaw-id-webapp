@@ -1,40 +1,41 @@
 import React from "react";
-import {render, waitFor} from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import useCategories from "./useCategories";
 import fetchWrapper from "../fetchWrapper";
+import { when } from "jest-when";
 
 jest.mock("../fetchWrapper");
+
 describe(useCategories.name, () => {
     let expectedData: string[];
-    let releaseTheHounds: () => void;
+    let resolveFetchRequest: () => void;
     let rerender: any;
     beforeEach(() => {
         expectedData = ["cranberries", "banana", "cherry"];
         const mockResponseJson = jest.fn().mockName("response.json");
         mockResponseJson.mockResolvedValue(expectedData);
 
-        jest.mocked(fetchWrapper)
-            .mockName("fetch")
+        jest.mocked(fetchWrapper).mockName("fetch");
+        when(fetchWrapper)
+            .calledWith("categories")
             .mockImplementation(() => {
                 return new Promise((resolve) => {
-                    releaseTheHounds = () => {
+                    resolveFetchRequest = () => {
                         //@ts-ignore
                         resolve({
                             json: mockResponseJson
-                        })
+                        });
                     }
                 });
             });
-        rerender = render(<StubComponent/>).rerender;
+
+        ({rerender} = render(<StubComponent/>));
     });
     test("should return an empty list of categories before fetch is complete", () => {
         expect(categories).toEqual([]);
     });
-    test("should make a request to get the categories", () => {
-        expect(fetchWrapper).toHaveBeenCalledWith("categories");
-    });
     test("should update the categories with the response from fetch", async () => {
-        await waitFor(() => releaseTheHounds());
+        await waitFor(() => resolveFetchRequest());
         expect(categories).toBe(expectedData);
     });
     test("should call fetch only once", () => {

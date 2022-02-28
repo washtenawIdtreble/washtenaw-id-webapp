@@ -25,7 +25,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"],
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
     "rules": {
       "jest/valid-title": "off",
       "testing-library/no-render-in-setup": "off"
@@ -45,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jest-when": "^3.5.0",
     "jest-when": "^3.5.1"
   }
 }
