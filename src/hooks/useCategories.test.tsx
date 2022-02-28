@@ -1,46 +1,39 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import useCategories from "./useCategories";
-import fetchWrapper from "../fetchWrapper";
-import { when } from "jest-when";
-
-jest.mock("../fetchWrapper");
+import { customCategoriesResolver, MOCK_CATEGORIES } from "../../mock-server/categoriesResolver";
+import { rest } from "msw";
+import { mockServer } from "../../mock-server/mock-server";
 
 describe(useCategories.name, () => {
-    let expectedData: string[];
-    let resolveFetchRequest: () => void;
     let rerender: any;
+    let unmount: any;
     beforeEach(() => {
-        expectedData = ["cranberries", "banana", "cherry"];
-        const mockResponseJson = jest.fn().mockName("response.json");
-        mockResponseJson.mockResolvedValue(expectedData);
-
-        jest.mocked(fetchWrapper).mockName("fetch");
-        when(fetchWrapper)
-            .calledWith("categories")
-            .mockImplementation(() => {
-                return new Promise((resolve) => {
-                    resolveFetchRequest = () => {
-                        //@ts-ignore
-                        resolve({
-                            json: mockResponseJson
-                        });
-                    }
-                });
-            });
-
-        ({rerender} = render(<StubComponent/>));
+        ({rerender, unmount} = render(<StubComponent/>));
+    });
+    afterEach(() => {
+        unmount();
     });
     test("should return an empty list of categories before fetch is complete", () => {
         expect(categories).toEqual([]);
     });
     test("should update the categories with the response from fetch", async () => {
-        await waitFor(() => resolveFetchRequest());
-        expect(categories).toBe(expectedData);
+        await waitFor(() => {
+            expect(categories).toEqual(MOCK_CATEGORIES);
+        });
     });
-    test("should call fetch only once", () => {
-        rerender(<StubComponent/>);
-        expect(fetchWrapper).toHaveBeenCalledTimes(1);
+    describe("on rerender", () => {
+        beforeEach(() => {
+            mockServer.use(
+                rest.get('categories', customCategoriesResolver(["anything"]))
+            )
+            rerender(<StubComponent/>);
+        });
+        test("should not fetch again", async () => {
+            await waitFor(() => {
+                expect(categories).toEqual(MOCK_CATEGORIES);
+            });
+        });
     });
 });
 
