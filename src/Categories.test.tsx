@@ -1,3 +1,4 @@
+import React from "react";
 import Categories from './Categories'
 import { render, screen, within } from '@testing-library/react';
 

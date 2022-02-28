@@ -1,30 +1,31 @@
-import { render, waitFor } from "@testing-library/react";
+import React from "react";
+import {render, waitFor} from "@testing-library/react";
 import useCategories from "./useCategories";
 import fetchWrapper from "../fetchWrapper";
 
 jest.mock("../fetchWrapper");
-describe(useCategories.name, ()=> {
+describe(useCategories.name, () => {
     let expectedData: string[];
     let releaseTheHounds: () => void;
-    let rerender : any;
+    let rerender: any;
     beforeEach(() => {
         expectedData = ["cranberries", "banana", "cherry"];
         const mockResponseJson = jest.fn().mockName("response.json");
         mockResponseJson.mockResolvedValue(expectedData);
-        
+
         jest.mocked(fetchWrapper)
-        .mockName("fetch")
-        .mockImplementation(() => {
-            return new Promise((resolve, reject) => {
-                releaseTheHounds = () => {
-                    //@ts-ignore
-                    resolve({
-                        json: mockResponseJson
-                    })
-                }
+            .mockName("fetch")
+            .mockImplementation(() => {
+                return new Promise((resolve) => {
+                    releaseTheHounds = () => {
+                        //@ts-ignore
+                        resolve({
+                            json: mockResponseJson
+                        })
+                    }
+                });
             });
-        });
-        rerender = render(<StubComponent></StubComponent>).rerender;
+        rerender = render(<StubComponent/>).rerender;
     });
     test("should return an empty list of categories before fetch is complete", () => {
         expect(categories).toEqual([]);
@@ -37,15 +38,16 @@ describe(useCategories.name, ()=> {
         expect(categories).toBe(expectedData);
     });
     test("should call fetch only once", () => {
-        rerender(<StubComponent></StubComponent>);
+        rerender(<StubComponent/>);
         expect(fetchWrapper).toHaveBeenCalledTimes(1);
     });
 });
 
 let categories: string[];
+
 function StubComponent() {
     categories = useCategories();
     return (
-         <div></div>
+        <div/>
     );
 }
