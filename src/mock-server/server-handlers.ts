@@ -1,8 +1,8 @@
 import { DefaultRequestMultipartBody, PathParams, ResponseResolver, rest, RestContext, RestRequest } from 'msw'
-import { categoriesResolver } from "./categoriesResolver";
+import { defaultCategoriesResolver } from "./categories-resolver";
 
 export type RequestResolver = ResponseResolver<RestRequest<never, PathParams>, RestContext, Record<string, any> | DefaultRequestMultipartBody | string | number | boolean | null | undefined>
 
 export const handlers = [
-    rest.get('/categories', categoriesResolver)
+    rest.get('/categories', defaultCategoriesResolver)
 ];
