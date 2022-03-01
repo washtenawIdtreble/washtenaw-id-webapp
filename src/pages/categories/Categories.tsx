@@ -1,5 +1,5 @@
 import React from "react";
-import useCategories from "./hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
 
 export default function Categories() {
     const categories = useCategories();

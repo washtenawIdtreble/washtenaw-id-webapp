@@ -1,7 +1,7 @@
 import React from "react";
 import Categories from "./Categories";
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { TEST_CATEGORIES } from "./mock-server/categories-resolver";
+import { TEST_CATEGORIES } from "../../mock-server/categories-resolver";
 
 describe(Categories.name, () => {
     test("contains a list of categories", async () => {
