@@ -51,5 +51,8 @@
     "@types/jest-when": "^3.5.0",
     "jest-when": "^3.5.1",
     "msw": "^0.38.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

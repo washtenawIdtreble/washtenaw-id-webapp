@@ -1,15 +1,15 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import useCategories from "./useCategories";
-import { customCategoriesResolver, MOCK_CATEGORIES } from "../../mock-server/categoriesResolver";
+import { customCategoriesResolver, MOCK_CATEGORIES } from "../mock-server/categories-resolver";
 import { rest } from "msw";
-import { mockServer } from "../../mock-server/mock-server";
+import { mockServer } from "../mock-server/mock-server";
 
 describe(useCategories.name, () => {
     let rerender: any;
     let unmount: any;
     beforeEach(() => {
-        ({rerender, unmount} = render(<StubComponent/>));
+        ({ rerender, unmount } = render(<StubComponent/>));
     });
     afterEach(() => {
         unmount();
