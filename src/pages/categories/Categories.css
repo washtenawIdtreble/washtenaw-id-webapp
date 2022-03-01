@@ -1,0 +1,35 @@
+ul {
+    align-items: center;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 0;
+    width: 100%;
+}
+
+li {
+    align-items: center;
+    background-color: #062d47;
+    border-radius: 1.5rem;
+    color: white;
+    display: flex;
+    font-size: 4rem;
+    height: 12rem;
+    hyphens: auto;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 2rem;
+    text-align: center;
+    width: 90%;
+    word-break: break-word;
+}
+
+@media (min-aspect-ratio: 5/4) {
+    ul {
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+    }
+
+    li {
+        width: 30%;
+    }
+}
