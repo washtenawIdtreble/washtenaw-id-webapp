@@ -1,15 +1,23 @@
-import { RequestResolver } from "./server-handlers";
+import { RequestResolver } from "./test-server-handlers";
 
-export const MOCK_CATEGORIES = ["banks", "pharmacies", "food"];
-
-export const defaultCategoriesResolver: RequestResolver = (request, response, context) => {
-    return response(context.json(MOCK_CATEGORIES));
-}
+export const TEST_CATEGORIES = ["banks", "pharmacies", "food"];
+export const testCategoriesResolver: RequestResolver = (request, response, context) => {
+    return response(context.json(TEST_CATEGORIES));
+};
 
 export const customCategoriesResolver = (categories: string[]): RequestResolver => {
     return (request, response, context) => {
         return response(context.json(categories));
-    }
-}
+    };
+};
 
-
+export const productionCategoriesResolver: RequestResolver = (request, response, context) => {
+    return response(context.json([
+        "banks",
+        "food",
+        "jobs",
+        "mental health",
+        "pharmacies",
+        "transportation",
+    ]));
+};

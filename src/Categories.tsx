@@ -1,13 +1,14 @@
 import React from "react";
+import useCategories from "./hooks/useCategories";
 
 export default function Categories() {
-        return (
-            <main data-testid = "categories-page">
-                <ul>
-                    <li>cranberry</li>
-                    <li>blueberry</li>
-                    <li>banana</li>
-                </ul>
-            </main>
-        );
+    const categories = useCategories();
+
+    return (
+        <main data-testid="categories-page">
+            <ul>
+                {categories.map(category => <li key={category}>{category}</li>)}
+            </ul>
+        </main>
+    );
 }

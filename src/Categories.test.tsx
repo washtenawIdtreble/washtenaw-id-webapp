@@ -1,18 +1,17 @@
 import React from "react";
-import Categories from './Categories'
-import { render, screen, within } from '@testing-library/react';
+import Categories from "./Categories";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import { TEST_CATEGORIES } from "./mock-server/categories-resolver";
 
 describe(Categories.name, () => {
-    test("contains a list of categories", () => {
+    test("contains a list of categories", async () => {
         render(<Categories/>);
         const listElement = screen.getByRole("list");
-        expect(listElement).toBeInTheDocument();
 
-        const listItems = within(listElement).getAllByRole("listitem");
-        expect(listItems.length).toEqual(3);
-        expect(listItems[0].textContent).toEqual("cranberry");
-        expect(listItems[1].textContent).toEqual("blueberry");
-        expect(listItems[2].textContent).toEqual("banana");
+        await waitFor(() => {
+            const listItems = within(listElement).getAllByRole("listitem").map(li => li.textContent);
+            expect(listItems).toEqual(TEST_CATEGORIES);
+        });
     });
 });
 
