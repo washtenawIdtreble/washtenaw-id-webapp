@@ -8,10 +8,8 @@ export default function Categories() {
     const categories = useCategories();
 
     return (
-        <main data-testid="categories-page">
-            <ul>
-                {categories.map(category => <li key={category}>{toTitleCase(category)}</li>)}
-            </ul>
-        </main>
+        <ul data-testid="categories-page">
+            {categories.map(category => <li key={category}>{toTitleCase(category)}</li>)}
+        </ul>
     );
 }
