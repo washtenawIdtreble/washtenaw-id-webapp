@@ -20,6 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-fake-data": "REACT_APP_API=fake-data react-scripts start",
+    "start-dev": "REACT_APP_API=localhost react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
