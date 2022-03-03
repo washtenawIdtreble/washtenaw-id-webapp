@@ -2,12 +2,15 @@ import React from "react";
 import "./App.css";
 import Categories from "./pages/categories/Categories";
 import { Workspace } from "@deque/cauldron-react";
+import { AlertProvider } from "./contexts/AlertContext";
 
 function App() {
     return (
-        <Workspace>
-            <Categories/>
-        </Workspace>
+        <AlertProvider>
+            <Workspace>
+                <Categories/>
+            </Workspace>
+        </AlertProvider>
     );
 }
 

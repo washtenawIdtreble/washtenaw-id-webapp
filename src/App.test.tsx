@@ -1,12 +1,17 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
-
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
 describe(App.name, () => {
-  test("renders categories component", () => {
-      render(<App/>);
-      const categoriesComponent = screen.getByTestId("categories-page");
-      expect(categoriesComponent).toBeInTheDocument();
-  });
+    beforeEach(() => {
+        render(<App/>);
+    });
+    test("renders categories component", () => {
+        const categoriesComponent = screen.getByTestId("categories-page");
+        expect(categoriesComponent).toBeInTheDocument();
+    });
+    test("should provide the alert context", () => {
+        const alertProvider = screen.getByTestId("alert-context-provider");
+        expect(alertProvider).toBeInTheDocument();
+    });
 });
