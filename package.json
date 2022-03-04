@@ -19,13 +19,19 @@
     "web-vitals": "^2.1.4",
     "whatwg-fetch": "^3.6.2"
   },
+  "devDependencies": {
+    "@types/jest-when": "^3.5.0",
+    "jest-when": "^3.5.1",
+    "msw": "^0.38.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "start-fake-data": "REACT_APP_API=fake-data react-scripts start",
     "start-dev": "REACT_APP_API=localhost react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint src*"
   },
   "eslintConfig": {
     "extends": [
@@ -75,11 +81,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/jest-when": "^3.5.0",
-    "jest-when": "^3.5.1",
-    "msw": "^0.38.1"
   },
   "msw": {
     "workerDirectory": "public"
