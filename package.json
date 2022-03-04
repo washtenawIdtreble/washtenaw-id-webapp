@@ -34,9 +34,35 @@
     ],
     "rules": {
       "jest/valid-title": "off",
-      "testing-library/no-render-in-setup": "off"
+      "testing-library/no-render-in-setup": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": [
+            {
+              "group": [
+                "msw*"
+              ],
+              "message": "Do not import from msw in production code - it is a dev dependency and will cause issues"
+            }
+          ]
+        }
+      ]
     },
-    "overrides": []
+    "overrides": [
+      {
+        "files": [
+          "*.test.ts*",
+          "**/mock-server/*"
+        ],
+        "rules": {
+          "no-restricted-imports": [
+            "off",
+            "msw"
+          ]
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
