@@ -1,0 +1,105 @@
+.Dialog--show {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 80%);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+}
+
+.Dialog__inner {
+    align-items: center;
+    background-color: white;
+    border-bottom: 3px solid #3c3c3c;
+    border-left: 3px solid #4e4e4e;
+    border-right: 3px solid #3c3c3c;
+    border-top: 3px solid #4e4e4e;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 50%;
+    overflow: hidden;
+    width: 75%;
+}
+
+.Dialog__header {
+    background-color: #062d47;
+    color: white;
+    height: 4rem;
+    width: 100%;
+}
+
+.Dialog__heading {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0;
+    padding: 1rem;
+}
+
+.Dialog__content {
+    box-sizing: border-box;
+    flex-grow: 1;
+    font-weight: normal;
+    padding: 2rem 1rem 2rem 1rem;
+    width: 100%;
+}
+
+.Dialog__footer {
+    box-sizing: border-box;
+    display: flex;
+    height: 4rem;
+    justify-content: flex-end;
+    padding: 0 1rem 1rem 0;
+    width: 100%;
+}
+
+.Button--primary {
+    background-color: #062d47;
+    border: none;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    color: white;
+    font-size: 2rem;
+    height: 100%;
+    padding: 0;
+    width: 50%;
+}
+
+.Button--primary:hover {
+    background-color: #052238;
+    cursor: pointer;
+}
+
+.Button--primary:active {
+    background-color: #031727;
+    cursor: pointer;
+}
+
+.Icon {
+    margin-right: 0.5rem;
+}
+
+@media (min-aspect-ratio: 5/4) {
+    .Dialog__inner {
+        height: 35%;
+        width: 50%;
+    }
+
+    .Dialog__content {
+        font-size: 1.3rem;
+    }
+
+    .Button--primary {
+        background-color: #062d47;
+        border: none;
+        border-radius: 1rem;
+        box-sizing: border-box;
+        color: white;
+        font-size: 2rem;
+        height: 100%;
+        padding: 0;
+        width: 25%;
+    }
+}
