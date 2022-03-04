@@ -56,25 +56,10 @@
 }
 
 .Button--primary {
-    background-color: #062d47;
-    border: none;
-    border-radius: 1rem;
-    box-sizing: border-box;
-    color: white;
     font-size: 2rem;
     height: 100%;
     padding: 0;
     width: 50%;
-}
-
-.Button--primary:hover {
-    background-color: #052238;
-    cursor: pointer;
-}
-
-.Button--primary:active {
-    background-color: #031727;
-    cursor: pointer;
 }
 
 .Icon {
@@ -92,14 +77,6 @@
     }
 
     .Button--primary {
-        background-color: #062d47;
-        border: none;
-        border-radius: 1rem;
-        box-sizing: border-box;
-        color: white;
-        font-size: 2rem;
-        height: 100%;
-        padding: 0;
         width: 25%;
     }
 }

@@ -10,3 +10,21 @@ body {
     margin: 0;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.Button--primary {
+    background-color: #062d47;
+    border: none;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    color: white;
+}
+
+.Button--primary:hover {
+    background-color: #052238;
+    cursor: pointer;
+}
+
+.Button--primary:active {
+    background-color: #031727;
+    cursor: pointer;
+}
