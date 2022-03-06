@@ -29,9 +29,10 @@ export function AlertProvider({ children }: Props) {
                     <Alert
                         heading={{ level: 1, text: <>{alert.heading}</> }}
                         show={true}
+                        className={"alert-dialog"}
                     >
-                        <AlertContent>{alert.message}</AlertContent>
-                        <AlertActions>
+                        <AlertContent className={"alert-dialog-content"}>{alert.message}</AlertContent>
+                        <AlertActions className={"alert-dialog-footer"}>
                             <Button onClick={onDismiss}>OK</Button>
                         </AlertActions>
                     </Alert>

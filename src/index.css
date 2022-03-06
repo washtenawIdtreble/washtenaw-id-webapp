@@ -11,7 +11,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.Button--primary {
+button {
     background-color: #062d47;
     border: none;
     border-radius: 1rem;
@@ -19,12 +19,12 @@ body {
     color: white;
 }
 
-.Button--primary:hover {
+button:hover {
     background-color: #052238;
     cursor: pointer;
 }
 
-.Button--primary:active {
+button:active {
     background-color: #031727;
     cursor: pointer;
 }

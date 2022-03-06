@@ -1,4 +1,4 @@
-.Dialog--show {
+.alert-dialog {
     align-items: center;
     background-color: rgba(0, 0, 0, 80%);
     display: flex;
@@ -10,6 +10,7 @@
     width: 100vw;
 }
 
+/* We can't access the div with this class or pass it a class name */
 .Dialog__inner {
     align-items: center;
     background-color: white;
@@ -24,6 +25,7 @@
     width: 75%;
 }
 
+/* We can't access the div with this class or pass it a class name */
 .Dialog__header {
     background-color: #062d47;
     color: white;
@@ -31,14 +33,15 @@
     width: 100%;
 }
 
-.Dialog__heading {
+/* Dialog Heading Text */
+h1 {
     display: flex;
     flex-flow: row nowrap;
     margin: 0;
     padding: 1rem;
 }
 
-.Dialog__content {
+.alert-dialog-content {
     box-sizing: border-box;
     flex-grow: 1;
     font-weight: normal;
@@ -46,7 +49,7 @@
     width: 100%;
 }
 
-.Dialog__footer {
+.alert-dialog-footer {
     box-sizing: border-box;
     display: flex;
     height: 4rem;
@@ -55,14 +58,15 @@
     width: 100%;
 }
 
-.Button--primary {
+button {
     font-size: 2rem;
     height: 100%;
     padding: 0;
     width: 50%;
 }
 
-.Icon {
+/* Icon in the dialog header */
+svg {
     margin-right: 0.5rem;
 }
 
@@ -72,11 +76,11 @@
         width: 50%;
     }
 
-    .Dialog__content {
+    .alert-dialog-content {
         font-size: 1.3rem;
     }
 
-    .Button--primary {
+    button {
         width: 25%;
     }
 }
