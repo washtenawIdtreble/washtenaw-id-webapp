@@ -7,23 +7,23 @@ export default function useCategories(): string[] {
     const [categories, setCategories] = useState<string[]>([]);
     const { showAlert } = useContext(AlertContext);
     useEffect(() => {
-        const result = GET(`${BASE_URL()}/categories`);
+        const { response, abort } = GET(`${BASE_URL()}/categories`);
 
-        result.response
+        response
             .then(async (response: Response) => {
                 if (response.ok) {
                     setCategories(await response.json());
                 } else {
                     showAlert({
                         heading: "Error",
-                        message: (await response.json()).message,
+                        message: "Failed to load the categories. Please reload the page or try again later.",
                     });
                 }
             })
             .catch(_e => {});
 
         return () => {
-            result.abort();
+            abort();
         };
         /**
          * There is an ESLint error on the line below because showAlert is used inside the useEffect, but is not included
