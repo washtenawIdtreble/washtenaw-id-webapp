@@ -26,7 +26,7 @@
     "msw": "^0.38.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run start-fake-data",
     "start-fake-data": "REACT_APP_API=fake-data react-scripts start",
     "start-dev": "REACT_APP_API=localhost react-scripts start",
     "build": "react-scripts build",
