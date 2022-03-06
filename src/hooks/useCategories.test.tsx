@@ -44,7 +44,7 @@ describe(useCategories.name, () => {
         });
     });
     describe("on error loading categories", () => {
-        const errorMessage = "He was the only member of the club who didn't like plum pudding.";
+        const errorMessage = "Doesn't matter!";
         let alertContext: AlertContextValue;
         beforeEach(() => {
             alertContext = buildMockAlertContext({ showAlert: jest.fn().mockName("showAlert") });
@@ -56,7 +56,7 @@ describe(useCategories.name, () => {
         test("should show an error alert", async () => {
             const alertData = stubAlertData({
                 heading: "Error",
-                message: errorMessage,
+                message: "Failed to load the categories. Please reload the page or try again later.",
             });
             await waitFor(() => {
                 expect(alertContext.showAlert).toHaveBeenCalledWith(alertData);
