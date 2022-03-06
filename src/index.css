@@ -11,6 +11,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+:focus {
+    outline: 3px dashed #c39738;
+    outline-offset: -4px;
+}
+
 button {
     background-color: #062d47;
     border: none;
