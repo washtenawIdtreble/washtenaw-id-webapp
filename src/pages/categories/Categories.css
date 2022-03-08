@@ -1,4 +1,4 @@
-ul {
+.categories-list {
     align-items: center;
     display: flex;
     flex-flow: column wrap;
@@ -7,7 +7,7 @@ ul {
     width: 100%;
 }
 
-li {
+.category-item {
     align-items: center;
     background-color: #062d47;
     border-radius: 1.5rem;
@@ -25,12 +25,12 @@ li {
 }
 
 @media (min-aspect-ratio: 5/4) {
-    ul {
+    .categories-list {
         flex-flow: row wrap;
         justify-content: space-evenly;
     }
 
-    li {
+    .category-item {
         font-size: 4rem;
         width: 30%;
     }
