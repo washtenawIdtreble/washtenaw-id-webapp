@@ -25,6 +25,7 @@ Learn more and support the ID at http://www.washtenawid.com.
 - Install NodeJS. Recommend using NVM. Current Versions:
     - Node: 16.13.0
     - NPM: 8.5.1
+- Run `npm install` after cloning and use the scripts below to run the server
 - Install ESLint plugin for your IDE or run `npm run lint` before committing
     - ESLint configuration is in `package.json`
 
