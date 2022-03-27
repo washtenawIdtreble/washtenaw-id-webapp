@@ -58,7 +58,7 @@ h1 {
     width: 100%;
 }
 
-button {
+.alert-dialog-button {
     font-size: 2rem;
     height: 100%;
     padding: 0;
@@ -80,7 +80,7 @@ svg {
         font-size: 1.5rem;
     }
 
-    button {
+    .alert-dialog-button {
         width: 25%;
     }
 }

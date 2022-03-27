@@ -18,27 +18,30 @@ type Props = { children: React.ReactNode }
 
 export function AlertProvider({ children }: Props) {
     const [alert, setAlert] = useState<AlertData | undefined>(undefined);
+
+    const showAlert = (x: AlertData) => {
+        setAlert(x);
+    };
+
     const onDismiss = () => {
         setAlert(undefined);
     };
 
     return (
-        <div data-testid={"alert-context-provider"}>
-            <AlertContext.Provider value={{ showAlert: setAlert }}>
-                {alert &&
-                    <Alert
-                        heading={{ level: 1, text: <>{alert.heading}</> }}
-                        show={true}
-                        className={"alert-dialog"}
-                    >
-                        <AlertContent className={"alert-dialog-content"}>{alert.message}</AlertContent>
-                        <AlertActions className={"alert-dialog-footer"}>
-                            <Button onClick={onDismiss}>OK</Button>
-                        </AlertActions>
-                    </Alert>
-                }
-                {children}
-            </AlertContext.Provider>
-        </div>
+        <AlertContext.Provider value={{ showAlert }}>
+            {alert &&
+                <Alert
+                    heading={{ level: 1, text: <>{alert.heading}</> }}
+                    show={true}
+                    className={"alert-dialog"}
+                >
+                    <AlertContent className={"alert-dialog-content"}>{alert.message}</AlertContent>
+                    <AlertActions className={"alert-dialog-footer"}>
+                        <Button className={"alert-dialog-button"} onClick={onDismiss}>OK</Button>
+                    </AlertActions>
+                </Alert>
+            }
+            {children}
+        </AlertContext.Provider>
     );
 }
