@@ -1,9 +1,9 @@
 import React from "react";
-import { Link, LinkProps, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, LinkProps, PathMatch, useMatch, useResolvedPath } from "react-router-dom";
 
 export const RefreshingLink = (props: Omit<LinkProps, "reloadDocument">) => {
     const resolved = useResolvedPath(props.to);
-    const match = useMatch({
+    const match: PathMatch | null = useMatch({
         path: resolved.pathname,
         end: true,
     });
@@ -11,6 +11,8 @@ export const RefreshingLink = (props: Omit<LinkProps, "reloadDocument">) => {
     return (<Link
         {...props}
         className={match ? `${props.className} matched-link` : props.className}
+        aria-current={match ? "page" : undefined}
+        data-testid={`refreshing-link-${props.to}`}
         reloadDocument
     />);
 };

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Disclosure, DisclosureContent, useDisclosureState } from "reakit";
-import { RefreshingLink } from "./RefreshingLink";
+import { ChildrenProps } from "../../utilities/children-props";
 
-export const NavMenu = () => {
+export const NavMenu = ({ children }: ChildrenProps) => {
     const disclosure = useDisclosureState({ visible: false });
 
     useEffect(() => {
@@ -15,11 +15,18 @@ export const NavMenu = () => {
     }, [disclosure.visible]);
 
     return (
-        <div className={"nav-container"} data-testid={"nav-menu"}>
-            <Disclosure tabIndex={0} className={"menu-button"} {...disclosure}>Menu</Disclosure>
-            <DisclosureContent {...disclosure} className={"menu"} aria-label="Navigation Menu">
-                <RefreshingLink tabIndex={0} to={"/businesses"} className={"nav-link"}>All Businesses</RefreshingLink>
-                <RefreshingLink to={"/"} className={"nav-link"}>Business Categories</RefreshingLink>
+        <div className={"nav-menu-container"} data-testid={"nav-menu"}>
+            <Disclosure {...disclosure}
+                        tabIndex={0}
+                        className={"menu-button"}
+                        aria-controls={"id-navigation-menu"}>
+                Menu
+            </Disclosure>
+            <DisclosureContent {...disclosure}
+                               className={"menu"}
+                               aria-label="Navigation Menu"
+                               id={"id-navigation-menu"}>
+                {children}
             </DisclosureContent>
         </div>
     );

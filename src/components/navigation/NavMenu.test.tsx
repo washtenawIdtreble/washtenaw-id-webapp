@@ -1,7 +1,7 @@
 import { NavMenu } from "./NavMenu";
 import { render, screen, within } from "@testing-library/react";
 import React from "react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 
 describe(NavMenu.name, () => {
@@ -9,12 +9,13 @@ describe(NavMenu.name, () => {
     let menuButton: HTMLButtonElement;
     let menu: HTMLDivElement;
     beforeEach(() => {
+        let dummyLinks = <a href={"google.com"}>Google</a>;
         render(
             <main>
                 <MemoryRouter>
-                    <Routes>
-                        <Route path="/" element={<NavMenu/>}/>
-                    </Routes>
+                    <NavMenu>
+                        {dummyLinks}
+                    </NavMenu>
                 </MemoryRouter>
             </main>,
         );
@@ -36,11 +37,9 @@ describe(NavMenu.name, () => {
             test("should display the menu", async () => {
                 expect(menu).toBeVisible();
             });
-            test("should have menu items", () => {
-                expect(menuItems[0]).toHaveTextContent("All Businesses");
-                expect(menuItems[0].href).toContain("/businesses");
-                expect(menuItems[1]).toHaveTextContent("Business Categories");
-                expect(menuItems[1].href.endsWith("/")).toBe(true);
+            test("should show child links", () => {
+                expect(menuItems.length).toEqual(1);
+                expect(menuItems[0].href).toContain("google.com");
             });
             test("should prevent scrolling", () => {
                 expect(screen.getByRole("main").style.overflowY).toEqual("hidden");
@@ -66,15 +65,8 @@ describe(NavMenu.name, () => {
         const menuItems: HTMLAnchorElement[] = within(menu).getAllByRole("link");
 
         userEvent.tab();
-        expect(menuItems[0]).toHaveTextContent("All Businesses");
-        expect(menuItems[0].href).toContain("/businesses");
+        expect(menuItems[0]).toHaveFocus();
 
-        userEvent.tab();
-        expect(menuItems[1]).toHaveFocus();
-        expect(menuItems[1]).toHaveTextContent("Business Categories");
-        expect(menuItems[1].href.endsWith("/")).toBe(true);
-
-        userEvent.tab({ shift: true });
         userEvent.tab({ shift: true });
         expect(menuButton).toHaveFocus();
 
