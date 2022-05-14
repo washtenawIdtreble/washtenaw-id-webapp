@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Categories from "../../pages/categories/Categories";
+import Categories from "../pages/categories/Categories";
 
 export const PAGE_ENDPOINTS = {
     categories: "/",

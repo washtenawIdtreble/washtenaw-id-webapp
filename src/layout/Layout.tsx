@@ -1,5 +1,5 @@
 import React from "react";
-import { RouterOutlet } from "../components/navigation/RouterOutlet";
+import { RouterOutlet } from "./RouterOutlet";
 import { HeaderBar } from "../components/HeaderBar";
 import "./Layout.css";
 

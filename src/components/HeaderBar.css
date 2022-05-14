@@ -44,9 +44,16 @@ nav {
 }
 
 .menu-button {
+    align-items: center;
+    display: flex;
     font-size: 1.5rem;
     height: 100%;
     padding: 0 1rem;
+}
+
+.menu-icon {
+    height: 75%;
+    padding-right: 0.5rem;
 }
 
 /* Nav link styles */
@@ -66,10 +73,15 @@ nav {
 
 @media (min-width: 768px) {
     .nav-list {
+        align-items: center;
         flex-direction: row;
+        height: 100%;
     }
 
     .nav-list-item {
         border: none;
+        display: flex;
+        height: 100%;
+        padding: 0;
     }
 }

@@ -21,7 +21,7 @@
     "jsx": "react"
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*"
   ],
   "exclude": [
     "./src/mock-server/**/*",
