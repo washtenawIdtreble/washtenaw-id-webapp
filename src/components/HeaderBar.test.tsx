@@ -13,10 +13,9 @@ describe(HeaderBar.name, () => {
 
 const HeaderBarTestWrapper = ({ children }: ChildrenProps) => {
     return (
-        <main>
-            <MemoryRouter>
-                {children}
-            </MemoryRouter>
-        </main>
+        <MemoryRouter>
+            {children}
+            <main/>
+        </MemoryRouter>
     );
 };
