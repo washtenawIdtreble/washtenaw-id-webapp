@@ -8,3 +8,21 @@
     overflow-y: scroll;
     padding-top: 2rem;
 }
+
+.skip-nav {
+    align-items: center;
+    background-color: #c39738;
+    box-sizing: border-box;
+    color: #062d47;
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    position: absolute;
+    top: -10rem;
+    width: 100vw;
+}
+
+.skip-nav:focus {
+    outline: 3px dashed #062d47;
+    top: 0;
+}

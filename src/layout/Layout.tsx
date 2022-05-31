@@ -6,10 +6,11 @@ import "./Layout.css";
 export const Layout = () => {
     return (
         <div className={"layout"} data-testid={"app-layout"}>
+            <a href={"#main-content"} className={"skip-nav"}>Skip to content</a>
             <header>
                 <HeaderBar/>
             </header>
-            <main className={"main-content"}>
+            <main id={"main-content"} tabIndex={-1} className={"main-content"}>
                 <RouterOutlet/>
             </main>
         </div>
