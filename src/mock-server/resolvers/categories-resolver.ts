@@ -1,8 +1,12 @@
 import { RequestResolver } from "../test-server-handlers";
 
-export const TEST_CATEGORIES = ["banks", "pharmacies", "food"];
+export const TEST_CATEGORIES = [
+        {displayName: "Banks", category: "banks"}, 
+        {displayName: "Pharmacies", category: "pharmacies"}, 
+        {displayName: "Food", category: "food"},
+    ];
 
-export const customCategoriesResolver = (categories: string[]): RequestResolver => {
+export const customCategoriesResolver = (categories: {displayName: string, category: string}[]): RequestResolver => {
     return (request, response, context) => {
         return response(context.json(categories));
     };
@@ -23,11 +27,11 @@ export const productionCategoriesResolver = (statusCode?: number, errorMessage?:
     }
 
     return customCategoriesResolver([
-        "banks",
-        "food",
-        "jobs",
-        "mental health",
-        "pharmacies",
-        "transportation",
+        { displayName: "Banks", category: "banks" },
+        { displayName: "Food", category: "food" },
+        { displayName: "Jobs", category: "jobs" },
+        { displayName: "Mental Health", category: "mental-health" },
+        { displayName: "Pharmacies", category: "pharmacies" }, 
+        { displayName: "Transportation", category: "transportation" },
     ]);
 };

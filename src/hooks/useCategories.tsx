@@ -4,8 +4,10 @@ import { BASE_URL } from "../utilities/base-url";
 import { AlertContext } from "../contexts/AlertContext";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 
-export default function useCategories(): string[] {
-    const [categories, setCategories] = useState<string[]>([]);
+export type Category = { displayName: string, category: string };
+
+export function useCategories(): Category[] {
+    const [categories, setCategories] = useState<Category[]>([]);
     const { showAlert } = useContext(AlertContext);
     useEffect(() => {
         const { responsePromise, abort } = GET(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`);

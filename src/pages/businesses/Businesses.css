@@ -1,0 +1,42 @@
+.businesses-list {
+    align-items: center;
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.businesses-header {
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 5rem;
+}
+
+.business-item {
+    align-items: center;
+    display: flex;
+    font-size: 2rem;
+    height: 9rem;
+    hyphens: auto;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 2rem;
+    text-align: center;
+    width: 90%;
+    word-break: break-word;
+    border: solid 1px;
+}
+
+@media (min-aspect-ratio: 5/4) {
+    .businesses-list {
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+    }
+
+    .business-item {
+        font-size: 4rem;
+        width: 30%;
+    }
+}

@@ -1,59 +1,64 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { useCategories, Category } from "./useCategories";
+import useBusinesses from "./useBusinesses";
 import {
-    customCategoriesResolver,
-    errorCategoriesResolver,
-    TEST_CATEGORIES,
-} from "../mock-server/resolvers/categories-resolver";
+    customBusinessesResolver,
+    productionBusinessesResolver,
+    TEST_BUSINESSES,
+} from "../mock-server/businesses-resolver";
 import { rest } from "msw";
 import { mockServer } from "../mock-server/mock-server";
 import { AlertContext, AlertContextValue } from "../contexts/AlertContext";
 import { buildMockAlertContext, stubAlertData } from "../../test/test-factories";
 import { BASE_URL } from "../utilities/base-url";
+import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 
-describe(useCategories.name, () => {
+describe(useBusinesses.name, () => {
     describe("on successful load", () => {
         let rerender: any;
+        let unmount: any;
         beforeEach(() => {
-            ({ rerender } = render(<StubComponent/>));
+            ({ rerender, unmount } = render(<StubComponent/>));
         });
-        test("should return an empty list of categories before fetch is complete", () => {
-            expect(categories).toEqual([]);
+        afterEach(() => {
+            unmount();
         });
-        test("should update the categories with the response from fetch", async () => {
+        test("should return an empty list of businesses before fetch is complete", () => {
+            expect(businesses).toEqual([]);
+        });
+        test("should update the businesses with the response from fetch", async () => {
             await waitFor(() => {
-                expect(categories).toEqual(TEST_CATEGORIES);
+                expect(businesses).toEqual(TEST_BUSINESSES);
             });
         });
         describe("on rerender", () => {
             beforeEach(() => {
                 mockServer.use(
-                    rest.get(`${BASE_URL()}/categories`, customCategoriesResolver([{displayName: "anything", category: "any category" }])),
+                    rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, customBusinessesResolver(["anything"])),
                 );
                 rerender(<StubComponent/>);
             });
             test("should not fetch again", async () => {
                 await waitFor(() => {
-                    expect(categories).toEqual(TEST_CATEGORIES);
+                    expect(businesses).toEqual(TEST_BUSINESSES);
                 });
             });
         });
     });
-    describe("on error loading categories", () => {
+    describe("on error loading businesses", () => {
         const errorMessage = "Doesn't matter!";
         let alertContext: AlertContextValue;
         beforeEach(() => {
             alertContext = buildMockAlertContext({ showAlert: jest.fn().mockName("showAlert") });
             mockServer.use(
-                rest.get(`${BASE_URL()}/categories`, errorCategoriesResolver(500, errorMessage)),
+                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, productionBusinessesResolver(500, errorMessage)),
             );
             render(<AlertContext.Provider value={alertContext}><StubComponent/></AlertContext.Provider>);
         });
         test("should show an error alert", async () => {
             const alertData = stubAlertData({
                 heading: "Error",
-                message: "Failed to load the categories. Please reload the page or try again later.",
+                message: "Failed to load the businesses. Please reload the page or try again later.",
             });
             await waitFor(() => {
                 expect(alertContext.showAlert).toHaveBeenCalledWith(alertData);
@@ -62,10 +67,10 @@ describe(useCategories.name, () => {
     });
 });
 
-let categories: Category[];
+let businesses: { category: string, businesses: string[] }[];
 
 function StubComponent() {
-    categories = useCategories();
+    businesses = useBusinesses();
     return (
         <div/>
     );

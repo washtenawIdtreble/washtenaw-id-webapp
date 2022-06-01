@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@deque/cauldron-react": "^4.1.0",
     "react": "^16.13.0",
     "react-app-polyfill": "^3.0.0",
     "react-dom": "^16.13.0",

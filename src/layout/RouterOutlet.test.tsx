@@ -28,7 +28,7 @@ describe(RouterOutlet.name, () => {
         test("businesses page", async () => {
             await user.click(screen.getByText("Businesses"));
             await waitFor(() => {
-                expect(screen.getByText("This is the businesses page")).toBeInTheDocument();
+                expect(screen.getByRole("heading", {level: 1, name: "Businesses that accept the ID"})).toBeInTheDocument();
             });
         });
 
