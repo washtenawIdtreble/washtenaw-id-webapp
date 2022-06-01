@@ -18,7 +18,7 @@
     hyphens: auto;
     justify-content: center;
     list-style-type: none;
-    margin-top: 2rem;
+    margin-bottom: 2rem;
     text-align: center;
     width: 90%;
     word-break: break-word;
@@ -31,7 +31,7 @@
     }
 
     .category-item {
-        font-size: 4rem;
+        font-size: 2.5rem;
         width: 30%;
     }
 }

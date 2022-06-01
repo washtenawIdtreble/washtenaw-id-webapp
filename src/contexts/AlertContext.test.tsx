@@ -14,7 +14,7 @@ describe("Alert Context", () => {
             </AlertProvider>,
         );
     });
-    describe("show alert", () => {
+    describe("when alert dialog is triggered", () => {
         beforeEach(async () => {
             const showAlertButton = screen.getByRole("button", { name: buttonText });
             fireEvent.click(showAlertButton);

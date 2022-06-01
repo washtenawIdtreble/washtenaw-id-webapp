@@ -10,6 +10,13 @@ export const mockWorker = setupWorker(...handlers);
 export const onUnhandledRequest: UnhandledRequestStrategy = ({ method, url }) => {
     const ignoredSubstrings = [
         "hot-update", // "hot-update" appears in requests made when the app hot reloads when running from source
+        "localhost:3000", // requests to localhost:3000, like loading the page itself, show an error in Chrome but not Firefox
+
+        /* the icon for the menu loads correctly on page load, but was failing when resizing the page because
+        this secondary request was being made to the service worker instead of the static files location*/
+        "menu-icon",
+        
+        "logo192.png", // requests for the logo show an error in Chrome but not Firefox
     ];
     if (!ignoredSubstrings.some(substring => url.pathname.includes(substring))) {
         throw new Error(`Unhandled ${method} request to ${url}`);

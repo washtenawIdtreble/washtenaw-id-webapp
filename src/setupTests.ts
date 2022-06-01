@@ -7,3 +7,9 @@ import "jest-when";
 import "./mock-server/setup-server";
 
 process.env.REACT_APP_API = "fake-data";
+
+global.matchMedia = global.matchMedia || function () {
+    return {
+        matches: false,
+    };
+};

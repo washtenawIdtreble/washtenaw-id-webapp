@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { GET } from "../fetch";
+import { GET } from "../utilities/fetch";
 import { BASE_URL } from "../utilities/base-url";
 import { AlertContext } from "../contexts/AlertContext";
 

@@ -3,7 +3,7 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./layout/App";
 
 if (process.env.NODE_ENV === "development" && process.env.REACT_APP_API === "fake-data") {
     const { mockWorker, onUnhandledRequest } = require("./mock-server/mock-worker");

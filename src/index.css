@@ -22,6 +22,7 @@ button {
     border-radius: 1rem;
     box-sizing: border-box;
     color: white;
+    font-family: inherit;
 }
 
 button:hover {
