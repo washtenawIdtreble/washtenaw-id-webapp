@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Alert, AlertActions, AlertContent, Button } from "@deque/cauldron-react";
+import { Button } from "reakit/Button";
+import { useDialogState, Dialog, DialogBackdrop } from "reakit/Dialog";
 import "./AlertContext.css";
 
 export type AlertData = {
@@ -19,29 +20,25 @@ type Props = { children: React.ReactNode }
 export function AlertProvider({ children }: Props) {
     const [alert, setAlert] = useState<AlertData | undefined>(undefined);
 
-    const showAlert = (x: AlertData) => {
-        setAlert(x);
-    };
-
-    const onDismiss = () => {
-        setAlert(undefined);
-    };
-
+    const showAlert = (alertData: AlertData) => setAlert(alertData);
+    const onDismiss = () => setAlert(undefined);
+    const dialog = useDialogState({visible: true});
     return (
-        <AlertContext.Provider value={{ showAlert }}>
-            {alert &&
-                <Alert
-                    heading={{ level: 1, text: <>{alert.heading}</> }}
-                    show={true}
-                    className={"alert-dialog"}
-                >
-                    <AlertContent className={"alert-dialog-content"}>{alert.message}</AlertContent>
-                    <AlertActions className={"alert-dialog-footer"}>
-                        <Button className={"alert-dialog-button"} onClick={onDismiss}>OK</Button>
-                    </AlertActions>
-                </Alert>
-            }
-            {children}
-        </AlertContext.Provider>
+        <div data-testid={"alert-context-provider"}>
+            <AlertContext.Provider value={{ showAlert: showAlert }}>
+                {alert &&
+                    <DialogBackdrop {...dialog} className={"alert-dialog"}>
+                        <Dialog {...dialog}
+                            aria-label="Error"
+                            className={"Dialog__inner"}>  
+                            <h1 className={"Dialog__header"}>{alert.heading}</h1>
+                            <p className={"alert-dialog-content"}>{alert.message}</p>
+                            <footer className={"alert-dialog-footer"}><Button onClick={onDismiss}>OK</Button></footer>
+                        </Dialog>
+                    </DialogBackdrop>
+                }
+                {children}
+            </AlertContext.Provider>
+        </div>
     );
 }

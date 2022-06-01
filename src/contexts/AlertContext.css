@@ -12,7 +12,7 @@
 
 /* We can't access the div with this class or pass it a class name */
 .Dialog__inner {
-    align-items: center;
+    align-items: right;
     background-color: white;
     border-bottom: 3px solid #3c3c3c;
     border-left: 3px solid #4e4e4e;
@@ -30,10 +30,6 @@
     background-color: #062d47;
     color: white;
     width: 100%;
-}
-
-/* Dialog Heading Text */
-h1 {
     display: flex;
     flex-flow: row nowrap;
     margin: 0;
@@ -45,7 +41,7 @@ h1 {
     flex-grow: 1;
     font-size: 1.25rem;
     font-weight: normal;
-    padding: 2rem 1rem 2rem 1rem;
+    padding: 2rem 1rem;
     width: 100%;
 }
 
@@ -54,13 +50,13 @@ h1 {
     display: flex;
     height: 4rem;
     justify-content: flex-end;
-    padding: 0 1rem 1rem 0;
+    padding: 0 1rem 2rem 0;
     width: 100%;
 }
 
 .alert-dialog-button {
     font-size: 2rem;
-    height: 100%;
+    height: 3rem;
     padding: 0;
     width: 50%;
 }
