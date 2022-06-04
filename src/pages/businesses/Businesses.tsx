@@ -8,7 +8,7 @@ export default function Businesses () {
     const businesses = useBusinesses();
 
     return(
-        <main>
+        <>
         <h1>{HEADER_TEXT}</h1>
             {businesses.map(business => {
                 return <ul 
@@ -28,26 +28,7 @@ export default function Businesses () {
                   })}
                </ul>
             })}
-        </main>
+        </>
         );
-
-//     <ul className={"categories-list"} data-testid="categories-page">
-//     {categories.map(category =>
-//         <li
-//             className={"category-item"}
-//             key={category}>
-//             {toTitleCase(category)}
-//         </li>)}
-// </ul>
-
-           // {businesses.map(business =>
-            // <h2>{toTitleCase(business.category)}</h2>
-            // <ul>
-            // {businesses.map(businessName =>
-            //     <li>
-            //         {toTitleCase(businessName.businesses[0])}
-            //     </li>)}
-            // </ul>
-            // )}
 }
 
