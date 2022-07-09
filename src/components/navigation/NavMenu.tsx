@@ -77,12 +77,12 @@ export const NavMenu = ({ children }: ChildrenProps) => {
                         tabIndex={0}
                         id={NAV_MENU_BUTTON_ID}
                         className={"menu-button"}
+                        aria-label="Navigation Menu"
                         aria-controls={NAV_MENU_ID}>
                 <MenuIcon/>Menu
             </Disclosure>
             <DisclosureContent {...disclosure}
                                className={"menu"}
-                               aria-label="Navigation Menu"
                                id={NAV_MENU_ID}>
                 {children}
             </DisclosureContent>

@@ -9,7 +9,7 @@ import { KEYS } from "../../../test/user-event-keys";
 describe(NavMenu.name, () => {
 
     let menuButton: HTMLButtonElement;
-    let menu: HTMLDivElement;
+    let linkList: HTMLUListElement | null;
     beforeEach(() => {
         render(
             <main>
@@ -20,12 +20,12 @@ describe(NavMenu.name, () => {
                 </MemoryRouter>
             </main>,
         );
-        menuButton = screen.getByRole("button", { name: "Menu" });
-        menu = screen.getByLabelText("Navigation Menu");
+        menuButton = screen.getByRole("button", { name: "Navigation Menu" });
+        linkList = screen.queryByRole("list");
     });
 
     test("should start with the menu hidden", () => {
-        expect(menu).not.toBeVisible();
+        expect(linkList).toBeNull();
     });
 
     describe("with mouse navigation", () => {
@@ -33,10 +33,11 @@ describe(NavMenu.name, () => {
             let links: HTMLAnchorElement[];
             beforeEach(() => {
                 userEvent.click(menuButton);
-                links = within(menu).getAllByRole("link");
+                linkList = screen.getByRole("list") as HTMLUListElement;
+                links = within(linkList).getAllByRole("link");
             });
             test("should display the menu", async () => {
-                expect(menu).toBeVisible();
+                expect(linkList).toBeVisible();
             });
             test("should show child links", () => {
                 expect(links.length).toBeGreaterThan(0);
@@ -49,7 +50,7 @@ describe(NavMenu.name, () => {
                     userEvent.click(menuButton);
                 });
                 test("should close the menu", () => {
-                    expect(menu).not.toBeVisible();
+                    expect(linkList).not.toBeVisible();
                 });
                 test("should re-enable scrolling", () => {
                     expect(screen.getByRole("main").style.overflowY).toEqual("scroll");
@@ -75,30 +76,31 @@ describe(NavMenu.name, () => {
         });
         test("can open and close the menu with the space bar", () => {
             userEvent.keyboard(KEYS.spaceBar);
-            expect(menu).toBeVisible();
+            expect(screen.getByRole("list")).toBeVisible();
 
             userEvent.keyboard(KEYS.spaceBar);
-            expect(menu).not.toBeVisible();
+            expect(screen.queryByRole("list")).toBeNull();
         });
         test("can open and close the menu with the enter key", () => {
             userEvent.keyboard(KEYS.enter);
-            expect(menu).toBeVisible();
+            expect(screen.getByRole("list")).toBeVisible();
 
             userEvent.keyboard(KEYS.enter);
-            expect(menu).not.toBeVisible();
+            expect(screen.queryByRole("list")).toBeNull();
         });
         describe("when the menu is open", () => {
             let links: HTMLAnchorElement[];
             beforeEach(() => {
                 userEvent.keyboard(KEYS.spaceBar);
-                links = within(menu).getAllByRole("link");
+                linkList = screen.getByRole("list") as HTMLUListElement;
+                links = within(linkList).getAllByRole("link");
             });
             test("should show child links", () => {
                 expect(links.length).toBeGreaterThan(0);
             });
             test("can close the menu with the Escape key", () => {
                 userEvent.keyboard(KEYS.escape);
-                expect(menu).not.toBeVisible();
+                expect(linkList).not.toBeVisible();
                 expect(menuButton).toHaveFocus();
             });
             test("can navigate links with the tab key", () => {
@@ -147,7 +149,7 @@ describe(NavMenu.name, () => {
                 });
                 test("can close the menu with the Escape key", () => {
                     userEvent.keyboard(KEYS.escape);
-                    expect(menu).not.toBeVisible();
+                    expect(linkList).not.toBeVisible();
                     expect(menuButton).toHaveFocus();
                 });
             });
