@@ -5,13 +5,16 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { ChildrenProps } from "../../utilities/children-props";
 import { when } from "jest-when";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import mocked = jest.mocked;
 
 describe(Navigation.name, () => {
     let windowResizeListener: EventListener;
     let resizeSubscriptionCount = 0;
     let navElement: HTMLDivElement;
+    let user: UserEvent;
     beforeEach(() => {
+        user = userEvent.setup();
         jest.spyOn(window, "matchMedia").mockImplementation(jest.fn());
 
         when(window.matchMedia)
@@ -62,8 +65,8 @@ describe(Navigation.name, () => {
             const navMenu = within(navElement).getByTestId("nav-menu");
             expect(navMenu).toBeInTheDocument();
         });
-        test("shows the nav links within the nav menu", () => {
-            userEvent.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
+        test("shows the nav links within the nav menu", async () => {
+            await user.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
             expect(within(navElement).getAllByRole("link").length).toBeGreaterThan(0);
         });
         describe("and becomes wide", () => {
@@ -97,7 +100,7 @@ describe(Navigation.name, () => {
         describe("and becomes wide with focus on a link in the menu", () => {
             let focusedLinkIndex: number;
             beforeEach(async () => {
-                userEvent.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
+                await user.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
 
                 const links = within(navElement).getAllByRole("link");
                 focusedLinkIndex = Math.floor(Math.random() * links.length);

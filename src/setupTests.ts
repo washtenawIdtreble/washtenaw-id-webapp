@@ -4,12 +4,17 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import "jest-when";
-import "./mock-server/setup-server";
+import { setupTestingServer } from "./mock-server/setup-testing-server";
+import { toHaveNoViolations } from "jest-axe";
 
-process.env.REACT_APP_API = "fake-data";
+process.env.REACT_APP_API = "test";
+
+setupTestingServer();
 
 global.matchMedia = global.matchMedia || function () {
     return {
         matches: false,
     };
 };
+
+expect.extend(toHaveNoViolations);

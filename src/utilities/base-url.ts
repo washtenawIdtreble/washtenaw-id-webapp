@@ -4,6 +4,8 @@ export const BASE_URL = (): string => {
             throw new Error("REACT_APP_API not defined");
         case "fake-data":
             return "";
+        case "test":
+            return "http://testinghost:9999";
         case "localhost":
             return "http://localhost:8000";
         default:

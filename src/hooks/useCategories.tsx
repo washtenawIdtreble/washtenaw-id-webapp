@@ -2,14 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { GET } from "../utilities/fetch";
 import { BASE_URL } from "../utilities/base-url";
 import { AlertContext } from "../contexts/AlertContext";
+import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 
 export default function useCategories(): string[] {
     const [categories, setCategories] = useState<string[]>([]);
     const { showAlert } = useContext(AlertContext);
     useEffect(() => {
-        const { response, abort } = GET(`${BASE_URL()}/categories`);
+        const { responsePromise, abort } = GET(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`);
 
-        response
+        responsePromise
             .then(async (response: Response) => {
                 if (response.ok) {
                     setCategories(await response.json());

@@ -1,0 +1,39 @@
+.container {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    font-weight: normal;
+    height: calc(100vh - 3rem);
+    padding: 2rem 1rem;
+}
+
+input {
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+}
+
+textarea {
+    flex-grow: 1;
+}
+
+.submit {
+    font-size: 2rem;
+    margin-top: 1rem;
+    padding: 1rem 0;
+}
+
+@media (min-aspect-ratio: 5/4) {
+    .container {
+        padding: 2rem 12.5%;
+        width: 100vw;
+    }
+    
+    textarea {
+        flex-grow: 0;
+        min-height: 12rem;
+    }
+
+    .submit {
+        width: 30%;
+    }
+}
