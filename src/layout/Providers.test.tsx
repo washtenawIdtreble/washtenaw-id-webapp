@@ -4,23 +4,30 @@ import React, { useContext } from "react";
 import { AlertContext } from "../contexts/AlertContext";
 import { mockServer } from "../mock-server/mock-server";
 import { rest } from "msw";
-import { errorCategoriesResolver } from "../mock-server/categories-resolver";
+import { errorCategoriesResolver } from "../mock-server/resolvers/categories-resolver";
 import userEvent from "@testing-library/user-event";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
+import { BASE_URL } from "../utilities/base-url";
+import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 
 const ALERT_HEADING = "Alert Heading";
 const ALERT_TEXT = "Something went wrong";
 const ALERT_BUTTON_TEXT = "Trigger Alert";
 
 describe(Providers.name, () => {
+    let user: UserEvent;
+    beforeEach(() => {
+        user = userEvent.setup();
+    });
     test("should provide the alert context and allow children to show alert dialogs", async () => {
         const errorMessage = "Doesn't matter!";
         mockServer.use(
-            rest.get("categories", errorCategoriesResolver(500, errorMessage)),
+            rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`, errorCategoriesResolver(500, errorMessage)),
         );
 
         render(<ProvidersConsumer/>, { wrapper: Providers });
 
-        userEvent.click(screen.getByRole("button", { name: ALERT_BUTTON_TEXT }));
+        await user.click(screen.getByRole("button", { name: ALERT_BUTTON_TEXT }));
 
         let dialog: HTMLElement;
         await waitFor(() => {

@@ -5,12 +5,14 @@ import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { NavLinks } from "./NavLinks";
 import { KEYS } from "../../../test/user-event-keys";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
 describe(NavMenu.name, () => {
-
     let menuButton: HTMLButtonElement;
     let linkList: HTMLUListElement | null;
+    let user: UserEvent;
     beforeEach(() => {
+        user = userEvent.setup();
         render(
             <main>
                 <MemoryRouter>
@@ -31,8 +33,8 @@ describe(NavMenu.name, () => {
     describe("with mouse navigation", () => {
         describe("when the menu is opened", () => {
             let links: HTMLAnchorElement[];
-            beforeEach(() => {
-                userEvent.click(menuButton);
+            beforeEach(async () => {
+                await user.click(menuButton);
                 linkList = screen.getByRole("list") as HTMLUListElement;
                 links = within(linkList).getAllByRole("link");
             });
@@ -46,8 +48,8 @@ describe(NavMenu.name, () => {
                 expect(screen.getByRole("main").style.overflowY).toEqual("hidden");
             });
             describe("and the menu button is clicked again", () => {
-                beforeEach(() => {
-                    userEvent.click(menuButton);
+                beforeEach(async () => {
+                    await user.click(menuButton);
                 });
                 test("should close the menu", () => {
                     expect(linkList).not.toBeVisible();
@@ -60,95 +62,95 @@ describe(NavMenu.name, () => {
     });
 
     describe("with keyboard navigation", () => {
-        beforeEach(() => {
-            userEvent.tab();
+        beforeEach(async () => {
+            await user.tab();
         });
-        test("can focus the menu button", () => {
+        test("can focus the menu button", async () => {
             expect(menuButton).toHaveFocus();
         });
-        test("can shift focus past the menu button", () => {
-            userEvent.tab();
+        test("can shift focus past the menu button", async () => {
+            await user.tab();
             expect(document.body).toHaveFocus();
         });
-        test("can shift focus before the menu button", () => {
-            userEvent.tab({ shift: true });
+        test("can shift focus before the menu button", async () => {
+            await user.tab({ shift: true });
             expect(document.body).toHaveFocus();
         });
-        test("can open and close the menu with the space bar", () => {
-            userEvent.keyboard(KEYS.spaceBar);
+        test("can open and close the menu with the space bar", async () => {
+            await user.keyboard(KEYS.spaceBar);
             expect(screen.getByRole("list")).toBeVisible();
 
-            userEvent.keyboard(KEYS.spaceBar);
+            await user.keyboard(KEYS.spaceBar);
             expect(screen.queryByRole("list")).toBeNull();
         });
-        test("can open and close the menu with the enter key", () => {
-            userEvent.keyboard(KEYS.enter);
+        test("can open and close the menu with the enter key", async () => {
+            await user.keyboard(KEYS.enter);
             expect(screen.getByRole("list")).toBeVisible();
 
-            userEvent.keyboard(KEYS.enter);
+            await user.keyboard(KEYS.enter);
             expect(screen.queryByRole("list")).toBeNull();
         });
         describe("when the menu is open", () => {
             let links: HTMLAnchorElement[];
-            beforeEach(() => {
-                userEvent.keyboard(KEYS.spaceBar);
+            beforeEach(async () => {
+                await user.keyboard(KEYS.spaceBar);
                 linkList = screen.getByRole("list") as HTMLUListElement;
                 links = within(linkList).getAllByRole("link");
             });
             test("should show child links", () => {
                 expect(links.length).toBeGreaterThan(0);
             });
-            test("can close the menu with the Escape key", () => {
-                userEvent.keyboard(KEYS.escape);
+            test("can close the menu with the Escape key", async () => {
+                await user.keyboard(KEYS.escape);
                 expect(linkList).not.toBeVisible();
                 expect(menuButton).toHaveFocus();
             });
-            test("can navigate links with the tab key", () => {
-                userEvent.tab();
+            test("can navigate links with the tab key", async () => {
+                await user.tab();
 
-                links.forEach(link => {
+                for (const link of links) {
                     expect(link).toHaveFocus();
-                    userEvent.tab();
-                });
+                    await user.tab();
+                }
 
                 expect(menuButton).toHaveFocus();
             });
-            test("can navigate links with the tab key in reverse", () => {
-                userEvent.tab({ shift: true });
+            test("can navigate links with the tab key in reverse", async () => {
+                await user.tab({ shift: true });
 
-                [...links].reverse().forEach(link => {
+                for (const link of [...links].reverse()) {
                     expect(link).toHaveFocus();
-                    userEvent.tab({ shift: true });
-                });
+                    await user.tab({ shift: true });
+                }
 
                 expect(menuButton).toHaveFocus();
             });
-            test("can navigate links down with the arrow keys", () => {
-                userEvent.keyboard(KEYS.arrows.down);
+            test("can navigate links down with the arrow keys", async () => {
+                await user.keyboard(KEYS.arrows.down);
 
-                links.forEach(link => {
+                for (const link of links) {
                     expect(link).toHaveFocus();
-                    userEvent.keyboard(KEYS.arrows.down);
-                });
+                    await user.keyboard(KEYS.arrows.down);
+                }
 
                 expect(menuButton).toHaveFocus();
             });
-            test("can navigate links up with the arrow keys", () => {
-                userEvent.keyboard(KEYS.arrows.up);
+            test("can navigate links up with the arrow keys", async () => {
+                await user.keyboard(KEYS.arrows.up);
 
-                [...links].reverse().forEach(link => {
+                for (const link of [...links].reverse()) {
                     expect(link).toHaveFocus();
-                    userEvent.keyboard(KEYS.arrows.up);
-                });
+                    await user.keyboard(KEYS.arrows.up);
+                }
 
                 expect(menuButton).toHaveFocus();
             });
             describe("and a link is focused", () => {
-                beforeEach(() => {
-                    userEvent.tab();
+                beforeEach(async () => {
+                    await user.tab();
                 });
-                test("can close the menu with the Escape key", () => {
-                    userEvent.keyboard(KEYS.escape);
+                test("can close the menu with the Escape key", async () => {
+                    await user.keyboard(KEYS.escape);
                     expect(linkList).not.toBeVisible();
                     expect(menuButton).toHaveFocus();
                 });

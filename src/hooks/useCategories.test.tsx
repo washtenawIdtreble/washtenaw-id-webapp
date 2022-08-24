@@ -3,23 +3,20 @@ import { render, waitFor } from "@testing-library/react";
 import useCategories from "./useCategories";
 import {
     customCategoriesResolver,
-    productionCategoriesResolver,
+    errorCategoriesResolver,
     TEST_CATEGORIES,
-} from "../mock-server/categories-resolver";
+} from "../mock-server/resolvers/categories-resolver";
 import { rest } from "msw";
 import { mockServer } from "../mock-server/mock-server";
 import { AlertContext, AlertContextValue } from "../contexts/AlertContext";
 import { buildMockAlertContext, stubAlertData } from "../../test/test-factories";
+import { BASE_URL } from "../utilities/base-url";
 
 describe(useCategories.name, () => {
     describe("on successful load", () => {
         let rerender: any;
-        let unmount: any;
         beforeEach(() => {
-            ({ rerender, unmount } = render(<StubComponent/>));
-        });
-        afterEach(() => {
-            unmount();
+            ({ rerender } = render(<StubComponent/>));
         });
         test("should return an empty list of categories before fetch is complete", () => {
             expect(categories).toEqual([]);
@@ -32,7 +29,7 @@ describe(useCategories.name, () => {
         describe("on rerender", () => {
             beforeEach(() => {
                 mockServer.use(
-                    rest.get("categories", customCategoriesResolver(["anything"])),
+                    rest.get(`${BASE_URL()}/categories`, customCategoriesResolver(["anything"])),
                 );
                 rerender(<StubComponent/>);
             });
@@ -49,7 +46,7 @@ describe(useCategories.name, () => {
         beforeEach(() => {
             alertContext = buildMockAlertContext({ showAlert: jest.fn().mockName("showAlert") });
             mockServer.use(
-                rest.get("categories", productionCategoriesResolver(500, errorMessage)),
+                rest.get(`${BASE_URL()}/categories`, errorCategoriesResolver(500, errorMessage)),
             );
             render(<AlertContext.Provider value={alertContext}><StubComponent/></AlertContext.Provider>);
         });
