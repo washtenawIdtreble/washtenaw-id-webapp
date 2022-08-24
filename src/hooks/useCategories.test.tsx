@@ -14,12 +14,8 @@ import { buildMockAlertContext, stubAlertData } from "../../test/test-factories"
 describe(useCategories.name, () => {
     describe("on successful load", () => {
         let rerender: any;
-        let unmount: any;
         beforeEach(() => {
-            ({ rerender, unmount } = render(<StubComponent/>));
-        });
-        afterEach(() => {
-            unmount();
+            ({ rerender } = render(<StubComponent/>));
         });
         test("should return an empty list of categories before fetch is complete", () => {
             expect(categories).toEqual([]);

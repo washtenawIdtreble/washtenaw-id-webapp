@@ -17,6 +17,10 @@ export const errorCategoriesResolver = (statusCode: number, message?: string): R
     };
 };
 
+export const noOpCategoriesResolver = (): RequestResolver => {
+    return errorCategoriesResolver(500);
+};
+
 export const productionCategoriesResolver = (statusCode?: number, errorMessage?: string): RequestResolver => {
     if (statusCode) {
         return errorCategoriesResolver(statusCode, errorMessage);

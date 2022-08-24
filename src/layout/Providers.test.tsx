@@ -6,12 +6,17 @@ import { mockServer } from "../mock-server/mock-server";
 import { rest } from "msw";
 import { errorCategoriesResolver } from "../mock-server/categories-resolver";
 import userEvent from "@testing-library/user-event";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
 const ALERT_HEADING = "Alert Heading";
 const ALERT_TEXT = "Something went wrong";
 const ALERT_BUTTON_TEXT = "Trigger Alert";
 
 describe(Providers.name, () => {
+    let user: UserEvent;
+    beforeEach(() => {
+        user = userEvent.setup();
+    });
     test("should provide the alert context and allow children to show alert dialogs", async () => {
         const errorMessage = "Doesn't matter!";
         mockServer.use(
@@ -20,7 +25,7 @@ describe(Providers.name, () => {
 
         render(<ProvidersConsumer/>, { wrapper: Providers });
 
-        userEvent.click(screen.getByRole("button", { name: ALERT_BUTTON_TEXT }));
+        await user.click(screen.getByRole("button", { name: ALERT_BUTTON_TEXT }));
 
         let dialog: HTMLElement;
         await waitFor(() => {

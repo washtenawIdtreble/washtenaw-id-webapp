@@ -3,9 +3,12 @@ import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
 describe(Layout.name, () => {
+    let user: UserEvent;
     beforeEach(() => {
+        user = userEvent.setup();
         render(<Layout/>, { wrapper: MemoryRouter });
     });
     test("should have a link to skip to the main landmark", () => {
@@ -15,10 +18,10 @@ describe(Layout.name, () => {
         expect(skipNav.href).toContain("#main-content");
         expect(main.id).toEqual("main-content");
     });
-    test("skip-nav link should be the first focusable element", () => {
+    test("skip-nav link should be the first focusable element", async () => {
         const skipNav = screen.getByRole("link", { name: "Skip to content" });
 
-        userEvent.tab();
+        await user.tab();
         expect(skipNav).toHaveFocus();
     });
     test("main content should be focusable for Safari so skip nav link works", () => {
