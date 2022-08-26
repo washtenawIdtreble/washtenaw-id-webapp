@@ -4,9 +4,11 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import "jest-when";
-import "./mock-server/setup-server";
+import { setupTestingServer } from "./mock-server/setup-testing-server";
 
-process.env.REACT_APP_API = "fake-data";
+process.env.REACT_APP_API = "test";
+
+setupTestingServer();
 
 global.matchMedia = global.matchMedia || function () {
     return {

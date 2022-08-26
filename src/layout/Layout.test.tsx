@@ -4,11 +4,17 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
+import { GET } from "../utilities/fetch";
+import { FAKE_FETCH_RESULT } from "../../test/test-factories";
+import mocked = jest.mocked;
+
+jest.mock("../utilities/fetch");
 
 describe(Layout.name, () => {
     let user: UserEvent;
     beforeEach(() => {
         user = userEvent.setup();
+        mocked(GET).mockReturnValue(FAKE_FETCH_RESULT);
         render(<Layout/>, { wrapper: MemoryRouter });
     });
     test("should have a link to skip to the main landmark", () => {

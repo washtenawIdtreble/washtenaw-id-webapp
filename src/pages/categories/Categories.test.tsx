@@ -1,7 +1,7 @@
 import React from "react";
 import Categories from "./Categories";
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { TEST_CATEGORIES } from "../../mock-server/categories-resolver";
+import { TEST_CATEGORIES } from "../../mock-server/resolvers/categories-resolver";
 import { toTitleCase } from "../../utilities/to-title-case";
 
 describe(Categories.name, () => {

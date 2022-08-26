@@ -4,17 +4,17 @@ import React from "react";
 import { Link, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
-import { mockServer } from "../mock-server/mock-server";
-import { rest } from "msw";
-import { noOpCategoriesResolver } from "../mock-server/categories-resolver";
+import { GET } from "../utilities/fetch";
+import { FAKE_FETCH_RESULT } from "../../test/test-factories";
+import mocked = jest.mocked;
+
+jest.mock("../utilities/fetch");
 
 describe(RouterOutlet.name, () => {
     let user: UserEvent;
     beforeEach(() => {
         user = userEvent.setup();
-        mockServer.use(
-            rest.get("categories", noOpCategoriesResolver()),
-        );
+        mocked(GET).mockReturnValue(FAKE_FETCH_RESULT);
         render(
             <TestingRouterWithLinks/>,
         );

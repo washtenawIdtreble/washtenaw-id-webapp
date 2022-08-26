@@ -1,4 +1,4 @@
-import { RequestResolver } from "./test-server-handlers";
+import { RequestResolver } from "../test-server-handlers";
 
 export const TEST_CATEGORIES = ["banks", "pharmacies", "food"];
 

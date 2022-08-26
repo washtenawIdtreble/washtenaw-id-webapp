@@ -15,6 +15,12 @@ describe("Base URL utility", () => {
             expect(BASE_URL()).toEqual("");
         });
     });
+    describe("when the app is configured to use a testing server", () => {
+        test("should return an empty URL", () => {
+            process.env.REACT_APP_API = "test";
+            expect(BASE_URL()).toEqual("http://testinghost:9999");
+        });
+    });
     describe("when the app is configured to use a local server", () => {
         test("should return the correct URL", () => {
             process.env.REACT_APP_API = "localhost";
