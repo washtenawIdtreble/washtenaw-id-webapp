@@ -1,10 +1,5 @@
 import { RequestResolver } from "../test-server-handlers";
-
-export type AccessibilityFormData = {
-    name?: string
-    email?: string
-    description: string
-}
+import { AccessibilityFormData } from "../../pages/accessibility-issues/AccessibilityIssues";
 
 export const accessibilityIssuesResolver = (statusCode?: number, captor?: (data: AccessibilityFormData) => void): RequestResolver => {
     return (request, response, context) => {

@@ -5,6 +5,7 @@
 import "@testing-library/jest-dom";
 import "jest-when";
 import { setupTestingServer } from "./mock-server/setup-testing-server";
+import { toHaveNoViolations } from "jest-axe";
 
 process.env.REACT_APP_API = "test";
 
@@ -15,3 +16,5 @@ global.matchMedia = global.matchMedia || function () {
         matches: false,
     };
 };
+
+expect.extend(toHaveNoViolations);

@@ -1,21 +1,21 @@
-import { AccessibilityIssues } from "./AccessibilityIssues";
+import { AccessibilityFormData, AccessibilityIssues } from "./AccessibilityIssues";
 import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { rest } from "msw";
-import {
-    AccessibilityFormData,
-    accessibilityIssuesResolver,
-} from "../../mock-server/resolvers/accessibility-report-resolver";
+import { accessibilityIssuesResolver } from "../../mock-server/resolvers/accessibility-report-resolver";
 import { mockServer } from "../../mock-server/mock-server";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import userEvent from "@testing-library/user-event";
 import { BASE_URL } from "../../utilities/base-url";
 import { stubAccessibilityFormData } from "../../../test/test-factories";
+import { axe } from "jest-axe";
 
-describe(AccessibilityIssues.name, () => {
+describe(`${AccessibilityIssues.name} form`, () => {
     const formLabelText = "Report Accessibility Issues";
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
+    let form: HTMLFormElement;
+    let container: any;
 
     beforeEach(() => {
         user = userEvent.setup();
@@ -26,13 +26,29 @@ describe(AccessibilityIssues.name, () => {
             })),
         );
 
-        render(<AccessibilityIssues/>);
+        ({ container } = render(<AccessibilityIssues/>));
+
+        form = screen.getByRole("form");
+    });
+
+    test("has no AxE violations", async () => {
+        const page = await axe(container);
+        expect(page).toHaveNoViolations();
+    });
+
+    test("has an accessible name", () => {
+        expect(screen.getByLabelText(formLabelText)).toBe(form);
+    });
+
+    test("has a page heading", () => {
+        const formLabel = within(form).getByRole("heading", { level: 1 });
+        expect(formLabel.textContent).toEqual(formLabelText);
     });
 
     test("can send the form contents to the server", async () => {
-        const form: HTMLFormElement = screen.getByRole("form");
         const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
-        const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Email (optional)" });
+        const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
+        const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
         const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
         const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
 
@@ -47,6 +63,11 @@ describe(AccessibilityIssues.name, () => {
         await user.keyboard(email);
 
         await user.tab();
+        expect(phoneInput).toHaveFocus();
+        const phone = "9999999999";
+        await user.keyboard(phone);
+
+        await user.tab();
         expect(descriptionInput).toHaveFocus();
         const description = "There was an input that didn't have a label";
         await user.keyboard(description);
@@ -55,46 +76,6 @@ describe(AccessibilityIssues.name, () => {
         expect(submit).toHaveFocus();
 
         await user.keyboard("{Enter}");
-        expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, description }));
+        expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, description }));
     });
-
-    // TODO: Remove as much of these tests as possible
-    describe("has a form containing", () => {
-        let form: HTMLFormElement;
-        beforeEach(() => {
-            form = screen.getByRole("form");
-        });
-
-        test("an accessible name", () => {
-            expect(screen.getByLabelText(formLabelText)).toBe(form);
-        });
-
-        test("a page heading", () => {
-            const formLabel = within(form).getByRole("heading", { level: 1 });
-            expect(formLabel.textContent).toEqual(formLabelText);
-        });
-
-        test("a name field", () => {
-            const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
-            expect(nameInput.type).toEqual("text");
-            expect(nameInput.autocomplete).toEqual("name");
-        });
-
-        test("an email field", () => {
-            const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Email (optional)" });
-            expect(emailInput.type).toEqual("text");
-            expect(emailInput.autocomplete).toEqual("email");
-        });
-
-        test("a textarea to enter their issue", () => {
-            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
-            expect(descriptionInput.type).toEqual("textarea");
-        });
-
-        test("a submit button", () => {
-            const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
-            expect(submit).toBeInTheDocument();
-        });
-    });
-
 });

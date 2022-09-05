@@ -1,5 +1,5 @@
 import { AlertContextValue, AlertData } from "../src/contexts/AlertContext";
-import { AccessibilityFormData } from "../src/mock-server/resolvers/accessibility-report-resolver";
+import { AccessibilityFormData } from "../src/pages/accessibility-issues/AccessibilityIssues";
 
 export const FAKE_FETCH_RESULT = {
     response: Promise.resolve({ ok: true } as Response),
@@ -24,7 +24,8 @@ export const stubAlertData = (attributes?: Partial<AlertData>): AlertData => {
 export const stubAccessibilityFormData = (attributes: Partial<AccessibilityFormData> = {}): AccessibilityFormData => {
     return {
         name: attributes.name === undefined ? "Stub Name" : attributes.name,
-        email: attributes.email === undefined ? "Stub Email" : attributes.email,
+        email: attributes.email === undefined ? "stub_email@example.com" : attributes.email,
+        phone: attributes.phone === undefined ? "9999999999" : attributes.phone,
         description: attributes.description === undefined ? "Stub Description" : attributes.description,
     };
 };
