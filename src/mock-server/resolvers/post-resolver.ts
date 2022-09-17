@@ -46,7 +46,7 @@ export const buildPostResolver = <RequestBody>(args: Partial<PostResolverArgs<Re
 
         return response(
             context.status(responseContent.statusCode),
-            context.json(responseContent.body),
+            context.json(responseContent.body ?? {}),
         );
     };
 };

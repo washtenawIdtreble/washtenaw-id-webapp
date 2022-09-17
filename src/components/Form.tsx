@@ -1,8 +1,7 @@
 import { ChildrenProps } from "../utilities/children-props";
 import React, { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import { POST } from "../utilities/fetch";
-import { BASE_URL } from "../utilities/base-url";
 import "./Form.css";
+import { usePOST } from "../hooks/fetch/usePost";
 
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
@@ -10,7 +9,6 @@ type FormProps = ChildrenProps & {
 }
 
 export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) => {
-    const unmounted = useRef(false);
     const responseMessage = useRef<HTMLSpanElement>(null);
 
     const [submitting, setSubmitting] = useState<boolean>(false);
@@ -19,11 +17,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) =>
     const [errorMessage, setErrorMessage] = useState<string>("");
     const liveRegion = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        return () => {
-            unmounted.current = true;
-        };
-    }, []);
+    const postFormData = usePOST(submitEndpoint);
 
     useEffect(() => {
         if (serverResponded) {
@@ -45,22 +39,19 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) =>
         setSubmitting(true);
 
         const formData = extractFormData(form);
-        const { responsePromise, abort } = POST(`${BASE_URL()}/${submitEndpoint}`, formData);
 
-        const response = await responsePromise;
-
-        if (!unmounted.current) {
+        postFormData(formData, (ok, _, error) => {
             setSubmitting(false);
             setServerResponded(true);
-            if (response.ok) {
+
+            if (ok) {
                 form.reset();
                 setShowSuccessMessage(true);
             } else {
-                const body = await response.json();
-                setErrorMessage(body.error);
+                setErrorMessage(error);
             }
-        }
-    }, [submitEndpoint]);
+        });
+    }, [postFormData]);
 
     return (<>
             {showSuccessMessage &&

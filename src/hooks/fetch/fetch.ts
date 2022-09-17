@@ -7,6 +7,8 @@ export type ErrorResponse = {
     error: string
 }
 
+export type ResponseCallback<T> = (ok: boolean, body: T, error: string) => void
+
 export const GET = (url: string): FetchResult => {
     const controller = new AbortController();
 
