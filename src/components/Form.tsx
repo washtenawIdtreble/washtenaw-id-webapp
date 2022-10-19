@@ -53,12 +53,28 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) =>
         });
     }, [postFormData]);
 
-    return (<>
+    return (<div className={"container"}>
             {showSuccessMessage &&
-                <span tabIndex={-1} onBlur={removeResponseMessage} ref={responseMessage}>Your issue has been reported, thank you!</span>}
+                <span
+                    tabIndex={-1}
+                    onBlur={removeResponseMessage}
+                    ref={responseMessage}
+                    className={"success message"}
+                >
+                    Your issue has been reported, thank you!
+                </span>
+            }
             {errorMessage &&
-                <span tabIndex={-1} onBlur={removeResponseMessage} ref={responseMessage}>{errorMessage}</span>}
-            <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"container"}
+                <span
+                    tabIndex={-1}
+                    onBlur={removeResponseMessage}
+                    ref={responseMessage}
+                    className={"error message"}
+                >
+                    {errorMessage}
+                </span>
+            }
+            <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>
                 {children}
                 <button type={"submit"} className={"submit"} disabled={submitting}>Submit</button>
@@ -66,7 +82,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) =>
                     {submitting && <span>Submitting...</span>}
                 </div>
             </form>
-        </>
+        </div>
     );
 };
 
