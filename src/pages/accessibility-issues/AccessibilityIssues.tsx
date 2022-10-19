@@ -1,5 +1,5 @@
 import React from "react";
-import "./AccessibilityIssues.css";
+import "../Pages.css";
 import { Form } from "../../components/Form";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
 
@@ -11,8 +11,10 @@ export type AccessibilityFormData = {
 }
 
 export const AccessibilityIssues = () => {
-    return (<>
-            <h1 id={"form-label"} className={"heading"}>Report Accessibility Issues</h1>
+    return (
+        <div className={"page-container"}>
+            <h1 id={"form-label"} className={"page-heading"}>Report Accessibility Issues</h1>
+
             <Form ariaLabelledBy={"form-label"} submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}>
                 <label htmlFor={"name"}>Your Name (optional)</label>
                 <input id={"name"} autoComplete={"name"} name={"name"}/>
@@ -23,6 +25,6 @@ export const AccessibilityIssues = () => {
                 <label htmlFor={"description"}>What do you want to tell us? (required)</label>
                 <textarea id={"description"} name={"description"}/>
             </Form>
-        </>
+        </div>
     );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "reakit/Button";
-import { useDialogState, Dialog, DialogBackdrop } from "reakit/Dialog";
+import { Dialog, DialogBackdrop, useDialogState } from "reakit/Dialog";
 import "./AlertContext.css";
 
 export type AlertData = {
@@ -22,15 +22,14 @@ export function AlertProvider({ children }: Props) {
 
     const showAlert = (alertData: AlertData) => setAlert(alertData);
     const onDismiss = () => setAlert(undefined);
-    const dialog = useDialogState({visible: true});
-    return (
-        <div data-testid={"alert-context-provider"}>
-            <AlertContext.Provider value={{ showAlert: showAlert }}>
+    const dialog = useDialogState({ visible: true });
+    return (<>
+            <AlertContext.Provider value={{ showAlert: showAlert }} data-testid={"alert-context-provider"}>
                 {alert &&
                     <DialogBackdrop {...dialog} className={"alert-dialog"}>
                         <Dialog {...dialog}
-                            aria-label="Error"
-                            className={"Dialog__inner"}>  
+                                aria-label="Error"
+                                className={"Dialog__inner"}>
                             <h1 className={"Dialog__header"}>{alert.heading}</h1>
                             <p className={"alert-dialog-content"}>{alert.message}</p>
                             <footer className={"alert-dialog-footer"}><Button onClick={onDismiss}>OK</Button></footer>
@@ -39,6 +38,6 @@ export function AlertProvider({ children }: Props) {
                 }
                 {children}
             </AlertContext.Provider>
-        </div>
+        </>
     );
 }

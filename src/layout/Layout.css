@@ -5,7 +5,12 @@
 }
 
 .main-content {
+    height: 100%;
     overflow-y: scroll;
+}
+
+.router-outlet {
+    height: 100%;
 }
 
 .skip-nav {

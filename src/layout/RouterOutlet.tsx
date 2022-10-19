@@ -12,7 +12,7 @@ export const PAGE_ENDPOINTS = {
 
 export const RouterOutlet = () => {
     return (
-        <div data-testid={"router-outlet"}>
+        <div className={"router-outlet"} data-testid={"router-outlet"}>
             <Routes>
                 <Route path={PAGE_ENDPOINTS.categories} element={<Categories/>}/>
                 <Route path={PAGE_ENDPOINTS.businesses} element={<Businesses/>}/>
