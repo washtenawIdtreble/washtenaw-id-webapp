@@ -11,12 +11,13 @@ export type PostResolverArgs<RequestBody> = {
     responseContent: ResponseContent
     captor: (body: RequestBody) => void
     delayUntil: Promise<ResponseContent>
+    delayMilliseconds: number
     requestCaveats: Array<RequestCaveats<RequestBody>>
 }
 
 const DEFAULT_STATUS_CODE = 200;
 
-export const buildPostResolver = <RequestBody>(args: Partial<PostResolverArgs<RequestBody>> = {}): RequestResolver => {
+export const buildPostResolver = <RequestBody>(args: Partial<PostResolverArgs<RequestBody>> = { delayMilliseconds: 0 }): RequestResolver => {
     return async (request, response, context) => {
         const requestBody = request.body as RequestBody;
         if (args.captor) {
@@ -47,6 +48,7 @@ export const buildPostResolver = <RequestBody>(args: Partial<PostResolverArgs<Re
         return response(
             context.status(responseContent.statusCode),
             context.json(responseContent.body ?? {}),
+            context.delay(args.delayMilliseconds),
         );
     };
 };
