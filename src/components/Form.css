@@ -24,20 +24,15 @@
     align-items: center;
     -moz-box-align: center;
     -webkit-box-align: center;
-    -moz-box-flex: 1;
-    -webkit-box-flex: 1;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
     display: flex;
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     margin-bottom: 1.5rem;
-    min-height: 3rem;
     padding: 1rem;
     width: 100%;
 }
