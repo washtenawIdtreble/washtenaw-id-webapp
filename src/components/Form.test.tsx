@@ -13,6 +13,7 @@ import { buildPostResolver, ResponseContent } from "../mock-server/resolvers/pos
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
 
+const successMessage = "Your issue has been reported, thank you!";
 describe(Form.name, () => {
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
@@ -51,7 +52,7 @@ describe(Form.name, () => {
     });
 
     test("does not show a success message on load", () => {
-        expect(screen.queryByText("Your issue has been reported, thank you!")).not.toBeInTheDocument();
+        expect(screen.queryByText(successMessage)).not.toBeInTheDocument();
     });
 
     test("does not show an error message on load", () => {
@@ -95,11 +96,11 @@ describe(Form.name, () => {
         });
 
         describe("when form submission succeeds", () => {
-            let successMessage: HTMLSpanElement;
+            let successElement: HTMLSpanElement;
             beforeEach(async () => {
                 resolveRequest({ statusCode: 200 });
                 await waitFor(() => {
-                    successMessage = screen.getByText("Your issue has been reported, thank you!");
+                    successElement = screen.getByText(successMessage);
                 });
             });
 
@@ -118,20 +119,20 @@ describe(Form.name, () => {
 
             test("the success message is focused", async () => {
                 await waitFor(() => {
-                    expect(successMessage).toHaveFocus();
+                    expect(successElement).toHaveFocus();
                 });
             });
 
             describe("when the user moves focus from the success message", () => {
                 beforeEach(async () => {
                     await waitFor(() => {
-                        expect(successMessage).toHaveFocus();
+                        expect(successElement).toHaveFocus();
                     });
                     await user.tab();
                 });
 
                 test("the success message disappears", () => {
-                    expect(successMessage).not.toBeInTheDocument();
+                    expect(successElement).not.toBeInTheDocument();
                 });
 
                 test("the user's focus is at the top of the form", () => {
@@ -194,7 +195,7 @@ const FormWithInputs = () => {
     return (
         <>
             <span id="form-label">{formLabelText}</span>
-            <Form ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
+            <Form successMessage={successMessage} ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
                 <label htmlFor={"name"}>Name</label>
                 <input id={"name"} name={"name"}/>
                 <label htmlFor={"age"}>Age</label>

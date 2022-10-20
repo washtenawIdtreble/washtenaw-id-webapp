@@ -1,5 +1,5 @@
 import { AccessibilityFormData, AccessibilityIssues } from "./AccessibilityIssues";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import { rest } from "msw";
 import { mockServer } from "../../mock-server/mock-server";
@@ -13,6 +13,7 @@ import { buildPostResolver } from "../../mock-server/resolvers/post-resolver";
 
 describe(`${AccessibilityIssues.name} form`, () => {
     const formLabelText = "Report Accessibility Issues";
+    const successMessage = "Your issue has been reported, thank you!";
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
@@ -79,5 +80,9 @@ describe(`${AccessibilityIssues.name} form`, () => {
         await user.keyboard("{Enter}");
 
         expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, description }));
+
+        await waitFor(() => {
+            expect(screen.getByText(successMessage)).toBeInTheDocument();
+        });
     });
 });

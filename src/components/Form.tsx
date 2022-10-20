@@ -6,9 +6,10 @@ import { usePOST } from "../hooks/fetch/usePost";
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
     submitEndpoint: string
+    successMessage: string
 }
 
-export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) => {
+export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage }: FormProps) => {
     const responseMessage = useRef<HTMLSpanElement>(null);
 
     const [submitting, setSubmitting] = useState<boolean>(false);
@@ -61,7 +62,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint }: FormProps) =>
                     ref={responseMessage}
                     className={"success message"}
                 >
-                    Your issue has been reported, thank you!
+                    {successMessage}
                 </span>
             }
             {errorMessage &&

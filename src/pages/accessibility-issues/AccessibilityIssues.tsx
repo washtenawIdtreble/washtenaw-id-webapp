@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Pages.css";
 import { Form } from "../../components/Form";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
@@ -11,11 +11,13 @@ export type AccessibilityFormData = {
 }
 
 export const AccessibilityIssues = () => {
+    const [successMessage] = useState("Your issue has been reported, thank you!");
     return (
         <div className={"page-container"}>
             <h1 id={"form-label"} className={"page-heading"}>Report Accessibility Issues</h1>
 
-            <Form ariaLabelledBy={"form-label"} submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}>
+            <Form successMessage={successMessage} ariaLabelledBy={"form-label"}
+                  submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}>
                 <label htmlFor={"name"}>Your Name (optional)</label>
                 <input id={"name"} autoComplete={"name"} name={"name"}/>
                 <label htmlFor={"email"}>Your email (optional)</label>
