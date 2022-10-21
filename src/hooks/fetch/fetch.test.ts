@@ -1,4 +1,4 @@
-import { FetchResult, GET, POST } from "./fetch";
+import { DEFAULT_ERROR_MESSAGE, FetchResult, GET, POST } from "./fetch";
 
 describe("fetch utilities", () => {
     let originalFetch: any;
@@ -24,6 +24,10 @@ describe("fetch utilities", () => {
     });
     afterEach(() => {
         global.fetch = originalFetch;
+    });
+
+    test("DEFAULT_ERROR_MESSAGE", () => {
+        expect(DEFAULT_ERROR_MESSAGE).toEqual("There was an error, please try again.");
     });
 
     describe(GET.name, () => {

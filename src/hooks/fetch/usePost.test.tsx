@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import { usePOST } from "./usePost";
-import { POST } from "./fetch";
+import { DEFAULT_ERROR_MESSAGE, POST } from "./fetch";
 import mocked = jest.mocked;
 
 jest.mock("./fetch");
@@ -123,23 +123,44 @@ describe(usePOST.name, () => {
         });
     });
 
-    describe("when the response is not OK", () => {
-        const errorMessage = "it failed";
-        beforeEach(async () => {
-            mocked(POST)
-                .mockReset()
-                .mockReturnValueOnce({
-                    abort: abort1,
-                    responsePromise: Promise.resolve({
-                        json: jest.fn().mockResolvedValue({ error: errorMessage }),
-                        ok: false,
-                    } as unknown as Response),
+    describe("when the request fails", () => {
+        describe("with an error on the response body", () => {
+            const errorMessage = "it failed";
+            beforeEach(async () => {
+                mocked(POST)
+                    .mockReset()
+                    .mockReturnValueOnce({
+                        abort: abort1,
+                        responsePromise: Promise.resolve({
+                            json: jest.fn().mockResolvedValue({ error: errorMessage }),
+                            ok: false,
+                        } as unknown as Response),
+                    });
+                await user.click(button);
+            });
+            test("sends the error message from the server to the component", async () => {
+                await waitFor(() => {
+                    expect(screen.getByText(errorMessage)).toBeInTheDocument();
                 });
-            await user.click(button);
+            });
         });
-        test("sends the error message from the server to the component", async () => {
-            await waitFor(() => {
-                expect(screen.getByText(errorMessage)).toBeInTheDocument();
+        describe("without an error message", () => {
+            beforeEach(async () => {
+                mocked(POST)
+                    .mockReset()
+                    .mockReturnValueOnce({
+                        abort: abort1,
+                        responsePromise: Promise.resolve({
+                            json: jest.fn().mockResolvedValue({}),
+                            ok: false,
+                        } as unknown as Response),
+                    });
+                await user.click(button);
+            });
+            test("sends the error message from the server to the component", async () => {
+                await waitFor(() => {
+                    expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
+                });
             });
         });
     });

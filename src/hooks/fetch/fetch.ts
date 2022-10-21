@@ -3,11 +3,9 @@ export type FetchResult = {
     abort(): void;
 }
 
-export type ErrorResponse = {
-    error: string
-}
-
 export type ResponseCallback<T> = (ok: boolean, body: T, error: string) => void
+
+export const DEFAULT_ERROR_MESSAGE = "There was an error, please try again.";
 
 export const GET = (url: string): FetchResult => {
     const controller = new AbortController();

@@ -2,7 +2,7 @@ import { useGET } from "./useGet";
 import React, { useCallback, useState } from "react";
 import { BASE_URL } from "../../utilities/base-url";
 import { render, screen, waitFor } from "@testing-library/react";
-import { GET } from "./fetch";
+import { DEFAULT_ERROR_MESSAGE, GET } from "./fetch";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import mocked = jest.mocked;
@@ -125,26 +125,52 @@ describe(useGET.name, () => {
         });
     });
     describe("when the request fails", () => {
-        const errorMessage = "it failed";
-        beforeEach(async () => {
-            const response = {
-                ok: false,
-                json: jest.fn().mockResolvedValue({ error: errorMessage }),
-            } as unknown as Response;
+        describe("with an error on the response body", () => {
+            const errorMessage = "it failed";
+            beforeEach(() => {
+                const response = {
+                    ok: false,
+                    json: jest.fn().mockResolvedValue({ error: errorMessage }),
+                } as unknown as Response;
 
-            mocked(GET).mockReturnValue({
-                abort: abort1,
-                responsePromise: Promise.resolve(response),
+                mocked(GET).mockReturnValue({
+                    abort: abort1,
+                    responsePromise: Promise.resolve(response),
+                });
+
+                render(<FetchingComponent/>);
+
+                button = screen.getByRole("button");
             });
-
-            render(<FetchingComponent/>);
-
-            button = screen.getByRole("button");
+            test("rejects with the value from the server", async () => {
+                await user.click(button);
+                await waitFor(() => {
+                    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+                });
+            });
         });
-        test("rejects with the value from the server", async () => {
-            await user.click(button);
-            await waitFor(() => {
-                expect(screen.getByText(errorMessage)).toBeInTheDocument();
+
+        describe("without an error message", () => {
+            beforeEach(() => {
+                const response = {
+                    ok: false,
+                    json: jest.fn().mockResolvedValue({}),
+                } as unknown as Response;
+
+                mocked(GET).mockReturnValue({
+                    abort: abort1,
+                    responsePromise: Promise.resolve(response),
+                });
+
+                render(<FetchingComponent/>);
+
+                button = screen.getByRole("button");
+            });
+            test("rejects with the value from the server", async () => {
+                await user.click(button);
+                await waitFor(() => {
+                    expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
+                });
             });
         });
     });

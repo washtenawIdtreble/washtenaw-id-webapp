@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { BASE_URL } from "../../utilities/base-url";
-import { GET, ResponseCallback } from "./fetch";
+import { DEFAULT_ERROR_MESSAGE, GET, ResponseCallback } from "./fetch";
 
 type GetFunction<ResponseBody> = (responseCallback: ResponseCallback<ResponseBody>) => void;
 
@@ -26,11 +26,14 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
             const response = await responsePromise;
             let ok = response.ok;
 
-            let body = await response.json().catch(() => {
+            const body = await response.json().catch(() => {
                 ok = false;
                 return { error: `There was an error getting the resource from ${BASE_URL()}/${endpoint}` };
             });
-            responseCallback(ok, body as T, body?.error);
+
+            const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
+
+            responseCallback(ok, body as T, errorMessage);
         } catch {}
 
     }, [endpoint]);

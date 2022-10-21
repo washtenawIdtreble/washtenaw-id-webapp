@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { BASE_URL } from "../../utilities/base-url";
-import { POST, ResponseCallback } from "./fetch";
+import { DEFAULT_ERROR_MESSAGE, POST, ResponseCallback } from "./fetch";
 
 type PostFunction<ResponseBody> = (body: any, responseCallback: ResponseCallback<ResponseBody>) => void;
 
@@ -24,9 +24,11 @@ export function usePOST<ResponseBody>(endpoint: string): PostFunction<ResponseBo
 
         try {
             const response = await responsePromise;
-            let body = await response.json().catch(() => {});
+            const body = await response.json().catch(() => {});
 
-            responseCallback(response.ok, body as ResponseBody, body?.error);
+            const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
+
+            responseCallback(response.ok, body as ResponseBody, errorMessage);
         } catch {}
 
     }, [endpoint]);
