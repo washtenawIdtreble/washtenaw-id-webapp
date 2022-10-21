@@ -27,12 +27,15 @@ button {
 
 button:hover {
     background-color: #052238;
-    cursor: pointer;
 }
 
 button:active {
     background-color: #031727;
     cursor: pointer;
+}
+
+button:disabled {
+    background-color: #808080;
 }
 
 input {
