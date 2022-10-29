@@ -12,7 +12,7 @@ export function Categories() {
                 <li
                     className={"category-item"}
                     key={category.category}>
-                    <RefreshingLink to={`${PAGE_ENDPOINTS.businesses}#${category}`}
+                    <RefreshingLink to={`${PAGE_ENDPOINTS.businesses}#${category.category}`}
                                     className={"nav-link"}>
                                     {category.displayName}
                     </RefreshingLink>

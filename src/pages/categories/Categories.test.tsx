@@ -3,11 +3,14 @@ import { Categories } from "./Categories";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { TEST_CATEGORIES } from "../../mock-server/resolvers/categories-resolver";
 import { MemoryRouter } from "react-router-dom";
+import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
 
 
 describe(Categories.name, () => {
-    test("contains a list of categories", async () => {
+    beforeEach(() => {
         render(<Categories/>,  { wrapper: MemoryRouter });
+    });
+    test("contains a list of categories", async () => {
         const listElement = screen.getByRole("list");
         let categoryNames : string[];
         await waitFor(() => {
@@ -18,6 +21,20 @@ describe(Categories.name, () => {
         });
         const categories = TEST_CATEGORIES.map(c => c.displayName);
         expect(categoryNames).toEqual(categories);
+    });
+
+    test("links to correct url", async() => {
+        let categoryUrls : string[];
+        await waitFor(() => {
+            const categoryLinks : HTMLAnchorElement[] = screen.getAllByRole("link");
+            categoryUrls = categoryLinks.map(link => link.href);
+        });
+
+        const expectedCategoryUrls = TEST_CATEGORIES.map(c => `${PAGE_ENDPOINTS.businesses}#${c.category}`);
+        expect(categoryUrls.length).toEqual(expectedCategoryUrls.length);
+        expectedCategoryUrls.forEach((expectUrl, index) => {
+            expect(categoryUrls[index].endsWith(expectUrl)).toBe(true);
+        });
     });
 });
 
