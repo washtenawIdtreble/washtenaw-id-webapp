@@ -16,17 +16,17 @@ export function Businesses () {
         <h1>{HEADER_TEXT}</h1>
             {businesses.map(business => {
                 return (
-                <div key={`${business.category}-container`}> 
+                <div key={`${business.category.category}-container`}> 
                 <h2
-                    id={business.category}
+                    id={business.category.category}
                     className={"businesses-header"}
                     tabIndex={-1}
-                    key={`${business.category}-heading`}>
-                    {(business.category)}
+                    key={`${business.category.category}-heading`}>
+                    {(business.category.displayName)}
                 </h2>
-                <ul aria-labelledby={business.category}
+                <ul aria-labelledby={business.category.category}
                     className={"businesses-list"}
-                    key={`${business.category}-list`}>
+                    key={`${business.category.category}-list`}>
 
                     {business.businesses.map(businessName => {
                         return <li

@@ -12,6 +12,7 @@ import { AlertContext, AlertContextValue } from "../contexts/AlertContext";
 import { buildMockAlertContext, stubAlertData } from "../../test/test-factories";
 import { BASE_URL } from "../utilities/base-url";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
+import { Category } from "./useCategories";
 
 describe(useBusinesses.name, () => {
     describe("on successful load", () => {
@@ -67,7 +68,7 @@ describe(useBusinesses.name, () => {
     });
 });
 
-let businesses: { category: string, businesses: string[] }[];
+let businesses: { category: Category, businesses: string[] }[];
 
 function StubComponent() {
     businesses = useBusinesses();

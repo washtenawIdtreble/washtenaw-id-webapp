@@ -17,7 +17,7 @@ describe(Businesses.name, () => {
     test("contains category name as heading for a set of businesses", async() => {
         await waitFor(() => {
             const categoryNames = screen.getAllByRole("heading", { level: 2 }).map(h2 => h2.textContent);
-            const titleCaseCategories = TEST_BUSINESSES.map(b => b.category);
+            const titleCaseCategories = TEST_BUSINESSES.map(b => b.category.displayName);
             expect(categoryNames).toEqual(titleCaseCategories);
         });
     });  

@@ -2,7 +2,8 @@ import { RequestResolver } from "./test-server-handlers";
 
 export const TEST_BUSINESSES = [
     {
-        category: "banks", businesses: [
+        category: { displayName: "Banks", category: "banks" },
+        businesses: [
             "business 1",
             "business 2",
             "business 3",
@@ -11,14 +12,16 @@ export const TEST_BUSINESSES = [
         ],
     },
     {
-        category: "food", businesses: [
+        category: { displayName: "Food", category: "food" }, 
+        businesses: [
             "business 1",
             "business 2",
             "business 3"
         ],
     },
     {
-        category: "jobs", businesses: [
+        category: { displayName: "Jobs", category: "jobs" }, 
+        businesses: [
             "business 1",
             "business 2"
         ],
@@ -47,7 +50,8 @@ export const productionBusinessesResolver = (statusCode?: number, errorMessage?:
 
     return customBusinessesResolver([
         {
-            category: "banks", businesses: [
+            category: { displayName: "Banks", category: "banks" }, 
+            businesses: [
                 "business 1",
                 "business 2",
                 "business 3",
@@ -56,34 +60,39 @@ export const productionBusinessesResolver = (statusCode?: number, errorMessage?:
             ],
         },
         {
-            category: "food", businesses: [
+            category: { displayName: "Food", category: "food" }, 
+            businesses: [
                 "business 1",
                 "business 2",
                 "business 3"
             ],
         },
         {
-            category: "jobs", businesses: [
+            category: { displayName: "Jobs", category: "jobs" }, 
+            businesses: [
                 "business 1",
                 "business 2"
             ],
         },
         {
-            category: "mental health", businesses: [
+            category: { displayName: "Mental Health", category: "mental-health" }, 
+            businesses: [
                 "business 1",
                 "business 2",
                 "business 3"
             ],
         },
         {
-            category: "pharmacies", businesses: [
+            category: { displayName: "Pharmacies", category: "pharmacies" }, 
+            businesses: [
                 "business 1",
                 "business 2",
                 "business 3"
             ],
         },
         {
-            category: "transportation", businesses: [
+            category: { displayName: "Transportation", category: "transportation" }, 
+            businesses: [
                 "business 1",
                 "business 2",
                 "business 3"

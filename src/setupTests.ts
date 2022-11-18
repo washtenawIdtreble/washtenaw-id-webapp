@@ -17,4 +17,6 @@ global.matchMedia = global.matchMedia || function () {
     };
 };
 
+HTMLElement.prototype.scrollIntoView = jest.fn();
+
 expect.extend(toHaveNoViolations);

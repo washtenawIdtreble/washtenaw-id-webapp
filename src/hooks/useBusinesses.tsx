@@ -3,9 +3,10 @@ import { GET } from "../utilities/fetch";
 import { BASE_URL } from "../utilities/base-url";
 import { AlertContext } from "../contexts/AlertContext";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
+import { Category } from "./useCategories";
 
-export default function useBusinesses(): { category: string, businesses: string[] }[] {
-    const [businesses, setBusinesses] = useState<{ category: string, businesses: string[] }[]>([]);
+export default function useBusinesses(): { category: Category, businesses: string[] }[] {
+    const [businesses, setBusinesses] = useState<{ category: Category, businesses: string[] }[]>([]);
     const { showAlert } = useContext(AlertContext);
     useEffect(() => {
         const { responsePromise, abort } = GET(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`);
