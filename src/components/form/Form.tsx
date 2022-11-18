@@ -1,7 +1,8 @@
-import { ChildrenProps } from "../utilities/children-props";
+import { ChildrenProps } from "../../utilities/children-props";
 import React, { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import "./Form.css";
-import { usePOST } from "../hooks/fetch/usePost";
+import { usePOST } from "../../hooks/fetch/usePost";
+import { FormSubmitMessage } from "./FormSubmitMessage";
 
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
@@ -55,25 +56,12 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     }, [postFormData]);
 
     return (<div className={"container"}>
-            {showSuccessMessage &&
-                <span
-                    tabIndex={-1}
-                    onBlur={removeResponseMessage}
-                    ref={responseMessage}
-                    className={"success message"}
-                >
-                    {successMessage}
-                </span>
+            {showSuccessMessage && <FormSubmitMessage message={successMessage} clearMessage={removeResponseMessage}
+                                                      ref={responseMessage} className={"success"}/>
             }
-            {errorMessage &&
-                <span
-                    tabIndex={-1}
-                    onBlur={removeResponseMessage}
-                    ref={responseMessage}
-                    className={"error message"}
-                >
-                    {errorMessage}
-                </span>
+
+            {errorMessage && <FormSubmitMessage message={errorMessage} clearMessage={removeResponseMessage}
+                                                ref={responseMessage} className={"error"}/>
             }
             <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>

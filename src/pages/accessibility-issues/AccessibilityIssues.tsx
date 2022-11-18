@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Pages.css";
-import { Form } from "../../components/Form";
+import { Form } from "../../components/form/Form";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
 
 export type AccessibilityFormData = {

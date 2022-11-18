@@ -5,10 +5,10 @@ import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { Form } from "./Form";
-import { AccessibilityFormData } from "../pages/accessibility-issues/AccessibilityIssues";
-import { mockServer } from "../mock-server/mock-server";
-import { BASE_URL } from "../utilities/base-url";
-import { buildPostResolver, ResponseContent } from "../mock-server/resolvers/post-resolver";
+import { AccessibilityFormData } from "../../pages/accessibility-issues/AccessibilityIssues";
+import { mockServer } from "../../mock-server/mock-server";
+import { BASE_URL } from "../../utilities/base-url";
+import { buildPostResolver, ResponseContent } from "../../mock-server/resolvers/post-resolver";
 
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
