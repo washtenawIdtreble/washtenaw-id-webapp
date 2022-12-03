@@ -22,7 +22,6 @@
     "@types/jest": "^27.4.0",
     "@types/jest-axe": "^3.5.4",
     "@types/jest-when": "^3.5.0",
-    "@types/node": "^16.11.25",
     "@types/react": "^16.14.23",
     "@types/react-dom": "^16.9.14",
     "jest-axe": "^6.0.0",

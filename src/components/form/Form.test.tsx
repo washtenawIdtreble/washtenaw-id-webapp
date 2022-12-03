@@ -9,11 +9,14 @@ import { AccessibilityFormData } from "../../pages/accessibility-issues/Accessib
 import { mockServer } from "../../mock-server/mock-server";
 import { BASE_URL } from "../../utilities/base-url";
 import { buildPostResolver, ResponseContent } from "../../mock-server/resolvers/post-resolver";
+import { FormField } from "./FormField";
+import { Validator } from "../../hooks/form-validation/useValidation";
 
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
 
 const successMessage = "Your issue has been reported, thank you!";
+
 describe(Form.name, () => {
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
@@ -21,6 +24,7 @@ describe(Form.name, () => {
     let container: any;
     let liveRegion: HTMLDivElement;
     let resolveRequest: (response: ResponseContent) => void;
+    let nameValidators: Validator[];
 
     beforeEach(() => {
         user = userEvent.setup();
@@ -36,7 +40,9 @@ describe(Form.name, () => {
             })),
         );
 
-        ({ container } = render(<FormWithInputs/>));
+        nameValidators = [];
+
+        ({ container } = render(<FormWithInputs nameValidators={nameValidators}/>));
 
         form = screen.getByRole("form");
         liveRegion = screen.getByTestId("live-region");
@@ -70,7 +76,6 @@ describe(Form.name, () => {
         let submitButton: HTMLButtonElement;
         const name = "Martin Starr";
         const age = "47";
-
         beforeEach(async () => {
             nameInput = within(form).getByRole("textbox", { name: "Name" });
             ageInput = within(form).getByRole("textbox", { name: "Age" });
@@ -78,128 +83,171 @@ describe(Form.name, () => {
 
             await user.type(nameInput, name);
             await user.type(ageInput, age);
-
-            submitButton.focus();
-            await user.keyboard("{Enter}");
         });
 
-        test("the submit button is disabled", async () => {
-            expect(submitButton).toBeDisabled();
-        });
-
-        test("an announcement appears in the live region", async () => {
-            expect(liveRegion.textContent).toEqual("Submitting...");
-        });
-
-        test("the form's data is sent to the server", async () => {
-            expect(capturedFormData).toEqual({ name, age });
-        });
-
-        describe("when form submission succeeds", () => {
-            let successElement: HTMLSpanElement;
+        describe("with errors", () => {
+            const nameErrorMessage = "name is incorrect";
             beforeEach(async () => {
-                resolveRequest({ statusCode: 200 });
+                nameValidators.push(() => nameErrorMessage);
+
+                submitButton.focus();
+                await user.keyboard("{Enter}");
+            });
+            test("the error message is shown", async () => {
                 await waitFor(() => {
-                    successElement = screen.getByText(successMessage);
+                    expect(screen.getByText(nameErrorMessage)).toBeVisible();
                 });
             });
-
-            test("the live region is cleared", async () => {
-                expect(liveRegion.textContent).toEqual("");
+            test("the invalid field is focused", async () => {
+                await waitFor(() => {
+                    expect(nameInput).toHaveFocus();
+                });
             });
-
-            test("the button is enabled", async () => {
+            test("the submit button is NOT disabled", async () => {
+                await waitFor(() => {
+                    expect(nameInput).toHaveFocus();
+                });
                 expect(submitButton).not.toBeDisabled();
             });
 
-            test("the form is cleared", async () => {
-                expect(nameInput.value).toBe("");
-                expect(ageInput.value).toBe("");
-            });
-
-            test("the success message is focused", async () => {
+            test("the live region remains empty", async () => {
                 await waitFor(() => {
-                    expect(successElement).toHaveFocus();
+                    expect(nameInput).toHaveFocus();
                 });
+                expect(liveRegion.textContent).toEqual("");
             });
 
-            describe("when the user moves focus from the success message", () => {
+            test("the form's data is NOT sent to the server", async () => {
+                await waitFor(() => {
+                    expect(nameInput).toHaveFocus();
+                });
+                expect(capturedFormData).toBeUndefined();
+            });
+        });
+
+        describe("without errors", () => {
+            beforeEach(async () => {
+                submitButton.focus();
+                await user.keyboard("{Enter}");
+            });
+
+            test("the submit button is disabled", async () => {
+                expect(submitButton).toBeDisabled();
+            });
+
+            test("an announcement appears in the live region", async () => {
+                expect(liveRegion.textContent).toEqual("Submitting...");
+            });
+
+            test("the form's data is sent to the server", async () => {
+                expect(capturedFormData).toEqual({ name, age });
+            });
+
+            describe("when form submission succeeds", () => {
+                let successElement: HTMLSpanElement;
                 beforeEach(async () => {
+                    resolveRequest({ statusCode: 200 });
+                    await waitFor(() => {
+                        successElement = screen.getByText(successMessage);
+                    });
+                });
+
+                test("the live region is cleared", async () => {
+                    expect(liveRegion.textContent).toEqual("");
+                });
+
+                test("the button is enabled", async () => {
+                    expect(submitButton).not.toBeDisabled();
+                });
+
+                test("the form is cleared", async () => {
+                    expect(nameInput.value).toBe("");
+                    expect(ageInput.value).toBe("");
+                });
+
+                test("the success message is focused", async () => {
                     await waitFor(() => {
                         expect(successElement).toHaveFocus();
                     });
-                    await user.tab();
                 });
 
-                test("the success message disappears", () => {
-                    expect(successElement).not.toBeInTheDocument();
-                });
+                describe("when the user moves focus from the success message", () => {
+                    beforeEach(async () => {
+                        await waitFor(() => {
+                            expect(successElement).toHaveFocus();
+                        });
+                        await user.tab();
+                    });
 
-                test("the user's focus is at the top of the form", () => {
-                    expect(nameInput).toHaveFocus();
-                });
-            });
-        });
+                    test("the success message disappears", () => {
+                        expect(successElement).not.toBeInTheDocument();
+                    });
 
-        describe("when form submission fails", () => {
-            let errorMessage: HTMLSpanElement;
-            const errorMessageText = "Your request was terrible!";
-            beforeEach(async () => {
-                resolveRequest({ statusCode: 400, body: { "error": errorMessageText } });
-                await waitFor(() => {
-                    errorMessage = screen.getByText(errorMessageText);
+                    test("the user's focus is at the top of the form", () => {
+                        expect(nameInput).toHaveFocus();
+                    });
                 });
             });
 
-            test("the live region is cleared", async () => {
-                expect(liveRegion.textContent).toEqual("");
-            });
-
-            test("the button is enabled", async () => {
-                expect(submitButton).not.toBeDisabled();
-            });
-
-            test("the form is NOT cleared", async () => {
-                expect(nameInput.value).toBe(name);
-                expect(ageInput.value).toBe(age);
-            });
-
-            test("the error message is focused", async () => {
-                await waitFor(() => {
-                    expect(errorMessage).toHaveFocus();
-                });
-            });
-
-            describe("when the user moves focus from the error message", () => {
+            describe("when form submission fails", () => {
+                let errorMessage: HTMLSpanElement;
+                const errorMessageText = "Your request was terrible!";
                 beforeEach(async () => {
+                    resolveRequest({ statusCode: 400, body: { "error": errorMessageText } });
+                    await waitFor(() => {
+                        errorMessage = screen.getByText(errorMessageText);
+                    });
+                });
+
+                test("the live region is cleared", async () => {
+                    expect(liveRegion.textContent).toEqual("");
+                });
+
+                test("the button is enabled", async () => {
+                    expect(submitButton).not.toBeDisabled();
+                });
+
+                test("the form is NOT cleared", async () => {
+                    expect(nameInput.value).toBe(name);
+                    expect(ageInput.value).toBe(age);
+                });
+
+                test("the error message is focused", async () => {
                     await waitFor(() => {
                         expect(errorMessage).toHaveFocus();
                     });
-                    await user.tab();
                 });
 
-                test("the error message disappears", () => {
-                    expect(errorMessage).not.toBeInTheDocument();
-                });
+                describe("when the user moves focus from the error message", () => {
+                    beforeEach(async () => {
+                        await waitFor(() => {
+                            expect(errorMessage).toHaveFocus();
+                        });
+                        await user.tab();
+                    });
 
-                test("the user's focus is at the top of the form", () => {
-                    expect(nameInput).toHaveFocus();
+                    test("the error message disappears", () => {
+                        expect(errorMessage).not.toBeInTheDocument();
+                    });
+
+                    test("the user's focus is at the top of the form", () => {
+                        expect(nameInput).toHaveFocus();
+                    });
                 });
             });
         });
     });
 });
 
-const FormWithInputs = () => {
-
+const FormWithInputs = (props: { nameValidators: Validator[] }) => {
     return (
         <>
             <span id="form-label">{formLabelText}</span>
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
                 <label htmlFor={"name"}>Name</label>
-                <input id={"name"} name={"name"}/>
+                <FormField id={"name"} name={"name"} validators={props.nameValidators}/>
                 <label htmlFor={"age"}>Age</label>
-                <input id={"age"} name={"age"}/>
+                <FormField id={"age"} name={"age"} validators={[]}/>
             </Form>
         </>
     );

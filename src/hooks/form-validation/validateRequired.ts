@@ -1,4 +1,4 @@
-import { Validator } from "./useValidations";
+import { Validator } from "./useValidation";
 
 export const MISSING_REQUIRED_MESSAGE = "You must enter something in this field";
 

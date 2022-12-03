@@ -1,4 +1,4 @@
-import { Validator } from "./useValidations";
+import { Validator } from "./useValidation";
 
 export const INVALID_PHONE_MESSAGE = "This is not a valid phone number. Make sure it contains 7 or 10 digits excluding a 1 at the beginning";
 
