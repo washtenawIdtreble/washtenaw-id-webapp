@@ -3,6 +3,8 @@ import React, { FormEvent, useCallback, useEffect, useRef, useState } from "reac
 import "./Form.css";
 import { usePOST } from "../../hooks/fetch/usePost";
 import { FormSubmitMessage } from "./FormSubmitMessage";
+import { FormProvider } from "../../contexts/FormContext";
+import { Observable } from "../../utilities/observable";
 
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
@@ -35,25 +37,34 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
         setErrorMessage("");
     }, []);
 
+    const [onSubmitObservable] = useState(new Observable());
+
     const onSubmit = useCallback(async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const form = event.target as HTMLFormElement;
-        setSubmitting(true);
 
-        const formData = extractFormData(form);
+        const foundInvalidFields = onSubmitObservable.notify();
 
-        postFormData(formData, (ok, _, error) => {
-            setSubmitting(false);
-            setServerResponded(true);
+        if (!foundInvalidFields) {
 
-            if (ok) {
-                form.reset();
-                setShowSuccessMessage(true);
-            } else {
-                setErrorMessage(error);
-            }
-        });
-    }, [postFormData]);
+            const form = event.target as HTMLFormElement;
+            setSubmitting(true);
+
+            const formData = extractFormData(form);
+
+            postFormData(formData, (ok, _, error) => {
+                setSubmitting(false);
+                setServerResponded(true);
+
+                if (ok) {
+                    form.reset();
+                    setShowSuccessMessage(true);
+                } else {
+                    setErrorMessage(error);
+                }
+            });
+        }
+
+    }, [postFormData, onSubmitObservable]);
 
     return (<div className={"container"}>
             {showSuccessMessage && <FormSubmitMessage message={successMessage} clearMessage={removeResponseMessage}
@@ -65,7 +76,9 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
             }
             <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>
-                {children}
+                <FormProvider onSubmit={onSubmitObservable}>
+                    {children}
+                </FormProvider>
                 <button type={"submit"} className={"submit"} disabled={submitting}>Submit</button>
                 <div aria-live={"polite"} ref={liveRegion} data-testid={"live-region"}>
                     {submitting && <span>Submitting...</span>}

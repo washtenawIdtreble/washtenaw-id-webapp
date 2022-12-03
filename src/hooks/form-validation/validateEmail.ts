@@ -1,4 +1,4 @@
-import { Validator } from "./useValidations";
+import { Validator } from "./useValidation";
 
 export const INVALID_EMAIL_MESSAGE = "This is not a valid email address. It must have an at symbol (@) and a period (.) like this: abc@xyz.com";
 
