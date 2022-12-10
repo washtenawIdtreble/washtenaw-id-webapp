@@ -3,33 +3,32 @@ import { useFocusOnLoad } from "./useFocusOnLoad";
 import { render, screen, waitFor } from "@testing-library/react";
 
 describe(useFocusOnLoad.name, () => {
-    describe('on element found within the interval', () => {
-        let rerender: any;
+    describe("on element found within the interval", () => {
         beforeEach(() => {
             (render(<StubComponent elementId={"button-id"}/>));
         });
-        test('focuses on the element', async() => {
-            const button = screen.getByRole("button", { name: "ElementToFocus"});
-            
+        test("focuses on the element", async () => {
+            const button = screen.getByRole("button", { name: "ElementToFocus" });
+
             await waitFor(() => {
                 expect(button).toHaveFocus();
             });
             expect(button.scrollIntoView).toHaveBeenCalled();
         });
-    });   
+    });
 
-    describe('on element not found within the interval', () => {
-        test('focus does not change', async() => {
+    describe("on element not found within the interval", () => {
+        test("focus does not change", async () => {
             render(<StubComponent elementId={"non-existent-element-id"}/>);
 
-            const button = screen.getByRole("button", { name: "ElementToFocus"});
-            
+            const button = screen.getByRole("button", { name: "ElementToFocus" });
+
             await new Promise((resolve) => {
-                setTimeout(() => { 
-                    resolve();
+                setTimeout(() => {
+                    resolve(null);
                 }, 80);
             });
-            expect(button).not.toHaveFocus(); 
+            expect(button).not.toHaveFocus();
         });
     });
 });
