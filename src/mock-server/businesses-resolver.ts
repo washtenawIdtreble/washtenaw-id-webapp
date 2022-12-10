@@ -1,34 +1,35 @@
 import { RequestResolver } from "./test-server-handlers";
+import { CategorizedBusinesses } from "../hooks/useBusinesses";
 
-export const TEST_BUSINESSES = [
+export const TEST_BUSINESSES: CategorizedBusinesses[] = [
     {
-        category: { displayName: "Banks", category: "banks" },
+        category: { displayName: "Banks", name: "banks" },
         businesses: [
             "business 1",
             "business 2",
             "business 3",
             "business 4",
-            "business 5"
+            "business 5",
         ],
     },
     {
-        category: { displayName: "Food", category: "food" }, 
+        category: { displayName: "Food", name: "food" },
         businesses: [
             "business 1",
             "business 2",
-            "business 3"
+            "business 3",
         ],
     },
     {
-        category: { displayName: "Jobs", category: "jobs" }, 
+        category: { displayName: "Jobs", name: "jobs" },
         businesses: [
             "business 1",
-            "business 2"
+            "business 2",
         ],
     },
 ];
 
-export const customBusinessesResolver = (businesses: any): RequestResolver => {
+export const customBusinessesResolver = (businesses: CategorizedBusinesses[]): RequestResolver => {
     return (request, response, context) => {
         return response(context.json(businesses));
     };
@@ -50,52 +51,52 @@ export const productionBusinessesResolver = (statusCode?: number, errorMessage?:
 
     return customBusinessesResolver([
         {
-            category: { displayName: "Banks", category: "banks" }, 
+            category: { displayName: "Banks", name: "banks" },
             businesses: [
                 "business 1",
                 "business 2",
                 "business 3",
                 "business 4",
-                "business 5"
+                "business 5",
             ],
         },
         {
-            category: { displayName: "Food", category: "food" }, 
+            category: { displayName: "Food", name: "food" },
             businesses: [
                 "business 1",
                 "business 2",
-                "business 3"
+                "business 3",
             ],
         },
         {
-            category: { displayName: "Jobs", category: "jobs" }, 
-            businesses: [
-                "business 1",
-                "business 2"
-            ],
-        },
-        {
-            category: { displayName: "Mental Health", category: "mental-health" }, 
+            category: { displayName: "Jobs", name: "jobs" },
             businesses: [
                 "business 1",
                 "business 2",
-                "business 3"
             ],
         },
         {
-            category: { displayName: "Pharmacies", category: "pharmacies" }, 
+            category: { displayName: "Mental Health", name: "mental-health" },
             businesses: [
                 "business 1",
                 "business 2",
-                "business 3"
+                "business 3",
             ],
         },
         {
-            category: { displayName: "Transportation", category: "transportation" }, 
+            category: { displayName: "Pharmacies", name: "pharmacies" },
             businesses: [
                 "business 1",
                 "business 2",
-                "business 3"
+                "business 3",
+            ],
+        },
+        {
+            category: { displayName: "Transportation", name: "transportation" },
+            businesses: [
+                "business 1",
+                "business 2",
+                "business 3",
             ],
         },
     ]);

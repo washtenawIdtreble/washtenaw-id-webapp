@@ -3,7 +3,7 @@ import { AlertContext } from "../contexts/AlertContext";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 import { useGET } from "./fetch/useGet";
 
-export type Category = { displayName: string, category: string };
+export type Category = { displayName: string, name: string };
 
 export function useCategories(): Category[] {
     const [categories, setCategories] = useState<Category[]>([]);

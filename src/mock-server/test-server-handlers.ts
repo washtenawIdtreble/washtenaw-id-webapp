@@ -10,6 +10,5 @@ export type RequestResolver = ResponseResolver<RestRequest<never>, RestContext, 
 export const handlers = [
     rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`, customCategoriesResolver(TEST_CATEGORIES)),
     rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, customBusinessesResolver(TEST_BUSINESSES)),
-    
     rest.post(`${BASE_URL()}/${SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}`, accessibilityReportResolver),
 ];

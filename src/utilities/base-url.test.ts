@@ -12,7 +12,7 @@ describe("Base URL utility", () => {
     });
     describe("when the app is configured to use a fake data server", () => {
         test("should return an empty URL", () => {
-            expect(BASE_URL()).toEqual("");
+            expect(BASE_URL()).toEqual("http://fake-host");
         });
     });
     describe("when the app is configured to use a testing server", () => {

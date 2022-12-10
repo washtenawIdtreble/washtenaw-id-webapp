@@ -4,13 +4,13 @@ import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 import { Category } from "./useCategories";
 import { useGET } from "./fetch/useGet";
 
-type Business = { category: Category, businesses: string[] }
+export type CategorizedBusinesses = { category: Category, businesses: string[] }
 
 export default function useBusinesses(): { category: Category, businesses: string[] }[] {
-    const [businesses, setBusinesses] = useState<Business[]>([]);
+    const [businesses, setBusinesses] = useState<CategorizedBusinesses[]>([]);
     const { showAlert } = useContext(AlertContext);
 
-    const getBusinesses = useGET<Business[]>(SERVER_ENDPOINTS.BUSINESSES);
+    const getBusinesses = useGET<CategorizedBusinesses[]>(SERVER_ENDPOINTS.BUSINESSES);
 
     useEffect(() => {
         getBusinesses((ok, response) => {

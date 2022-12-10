@@ -11,10 +11,10 @@ export function Categories() {
             {categories.map(category =>
                 <li
                     className={"category-item"}
-                    key={category.category}>
-                    <RefreshingLink to={`${PAGE_ENDPOINTS.businesses}#${category.category}`}
+                    key={category.name}>
+                    <RefreshingLink to={`${PAGE_ENDPOINTS.businesses}#${category.name}`}
                                     className={"category-link"}>
-                                    {category.displayName}
+                        {category.displayName}
                     </RefreshingLink>
                 </li>)}
         </ul>

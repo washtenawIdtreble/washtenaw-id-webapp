@@ -3,7 +3,7 @@ export const BASE_URL = (): string => {
         case undefined:
             throw new Error("REACT_APP_API not defined");
         case "fake-data":
-            return "";
+            return "http://fake-host";
         case "test":
             return "http://testinghost:9999";
         case "localhost":

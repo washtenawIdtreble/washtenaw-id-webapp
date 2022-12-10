@@ -43,7 +43,7 @@ describe(Categories.name, () => {
         });
 
         const categoryUrls = categoryLinks.map(link => link.href);
-        const expectedCategoryUrls = TEST_CATEGORIES.map(c => `${PAGE_ENDPOINTS.businesses}#${c.category}`);
+        const expectedCategoryUrls = TEST_CATEGORIES.map(c => `${PAGE_ENDPOINTS.businesses}#${c.name}`);
 
         expect(categoryUrls.length).toEqual(expectedCategoryUrls.length);
         expectedCategoryUrls.forEach((expectUrl, index) => {
