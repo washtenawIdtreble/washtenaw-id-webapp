@@ -1,5 +1,5 @@
 import { Layout } from "./Layout";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -16,6 +16,11 @@ describe(Layout.name, () => {
         user = userEvent.setup();
         mocked(GET).mockReturnValue(FAKE_FETCH_RESULT);
         render(<Layout/>, { wrapper: MemoryRouter });
+    });
+    afterEach(async () => {
+        await waitFor(() => {
+            screen.getByText("Banks"); // Wait for API call on Categories page to resolve
+        });
     });
     test("should have a link to skip to the main landmark", () => {
         const skipNav: HTMLLinkElement = screen.getByRole("link", { name: "Skip to content" });

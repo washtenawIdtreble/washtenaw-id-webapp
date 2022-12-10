@@ -20,15 +20,26 @@ describe(RouterOutlet.name, () => {
         );
     });
 
-    test("shows the categories page by default", () => {
+    test("shows the categories page by default", async () => {
         expect(screen.getByTestId("categories-page")).toBeInTheDocument();
     });
 
     describe("shows the correct page for each route - ", () => {
+        beforeEach(async () => {
+            await waitFor(() => {
+                screen.getByText("Banks"); // wait for API request to resolve
+            });
+        });
         test("businesses page", async () => {
             await user.click(screen.getByText("Businesses"));
             await waitFor(() => {
-                expect(screen.getByRole("heading", {level: 1, name: "Businesses that accept the ID"})).toBeInTheDocument();
+                expect(screen.getByRole("heading", {
+                    level: 1,
+                    name: "Businesses that accept the ID",
+                })).toBeInTheDocument();
+            });
+            await waitFor(() => {
+                screen.getAllByRole("heading", { level: 2 }); // wait for API request to resolve
             });
         });
 

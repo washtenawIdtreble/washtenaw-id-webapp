@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { Dialog, DialogBackdrop, useDialogState } from "reakit/Dialog";
 import "./AlertContext.css";
@@ -20,8 +20,8 @@ type Props = { children: React.ReactNode }
 export function AlertProvider({ children }: Props) {
     const [alert, setAlert] = useState<AlertData | undefined>(undefined);
 
-    const showAlert = (alertData: AlertData) => setAlert(alertData);
-    const onDismiss = () => setAlert(undefined);
+    const showAlert = useCallback((alertData: AlertData) => setAlert(alertData), []);
+    const onDismiss = useCallback(() => setAlert(undefined), []);
     const dialog = useDialogState({ visible: true });
     return (<>
             <AlertContext.Provider value={{ showAlert: showAlert }} data-testid={"alert-context-provider"}>

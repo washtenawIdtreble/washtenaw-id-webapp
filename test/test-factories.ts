@@ -1,6 +1,6 @@
 import { AlertContextValue, AlertData } from "../src/contexts/AlertContext";
 import { AccessibilityFormData } from "../src/pages/accessibility-issues/AccessibilityIssues";
-import { FetchResult } from "../src/utilities/fetch";
+import { FetchResult } from "../src/hooks/fetch/fetch";
 
 export const FAKE_FETCH_RESULT: FetchResult = {
     responsePromise: Promise.resolve({ ok: true } as Response),
