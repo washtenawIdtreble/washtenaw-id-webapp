@@ -4,11 +4,23 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { TEST_CATEGORIES } from "../../mock-server/resolvers/categories-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
+import { Container } from "react-dom";
+import { axe } from "jest-axe";
 
 describe(Categories.name, () => {
+    let container: Container;
     beforeEach(() => {
-        render(<Categories/>, { wrapper: MemoryRouter });
+        ({ container } = render(<Categories/>, { wrapper: MemoryRouter }));
     });
+
+    test("has no AxE violations", async () => {
+        await waitFor(() => {
+            screen.getAllByRole("listitem");
+        });
+        const page = await axe(container as Element);
+        expect(page).toHaveNoViolations();
+    });
+
     test("contains a list of categories", async () => {
         const listElement = screen.getByRole("list");
         let categoryListItems: HTMLLIElement[] = [];

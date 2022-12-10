@@ -3,10 +3,22 @@ import { Businesses } from "./Businesses";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { TEST_BUSINESSES } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
+import { axe } from "jest-axe";
+import { Container } from "react-dom";
 
 describe(Businesses.name, () => {
+    let container: Container;
+
     beforeEach(() => {
-        render(<Businesses/>, { wrapper: MemoryRouter });
+        ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
+    });
+
+    test("has no AxE violations", async () => {
+        await waitFor(() => {
+            screen.getAllByRole("heading", { level: 2 });
+        });
+        const page = await axe(container as Element);
+        expect(page).toHaveNoViolations();
     });
 
     test("has a heading", () => {
@@ -22,7 +34,7 @@ describe(Businesses.name, () => {
 
         const categoryNames = categoryHeadings.map(h2 => h2.textContent);
         const titleCaseCategories = TEST_BUSINESSES.map(b => b.category.displayName);
-        
+
         expect(categoryNames).toEqual(titleCaseCategories);
     });
 

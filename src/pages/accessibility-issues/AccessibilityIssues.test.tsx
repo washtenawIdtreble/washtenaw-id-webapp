@@ -10,6 +10,7 @@ import { stubAccessibilityFormData } from "../../../test/test-factories";
 import { axe } from "jest-axe";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
 import { buildPostResolver } from "../../mock-server/resolvers/post-resolver";
+import { Container } from "react-dom";
 
 describe(`${AccessibilityIssues.name} form`, () => {
     const formLabelText = "Report Accessibility Issues";
@@ -17,7 +18,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
-    let container: any;
+    let container: Container;
 
     beforeEach(() => {
         user = userEvent.setup();
@@ -34,7 +35,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
     });
 
     test("has no AxE violations", async () => {
-        const page = await axe(container);
+        const page = await axe(container as Element);
         expect(page).toHaveNoViolations();
     });
 
