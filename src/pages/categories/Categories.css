@@ -8,20 +8,32 @@
 }
 
 .category-item {
+    display: flex;
+    height: 9rem;
+    hyphens: auto;
+    list-style-type: none;
+    margin-bottom: 2rem;
+    width: 90%;
+    word-break: break-word;
+}
+
+.category-link {
     align-items: center;
     background-color: #062d47;
     border-radius: 1.5rem;
+    box-sizing: border-box;
     color: white;
     display: flex;
     font-size: 3rem;
-    height: 9rem;
-    hyphens: auto;
+    height: 100%;
     justify-content: center;
-    list-style-type: none;
-    margin-bottom: 2rem;
-    text-align: center;
-    width: 90%;
-    word-break: break-word;
+    width: 100%;
+    padding: 0;
+    text-decoration: none;
+}
+
+.category-link:focus {
+    outline-offset: -8px;
 }
 
 @media (min-aspect-ratio: 5/4) {
@@ -31,7 +43,10 @@
     }
 
     .category-item {
-        font-size: 2.5rem;
         width: 30%;
+    }
+
+    .category-link {
+        font-size: 2.5rem;
     }
 }
