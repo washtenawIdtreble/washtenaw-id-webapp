@@ -77,12 +77,12 @@ const TestInputFormConsumer = ({ label }: { label: string }) => {
     const validation = useCallback(() => {
         if (input.current!.value === validValue) {
             setErrorMessage("");
-            return [];
+            return "";
         }
 
         const message = `${label} input is invalid`;
         setErrorMessage(message);
-        return [message];
+        return message;
     }, [label]);
 
     useEffect(() => {

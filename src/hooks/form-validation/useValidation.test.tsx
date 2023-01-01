@@ -9,28 +9,27 @@ describe(useValidation.name, () => {
     beforeEach(() => {
         user = userEvent.setup();
     });
-    test("returns a validation that runs all validators passed in", async () => {
-        const validators = [
-            jest.fn().mockReturnValue("name is invalid"),
-            jest.fn().mockReturnValue("email is invalid"),
-            jest.fn().mockReturnValue("color is invalid"),
-        ];
+    test("returns a validation that runs the validator passed in", async () => {
+        const validator = jest.fn().mockReturnValue("name is invalid");
 
-        render(<ValidatingComponent validators={validators} initialRefValue={{ value: "invalid input value" }}/>);
+        render(<ValidatingComponent validator={validator} initialRefValue={{ value: "invalid input value" }}/>);
 
         await user.click(screen.getByRole("button"));
 
         await waitFor(() => {
             expect(screen.getByText("name is invalid")).toBeInTheDocument();
         });
-        expect(screen.getByText("email is invalid")).toBeInTheDocument();
-        expect(screen.getByText("color is invalid")).toBeInTheDocument();
+    });
+
+    test("returns a validation that does nothing if no validator was passed in", async () => {
+        render(<ValidatingComponent initialRefValue={{ value: "invalid input value" }}/>);
+        await user.click(screen.getByRole("button"));
     });
 
     test("does nothing if there is no current value to the input ref", async () => {
         const validator = jest.fn().mockReturnValue("should not be called");
 
-        render(<ValidatingComponent validators={[validator]} initialRefValue={null}/>);
+        render(<ValidatingComponent validator={validator} initialRefValue={null}/>);
 
         await user.click(screen.getByRole("button"));
 
@@ -45,8 +44,7 @@ describe(useValidation.name, () => {
         test(`does nothing if the input ref's value is ${testCase}`, async () => {
             const validator = jest.fn().mockReturnValue("should not be called");
 
-            render(<ValidatingComponent validators={[validator]}
-                                        initialRefValue={{ value: testCase }}/>);
+            render(<ValidatingComponent validator={validator} initialRefValue={{ value: testCase }}/>);
 
             await user.click(screen.getByRole("button"));
 
@@ -56,25 +54,21 @@ describe(useValidation.name, () => {
 });
 
 type ValidatingComponentProps = {
-    validators: Validator[]
+    validator?: Validator
     initialRefValue: { value: string | null | undefined } | null
 }
 
-const ValidatingComponent = ({ validators, initialRefValue }: ValidatingComponentProps) => {
+const ValidatingComponent = ({ validator, initialRefValue }: ValidatingComponentProps) => {
     const inputRef = useRef<HTMLInputElement>(initialRefValue as HTMLInputElement);
-    const [errorMessages, setErrorMessages] = useState([""]);
-    const validation = useValidation({ validators, inputRef, setErrorMessages });
-
-    const errorsElement = errorMessages.map(message => {
-        return <span key={message}>{message}</span>;
-    });
+    const [errorMessage, setErrorMessage] = useState("");
+    const validation = useValidation({ validator, inputRef, setErrorMessage });
 
     const onClick = () => {
         validation();
     };
 
     return (<>
-        {errorsElement}
+        <span>{errorMessage}</span>
         <button onClick={onClick}>SUBMIT</button>
     </>);
 };

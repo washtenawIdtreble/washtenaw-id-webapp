@@ -10,35 +10,31 @@ export enum FormFieldType {
 export type FormFieldProps = {
     id: string
     name: string
-    validators: Validator[]
+    validator?: Validator
     autocomplete?: string
     inputType?: FormFieldType
 }
 
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
-export const FormField = ({ id, name, validators, autocomplete, inputType = FormFieldType.INPUT }: FormFieldProps) => {
+export const FormField = ({ id, name, validator, autocomplete, inputType = FormFieldType.INPUT }: FormFieldProps) => {
     const { registerValidation } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
-    const [errorMessages, setErrorMessages] = useState<string[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const errorsElements = errorMessages.map(message => {
-        return <li key={message}>{message}</li>;
-    });
-
-    const validation = useValidation({ validators, inputRef, setErrorMessages });
+    const validation = useValidation({ validator, inputRef, setErrorMessage });
 
     useEffect(() => {
         registerValidation({ validation, inputRef });
     }, [registerValidation, validation]);
 
     const onBlur = useCallback(() => {
-        if (errorMessages.length > 0) {
+        if (errorMessage !== "") {
             validation();
         }
-    }, [validation, errorMessages]);
+    }, [validation, errorMessage]);
 
-    const invalid = errorMessages.length > 0;
+    const invalid = errorMessage !== "";
     const errorMessageContainerId = invalid ? `error-message-container-${id}` : "";
 
     const input = inputType === FormFieldType.INPUT
@@ -54,11 +50,7 @@ export const FormField = ({ id, name, validators, autocomplete, inputType = Form
         />;
 
     return (<>
-        {invalid &&
-            <ul id={errorMessageContainerId}>
-                {errorsElements}
-            </ul>
-        }
+        {invalid && <span>{errorMessage}</span>}
         {input}
     </>);
 };

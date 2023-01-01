@@ -21,10 +21,8 @@ describe(Form.name, () => {
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
-    let container: any;
     let liveRegion: HTMLDivElement;
     let resolveRequest: (response: ResponseContent) => void;
-    let nameValidators: Validator[];
 
     beforeEach(() => {
         user = userEvent.setup();
@@ -39,35 +37,37 @@ describe(Form.name, () => {
                 delayUntil: delayPromise,
             })),
         );
-
-        nameValidators = [];
-
-        ({ container } = render(<FormWithInputs nameValidators={nameValidators}/>));
-
-        form = screen.getByRole("form");
-        liveRegion = screen.getByTestId("live-region");
     });
+    describe("before submitting the form", () => {
+        let container: any;
+        beforeEach(() => {
+            ({ container } = render(<FormWithInputs/>));
 
-    test("has no AxE violations", async () => {
-        const page = await axe(container);
-        expect(page).toHaveNoViolations();
-    });
+            form = screen.getByRole("form");
+            liveRegion = screen.getByTestId("live-region");
+        });
 
-    test("has an accessible name", () => {
-        expect(screen.getByLabelText(formLabelText)).toBe(form);
-    });
+        test("has no AxE violations", async () => {
+            const page = await axe(container);
+            expect(page).toHaveNoViolations();
+        });
 
-    test("does not show a success message on load", () => {
-        expect(screen.queryByText(successMessage)).not.toBeInTheDocument();
-    });
+        test("has an accessible name", () => {
+            expect(screen.getByLabelText(formLabelText)).toBe(form);
+        });
 
-    test("does not show an error message on load", () => {
-        expect(screen.queryByText("Error:", { exact: false })).not.toBeInTheDocument();
-    });
+        test("does not show a success message on load", () => {
+            expect(screen.queryByText(successMessage)).not.toBeInTheDocument();
+        });
 
-    test("has an empty live-region on load", () => {
-        expect(liveRegion).toHaveAttribute("aria-live", "polite");
-        expect(liveRegion.textContent).toBe("");
+        test("does not show an error message on load", () => {
+            expect(screen.queryByText("Error:", { exact: false })).not.toBeInTheDocument();
+        });
+
+        test("has an empty live-region on load", () => {
+            expect(liveRegion).toHaveAttribute("aria-live", "polite");
+            expect(liveRegion.textContent).toBe("");
+        });
     });
 
     describe("when the user submits the form", () => {
@@ -76,19 +76,21 @@ describe(Form.name, () => {
         let submitButton: HTMLButtonElement;
         const name = "Martin Starr";
         const age = "47";
-        beforeEach(async () => {
-            nameInput = within(form).getByRole("textbox", { name: "Name" });
-            ageInput = within(form).getByRole("textbox", { name: "Age" });
-            submitButton = within(form).getByRole("button", { name: "Submit" });
-
-            await user.type(nameInput, name);
-            await user.type(ageInput, age);
-        });
 
         describe("with errors", () => {
             const nameErrorMessage = "name is incorrect";
             beforeEach(async () => {
-                nameValidators.push(() => nameErrorMessage);
+                render(<FormWithInputs validator={() => nameErrorMessage}/>);
+
+                form = screen.getByRole("form");
+                liveRegion = screen.getByTestId("live-region");
+
+                nameInput = within(form).getByRole("textbox", { name: "Name" });
+                ageInput = within(form).getByRole("textbox", { name: "Age" });
+                submitButton = within(form).getByRole("button", { name: "Submit" });
+
+                await user.type(nameInput, name);
+                await user.type(ageInput, age);
 
                 submitButton.focus();
                 await user.keyboard("{Enter}");
@@ -127,6 +129,18 @@ describe(Form.name, () => {
 
         describe("without errors", () => {
             beforeEach(async () => {
+                render(<FormWithInputs/>);
+
+                form = screen.getByRole("form");
+                liveRegion = screen.getByTestId("live-region");
+
+                nameInput = within(form).getByRole("textbox", { name: "Name" });
+                ageInput = within(form).getByRole("textbox", { name: "Age" });
+                submitButton = within(form).getByRole("button", { name: "Submit" });
+
+                await user.type(nameInput, name);
+                await user.type(ageInput, age);
+
                 submitButton.focus();
                 await user.keyboard("{Enter}");
             });
@@ -239,15 +253,15 @@ describe(Form.name, () => {
     });
 });
 
-const FormWithInputs = (props: { nameValidators: Validator[] }) => {
+const FormWithInputs = (props: { validator?: Validator }) => {
     return (
         <>
             <span id="form-label">{formLabelText}</span>
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
                 <label htmlFor={"name"}>Name</label>
-                <FormField id={"name"} name={"name"} validators={props.nameValidators}/>
+                <FormField id={"name"} name={"name"} validator={props.validator}/>
                 <label htmlFor={"age"}>Age</label>
-                <FormField id={"age"} name={"age"} validators={[]}/>
+                <FormField id={"age"} name={"age"}/>
             </Form>
         </>
     );

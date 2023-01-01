@@ -25,11 +25,11 @@ export const AccessibilityIssues = () => {
                 <label htmlFor={"name"}>Your Name (optional)</label>
                 <input id={"name"} autoComplete={"name"} name={"name"}/>
                 <label htmlFor={"email"}>Your email (optional)</label>
-                <FormField id={"email"} name={"email"} validators={[validateEmail]} autocomplete={"email"}/>
+                <FormField id={"email"} name={"email"} validator={validateEmail} autocomplete={"email"}/>
                 <label htmlFor={"phone"}>Your phone number (optional)</label>
-                <FormField id={"phone"} name={"phone"} validators={[validatePhone]} autocomplete={"tel"}/>
+                <FormField id={"phone"} name={"phone"} validator={validatePhone} autocomplete={"tel"}/>
                 <label htmlFor={"description"}>What do you want to tell us? (required)</label>
-                <FormField id={"description"} name={"description"} validators={[validateRequired]}
+                <FormField id={"description"} name={"description"} validator={validateRequired}
                            inputType={FormFieldType.TEXTAREA}/>
             </Form>
         </div>
