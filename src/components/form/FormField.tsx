@@ -11,13 +11,13 @@ export type FormFieldProps = {
     id: string
     name: string
     validator?: Validator
-    autocomplete?: string
+    autoComplete?: string
     inputType?: FormFieldType
 }
 
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
-export const FormField = ({ id, name, validator, autocomplete, inputType = FormFieldType.INPUT }: FormFieldProps) => {
+export const FormField = ({ id, name, validator, autoComplete, inputType = FormFieldType.INPUT }: FormFieldProps) => {
     const { registerValidation } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -41,16 +41,19 @@ export const FormField = ({ id, name, validator, autocomplete, inputType = FormF
         ? <input id={id} name={name} ref={inputRef as RefObject<HTMLInputElement>}
                  aria-describedby={errorMessageContainerId}
                  aria-invalid={invalid} aria-errormessage={errorMessageContainerId}
-                 onBlur={onBlur} autoComplete={autocomplete}
+                 onBlur={onBlur} autoComplete={autoComplete} className={"form-input"}
         />
         : <textarea id={id} name={name} ref={inputRef as RefObject<HTMLTextAreaElement>}
                     aria-describedby={errorMessageContainerId}
                     aria-invalid={invalid} aria-errormessage={errorMessageContainerId}
-                    onBlur={onBlur} autoComplete={autocomplete}
+                    onBlur={onBlur} autoComplete={autoComplete} className={"form-textarea"}
         />;
 
-    return (<>
-        {invalid && <span>{errorMessage}</span>}
+    const errorClass = invalid ? "invalid-form-field" : "";
+    const containerClass = inputType === FormFieldType.TEXTAREA ? "flex-grow-field" : "";
+
+    return (<div className={`form-field ${containerClass} ${errorClass}`}>
+        {invalid && <span className={"form-field-error-message"}>{errorMessage}</span>}
         {input}
-    </>);
+    </div>);
 };

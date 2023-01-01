@@ -19,7 +19,7 @@ describe(FormField.name, () => {
     describe("when there is no validation error", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormField id={id} name={name} validator={() => errorMessage} autocomplete={"tel"}/>);
+            render(<FormField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {

@@ -12,7 +12,7 @@ export const FormSubmitMessage = forwardRef(
     ({ message, clearMessage, className }: FormSubmitMessageProps,
      ref: ForwardedRef<HTMLSpanElement>) => {
         return (
-            <span tabIndex={-1} onBlur={clearMessage} ref={ref} className={`message ${className}`}>
+            <span tabIndex={-1} onBlur={clearMessage} ref={ref} className={`form-submit-message ${className}`}>
             {message}
         </span>
         );

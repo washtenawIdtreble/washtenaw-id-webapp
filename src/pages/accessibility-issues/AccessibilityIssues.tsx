@@ -22,13 +22,13 @@ export const AccessibilityIssues = () => {
 
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"}
                   submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}>
-                <label htmlFor={"name"}>Your Name (optional)</label>
-                <input id={"name"} autoComplete={"name"} name={"name"}/>
-                <label htmlFor={"email"}>Your email (optional)</label>
-                <FormField id={"email"} name={"email"} validator={validateEmail} autocomplete={"email"}/>
-                <label htmlFor={"phone"}>Your phone number (optional)</label>
-                <FormField id={"phone"} name={"phone"} validator={validatePhone} autocomplete={"tel"}/>
-                <label htmlFor={"description"}>What do you want to tell us? (required)</label>
+                <label htmlFor={"name"} className={"form-label"}>Your Name (optional)</label>
+                <FormField id={"name"} autoComplete={"name"} name={"name"}/>
+                <label htmlFor={"email"} className={"form-label"}>Your email (optional)</label>
+                <FormField id={"email"} name={"email"} validator={validateEmail} autoComplete={"email"}/>
+                <label htmlFor={"phone"} className={"form-label"}>Your phone number (optional)</label>
+                <FormField id={"phone"} name={"phone"} validator={validatePhone} autoComplete={"tel"}/>
+                <label htmlFor={"description"} className={"form-label"}>What do you want to tell us? (required)</label>
                 <FormField id={"description"} name={"description"} validator={validateRequired}
                            inputType={FormFieldType.TEXTAREA}/>
             </Form>
