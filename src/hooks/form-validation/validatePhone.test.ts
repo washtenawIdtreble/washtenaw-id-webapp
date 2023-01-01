@@ -2,9 +2,12 @@ import { INVALID_PHONE_MESSAGE, validatePhone } from "./validatePhone";
 
 describe(validatePhone.name, () => {
     test("default error message is correct", () => {
-        expect(INVALID_PHONE_MESSAGE).toEqual("This is not a valid phone number. Make sure it contains 7 or 10 digits excluding a 1 at the beginning");
+        expect(INVALID_PHONE_MESSAGE).toEqual("This is not a valid phone number. Make sure it has 7 or 10 digits like 734-555-1234 or 555-1234");
     });
     const validPhoneTestCases = [
+        { phone: "", testCondition: "empty" },
+        { phone: undefined, testCondition: "undefined" },
+        { phone: null, testCondition: "null" },
         { phone: "4642145", testCondition: "7 digits" },
         { phone: "464-2145", testCondition: "hyphenated" },
         { phone: "464 2145", testCondition: "spaces" },
@@ -18,7 +21,7 @@ describe(validatePhone.name, () => {
     ];
     validPhoneTestCases.forEach(testCase => {
         test(`returns empty string for a valid phone - ${testCase.testCondition}`, () => {
-            expect(validatePhone(testCase.phone)).toEqual("");
+            expect(validatePhone(testCase.phone as string)).toEqual("");
         });
     });
     const invalidPhoneTestCases = [

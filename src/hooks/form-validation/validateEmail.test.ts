@@ -2,10 +2,18 @@ import { INVALID_EMAIL_MESSAGE, validateEmail } from "./validateEmail";
 
 describe(validateEmail.name, () => {
     test("default error message is correct", () => {
-        expect(INVALID_EMAIL_MESSAGE).toEqual("This is not a valid email address. It must have an at symbol (@) and a period (.) like this: abc@xyz.com");
+        expect(INVALID_EMAIL_MESSAGE).toEqual("This is not a valid email address. Make sure it has an \"at\" symbol (@) and a period (.) like abc@xyz.com");
     });
-    test("returns empty string for a valid email", () => {
-        expect(validateEmail("anything@domain.org")).toEqual("");
+    const validEmailTestCases = [
+        "anything@domain.org",
+        "",
+        undefined,
+        null,
+    ];
+    validEmailTestCases.forEach(email => {
+        test(`returns empty string for a valid email - "${email}"`, () => {
+            expect(validateEmail(email as string)).toEqual("");
+        });
     });
     const invalidEmailTestCases = [
         { email: "anything.com", testCondition: "missing an @ symbol" },

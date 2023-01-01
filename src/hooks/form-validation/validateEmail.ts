@@ -1,8 +1,12 @@
 import { Validator } from "./useValidation";
 
-export const INVALID_EMAIL_MESSAGE = "This is not a valid email address. It must have an at symbol (@) and a period (.) like this: abc@xyz.com";
+export const INVALID_EMAIL_MESSAGE = "This is not a valid email address. Make sure it has an \"at\" symbol (@) and a period (.) like abc@xyz.com";
 
 export const validateEmail: Validator = (emailAddress: string) => {
+    if (["", undefined, null].includes(emailAddress)) {
+        return "";
+    }
+
     const atIndex = emailAddress.indexOf("@");
     const atCount = (emailAddress.match(/@/g) || []).length;
 
