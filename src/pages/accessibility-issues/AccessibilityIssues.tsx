@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../Pages.css";
 import { Form } from "../../components/form/Form";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
-import { FormField } from "../../components/form/FormField";
+import { FormField, FormFieldType } from "../../components/form/FormField";
 import { validateEmail } from "../../hooks/form-validation/validateEmail";
 import { validatePhone } from "../../hooks/form-validation/validatePhone";
 import { validateRequired } from "../../hooks/form-validation/validateRequired";
@@ -25,11 +25,12 @@ export const AccessibilityIssues = () => {
                 <label htmlFor={"name"}>Your Name (optional)</label>
                 <input id={"name"} autoComplete={"name"} name={"name"}/>
                 <label htmlFor={"email"}>Your email (optional)</label>
-                <FormField id={"email"} name={"email"} validators={[validateEmail]}/>
+                <FormField id={"email"} name={"email"} validators={[validateEmail]} autocomplete={"email"}/>
                 <label htmlFor={"phone"}>Your phone number (optional)</label>
-                <FormField id={"phone"} name={"phone"} validators={[validatePhone]}/>
+                <FormField id={"phone"} name={"phone"} validators={[validatePhone]} autocomplete={"tel"}/>
                 <label htmlFor={"description"}>What do you want to tell us? (required)</label>
-                <FormField id={"description"} name={"description"} validators={[validateRequired]}/>
+                <FormField id={"description"} name={"description"} validators={[validateRequired]}
+                           inputType={FormFieldType.TEXTAREA}/>
             </Form>
         </div>
     );
