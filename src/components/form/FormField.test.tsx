@@ -19,7 +19,7 @@ describe(FormField.name, () => {
 
     describe("when there is no validation error", () => {
         beforeEach(() => {
-            render(<FormField id={id} name={name} validators={[]} autocomplete={"tel"}/>);
+            render(<FormField id={id} name={name} validators={[() => "error message"]} autocomplete={"tel"}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -36,6 +36,15 @@ describe(FormField.name, () => {
         });
         test("passes autocomplete to the input", () => {
             expect(textBox.autocomplete).toEqual("tel");
+        });
+        describe("and the field is blurred with an invalid value", () => {
+            beforeEach(async () => {
+                textBox.focus();
+                await user.tab();
+            });
+            test("error message container is not present", () => {
+                expect(screen.queryByRole("list")).not.toBeInTheDocument();
+            });
         });
     });
     test("allows creating a textarea instead of an input", () => {

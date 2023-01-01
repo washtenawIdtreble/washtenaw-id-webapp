@@ -33,8 +33,10 @@ export const FormField = ({ id, name, validators, autocomplete, inputType = Form
     }, [registerValidation, validation]);
 
     const onBlur = useCallback(() => {
-        validation();
-    }, [validation]);
+        if (errorMessages.length > 0) {
+            validation();
+        }
+    }, [validation, errorMessages]);
 
     const invalid = errorMessages.length > 0;
     const errorMessageContainerId = invalid ? `error-message-container-${id}` : "";
