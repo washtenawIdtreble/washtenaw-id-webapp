@@ -9,7 +9,9 @@ export const validatePhone: Validator = (phoneNumber: string) => {
 
     const alphanumericPhone = phoneNumber.replace(/[^a-zA-Z\d]/g, "");
     const digitsOnly = alphanumericPhone.replace(/[a-z]/g, "");
-    const withoutLeadingOne = digitsOnly.startsWith("1") ? digitsOnly.substring(1) : digitsOnly;
+
+    const hasALeading1WeDontNeed = digitsOnly.startsWith("1") && digitsOnly.length !== 7;
+    const withoutLeadingOne = hasALeading1WeDontNeed ? digitsOnly.substring(1) : digitsOnly;
 
     const invalid = (withoutLeadingOne.length !== 10 && withoutLeadingOne.length !== 7)
         || digitsOnly.length < alphanumericPhone.length;

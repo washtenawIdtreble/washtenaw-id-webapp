@@ -14,6 +14,7 @@ describe(validatePhone.name, () => {
         { phone: "464.2145", testCondition: "periods" },
         { phone: "(810) 464-2145", testCondition: "10 digits" },
         { phone: "+1 (810) 464-2145", testCondition: "10 digits leading +1" },
+        { phone: "164-2145", testCondition: "prefix starts with 1" },
         {
             phone: "!@#$%^&*()~-=_8104^&*()~-=_6421+[]{};':\",./<>/45",
             testCondition: "containing other non alpha-numeric characters",
