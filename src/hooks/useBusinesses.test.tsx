@@ -1,10 +1,10 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import useBusinesses from "./useBusinesses";
+import { CategorizedBusinesses, useBusinesses } from "./useBusinesses";
 import {
     customBusinessesResolver,
     productionBusinessesResolver,
-    TEST_BUSINESSES,
+    TEST_CATEGORIZED_BUSINESSES,
 } from "../mock-server/businesses-resolver";
 import { rest } from "msw";
 import { mockServer } from "../mock-server/mock-server";
@@ -12,7 +12,6 @@ import { AlertContext, AlertContextValue } from "../contexts/AlertContext";
 import { buildMockAlertContext, stubAlertData } from "../../test/test-factories";
 import { BASE_URL } from "../utilities/base-url";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
-import { Category } from "./useCategories";
 
 describe(useBusinesses.name, () => {
     describe("on successful load", () => {
@@ -29,19 +28,19 @@ describe(useBusinesses.name, () => {
         });
         test("should update the businesses with the response from fetch", async () => {
             await waitFor(() => {
-                expect(businesses).toEqual(TEST_BUSINESSES);
+                expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
             });
         });
         describe("on rerender", () => {
             beforeEach(() => {
                 mockServer.use(
-                    rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, customBusinessesResolver(["anything"])),
+                    rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, customBusinessesResolver([])),
                 );
                 rerender(<StubComponent/>);
             });
             test("should not fetch again", async () => {
                 await waitFor(() => {
-                    expect(businesses).toEqual(TEST_BUSINESSES);
+                    expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
                 });
             });
         });
@@ -68,7 +67,7 @@ describe(useBusinesses.name, () => {
     });
 });
 
-let businesses: { category: Category, businesses: string[] }[];
+let businesses: CategorizedBusinesses[];
 
 function StubComponent() {
     businesses = useBusinesses();

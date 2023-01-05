@@ -1,7 +1,7 @@
 import React from "react";
 import { Businesses } from "./Businesses";
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { TEST_BUSINESSES } from "../../mock-server/businesses-resolver";
+import { TEST_CATEGORIZED_BUSINESSES } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { axe } from "jest-axe";
 import { Container } from "react-dom";
@@ -33,12 +33,12 @@ describe(Businesses.name, () => {
         });
 
         const categoryNames = categoryHeadings.map(h2 => h2.textContent);
-        const titleCaseCategories = TEST_BUSINESSES.map(b => b.category.displayName);
+        const titleCaseCategories = TEST_CATEGORIZED_BUSINESSES.map(b => b.category.displayName);
 
         expect(categoryNames).toEqual(titleCaseCategories);
     });
 
-    test("contains a list of businesses", async () => {
+    test("contains a list of business names", async () => {
         let listElements: HTMLUListElement[] = [];
         await waitFor(() => {
             listElements = screen.getAllByRole("list");
@@ -49,6 +49,6 @@ describe(Businesses.name, () => {
             let listItems = within(listElement).getAllByRole("listitem");
             businesses.push(listItems.map(li => li.textContent ?? ""));
         });
-        expect(businesses).toEqual(TEST_BUSINESSES.map(c => c.businesses));
+        expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES.map(c => c.businesses.map(b => b.name)));
     });
 });  
