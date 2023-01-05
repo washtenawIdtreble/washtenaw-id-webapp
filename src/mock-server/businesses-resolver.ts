@@ -1,30 +1,53 @@
 import { RequestResolver } from "./test-server-handlers";
-import { CategorizedBusinesses } from "../hooks/useBusinesses";
+import { Business, CategorizedBusinesses } from "../hooks/useBusinesses";
+import { faker } from "@faker-js/faker";
 
-export const TEST_BUSINESSES: CategorizedBusinesses[] = [
+const stubBusiness = (attributes: Partial<Business> = {}): Business => {
+    const name = toTitleCase(`${faker.word.adjective()} ${faker.word.noun()}`);
+    return {
+        name: attributes.name === undefined ? `${name} ${faker.company.companySuffix()}` : attributes.name,
+        address: attributes.address === undefined ? faker.address.streetAddress() : attributes.address,
+        city: attributes.city === undefined ? faker.address.city() : attributes.city,
+        state: attributes.state === undefined ? faker.address.stateAbbr() : attributes.state,
+        zip: attributes.zip === undefined ? faker.address.zipCode() : attributes.zip,
+        website: attributes.website === undefined ? faker.internet.url() : attributes.website,
+        phone: attributes.phone === undefined ? faker.phone.number() : attributes.phone,
+        description: attributes.description === undefined ? faker.lorem.paragraph(4) : attributes.description,
+    };
+};
+
+const toTitleCase = (input: string) => {
+    const words = input.toLowerCase().split(" ");
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return words.join(" ");
+};
+
+export const TEST_CATEGORIZED_BUSINESSES: CategorizedBusinesses[] = [
     {
         category: { displayName: "Banks", name: "banks" },
         businesses: [
-            "business 1",
-            "business 2",
-            "business 3",
-            "business 4",
-            "business 5",
+            stubBusiness(),
+            stubBusiness(),
+            stubBusiness(),
+            stubBusiness(),
+            stubBusiness(),
         ],
     },
     {
         category: { displayName: "Food", name: "food" },
         businesses: [
-            "business 1",
-            "business 2",
-            "business 3",
+            stubBusiness(),
+            stubBusiness(),
+            stubBusiness(),
         ],
     },
     {
         category: { displayName: "Jobs", name: "jobs" },
         businesses: [
-            "business 1",
-            "business 2",
+            stubBusiness(),
+            stubBusiness(),
         ],
     },
 ];
@@ -53,50 +76,50 @@ export const productionBusinessesResolver = (statusCode?: number, errorMessage?:
         {
             category: { displayName: "Banks", name: "banks" },
             businesses: [
-                "business 1",
-                "business 2",
-                "business 3",
-                "business 4",
-                "business 5",
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
         {
             category: { displayName: "Food", name: "food" },
             businesses: [
-                "business 1",
-                "business 2",
-                "business 3",
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
         {
             category: { displayName: "Jobs", name: "jobs" },
             businesses: [
-                "business 1",
-                "business 2",
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
         {
             category: { displayName: "Mental Health", name: "mental-health" },
             businesses: [
-                "business 1",
-                "business 2",
-                "business 3",
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
         {
             category: { displayName: "Pharmacies", name: "pharmacies" },
             businesses: [
-                "business 1",
-                "business 2",
-                "business 3",
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
         {
             category: { displayName: "Transportation", name: "transportation" },
             businesses: [
-                "business 1",
-                "business 2",
-                "business 3",
+                stubBusiness(),
+                stubBusiness(),
+                stubBusiness(),
             ],
         },
     ]);

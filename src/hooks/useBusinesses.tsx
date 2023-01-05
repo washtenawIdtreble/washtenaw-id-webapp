@@ -4,9 +4,20 @@ import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 import { Category } from "./useCategories";
 import { useGET } from "./fetch/useGet";
 
-export type CategorizedBusinesses = { category: Category, businesses: string[] }
+export type CategorizedBusinesses = { category: Category, businesses: Business[] }
 
-export default function useBusinesses(): { category: Category, businesses: string[] }[] {
+export type Business = {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    website: string;
+    phone: string;
+    description: string;
+}
+
+export function useBusinesses(): { category: Category, businesses: Business[] }[] {
     const [businesses, setBusinesses] = useState<CategorizedBusinesses[]>([]);
     const { showAlert } = useContext(AlertContext);
 
