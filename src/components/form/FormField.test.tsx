@@ -71,9 +71,11 @@ describe(FormField.name, () => {
         test(`shows the error message`, async () => {
             await user.type(textBox, invalidValue);
             await user.click(screen.getByRole("button"));
+            let errorMessage: HTMLSpanElement;
 
             await waitFor(() => {
-                expect(screen.getByText(`Don't say ${invalidValue}`)).toBeInTheDocument();
+                errorMessage = screen.getByText(`Don't say ${invalidValue}`);
+                expect(errorMessage).toBeVisible();
             });
 
             await waitFor(() => {
@@ -81,8 +83,11 @@ describe(FormField.name, () => {
             });
 
             expect(textBox.getAttribute("aria-invalid")).toEqual("true");
-            expect(textBox.getAttribute("aria-errormessage")).toEqual(`error-message-container-${id}`);
-            expect(textBox.getAttribute("aria-describedby")).toEqual(`error-message-container-${id}`);
+
+            const errorMessageID = `form-error-message-for-${id}`;
+            expect(errorMessage!.id).toEqual(errorMessageID);
+            expect(textBox.getAttribute("aria-errormessage")).toEqual(errorMessageID);
+            expect(textBox.getAttribute("aria-describedby")).toEqual(errorMessageID);
         });
 
         describe("on blur", () => {

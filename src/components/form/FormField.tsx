@@ -35,17 +35,17 @@ export const FormField = ({ id, name, validator, autoComplete, inputType = FormF
     }, [validation, errorMessage]);
 
     const invalid = errorMessage !== "";
-    const errorMessageContainerId = invalid ? `error-message-container-${id}` : "";
+    const errorMessageId = invalid ? `form-error-message-for-${id}` : "";
 
     const input = inputType === FormFieldType.INPUT
         ? <input id={id} name={name} ref={inputRef as RefObject<HTMLInputElement>}
-                 aria-describedby={errorMessageContainerId}
-                 aria-invalid={invalid} aria-errormessage={errorMessageContainerId}
+                 aria-describedby={errorMessageId}
+                 aria-invalid={invalid} aria-errormessage={errorMessageId}
                  onBlur={onBlur} autoComplete={autoComplete} className={"form-input"}
         />
         : <textarea id={id} name={name} ref={inputRef as RefObject<HTMLTextAreaElement>}
-                    aria-describedby={errorMessageContainerId}
-                    aria-invalid={invalid} aria-errormessage={errorMessageContainerId}
+                    aria-describedby={errorMessageId}
+                    aria-invalid={invalid} aria-errormessage={errorMessageId}
                     onBlur={onBlur} autoComplete={autoComplete} className={"form-textarea"}
         />;
 
@@ -53,7 +53,7 @@ export const FormField = ({ id, name, validator, autoComplete, inputType = FormF
     const containerClass = inputType === FormFieldType.TEXTAREA ? "flex-grow-field" : "";
 
     return (<div className={`form-field ${containerClass} ${errorClass}`}>
-        {invalid && <span className={"form-field-error-message"}>{errorMessage}</span>}
+        {invalid && <span id={errorMessageId} className={"form-field-error-message"}>{errorMessage}</span>}
         {input}
     </div>);
 };
