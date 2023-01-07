@@ -1,6 +1,6 @@
 import React from "react";
 import { Businesses } from "./Businesses";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { TEST_CATEGORIZED_BUSINESSES } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { axe } from "jest-axe";
@@ -13,42 +13,38 @@ describe(Businesses.name, () => {
         ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
     });
 
-    test("has no AxE violations", async () => {
-        await waitFor(() => {
-            screen.getAllByRole("heading", { level: 2 });
-        });
-        const page = await axe(container as Element);
-        expect(page).toHaveNoViolations();
-    });
-
     test("has a heading", () => {
         const pageHeader = screen.getByRole("heading", { level: 1 });
         expect(pageHeader.textContent).toBe("Businesses that accept the ID");
     });
 
-    test("contains category name as heading for a set of businesses", async () => {
+    describe("after businesses are loaded", () => {
         let categoryHeadings: HTMLHeadingElement[] = [];
-        await waitFor(() => {
-            categoryHeadings = screen.getAllByRole("heading", { level: 2 });
+        beforeEach(async () => {
+            await waitFor(() => {
+                categoryHeadings = screen.getAllByRole("heading", { level: 2 });
+            });
+        });
+        test("has no AxE violations", async () => {
+            const page = await axe(container as Element);
+            expect(page).toHaveNoViolations();
         });
 
-        const categoryNames = categoryHeadings.map(h2 => h2.textContent);
-        const titleCaseCategories = TEST_CATEGORIZED_BUSINESSES.map(b => b.category.displayName);
+        test("contains category name as heading for each set of businesses", async () => {
+            const categoryNames = categoryHeadings.map(h2 => h2.textContent);
+            const titleCaseCategories = TEST_CATEGORIZED_BUSINESSES.map(b => b.category.displayName);
 
-        expect(categoryNames).toEqual(titleCaseCategories);
-    });
-
-    test("contains a list of business names", async () => {
-        let listElements: HTMLUListElement[] = [];
-        await waitFor(() => {
-            listElements = screen.getAllByRole("list");
+            expect(categoryNames).toEqual(titleCaseCategories);
         });
 
-        let businesses: string[][] = [];
-        listElements.forEach(listElement => {
-            let listItems = within(listElement).getAllByRole("listitem");
-            businesses.push(listItems.map(li => li.textContent ?? ""));
+        test("contains a business card for each business in a category", async () => {
+            expect(TEST_CATEGORIZED_BUSINESSES.length).not.toBe(0);
+            TEST_CATEGORIZED_BUSINESSES.forEach(category => {
+                expect(category.businesses.length).not.toBe(0);
+                category.businesses.forEach(business => {
+                    expect(screen.getByRole("table", { name: business.name })).toBeVisible();
+                });
+            });
         });
-        expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES.map(c => c.businesses.map(b => b.name)));
     });
 });  
