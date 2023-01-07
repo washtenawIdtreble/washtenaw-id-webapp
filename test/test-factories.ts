@@ -44,7 +44,7 @@ export const stubBusiness = (attributes: Partial<Business> = {}): Business => {
         state: attributes.state === undefined ? faker.address.stateAbbr() : attributes.state,
         zip: attributes.zip === undefined ? faker.address.zipCode() : attributes.zip,
         website: attributes.website === undefined ? faker.internet.url() : attributes.website,
-        phone: attributes.phone === undefined ? faker.phone.number() : attributes.phone,
+        phone: attributes.phone === undefined ? faker.phone.number().replace(/ x.*$/g, "") : attributes.phone,
         description: attributes.description === undefined ? faker.lorem.paragraph(4) : attributes.description,
     };
 };
