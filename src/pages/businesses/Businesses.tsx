@@ -12,24 +12,25 @@ export function Businesses() {
 
     useFocusOnLoad(hash.replace("#", ""));
 
+    const categories = categorizedBusinesses.map(categorizedBusinesses => {
+        return (
+            <div className={"category-section"} key={`${categorizedBusinesses.category.name}-container`}>
+                <h2
+                    className={"businesses-header"}
+                    tabIndex={-1}
+                    key={`${categorizedBusinesses.category.name}-heading`}>
+                    {(categorizedBusinesses.category.displayName)}
+                </h2>
+                {categorizedBusinesses.businesses.map(business => {
+                    return <BusinessCard business={business} key={business.name}/>;
+                })}
+            </div>);
+    });
+
     return (
         <>
             <h1>{HEADER_TEXT}</h1>
-            {categorizedBusinesses.map(categorizedBusinesses => {
-                return (
-                    <div key={`${categorizedBusinesses.category.name}-container`}>
-                        <h2
-                            id={categorizedBusinesses.category.name}
-                            className={"businesses-header"}
-                            tabIndex={-1}
-                            key={`${categorizedBusinesses.category.name}-heading`}>
-                            {(categorizedBusinesses.category.displayName)}
-                        </h2>
-                        {categorizedBusinesses.businesses.map(business => {
-                            return <BusinessCard business={business} key={business.name}/>;
-                        })}
-                    </div>);
-            })}
+            {categories}
         </>
     );
 }
