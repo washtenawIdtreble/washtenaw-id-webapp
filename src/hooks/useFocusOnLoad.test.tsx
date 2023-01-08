@@ -1,6 +1,7 @@
 import React from "react";
 import { useFocusOnLoad } from "./useFocusOnLoad";
 import { render, screen, waitFor } from "@testing-library/react";
+import { asyncTimeout } from "../../test/async-timeout";
 
 describe(useFocusOnLoad.name, () => {
     describe("on element found within the interval", () => {
@@ -23,12 +24,22 @@ describe(useFocusOnLoad.name, () => {
 
             const button = screen.getByRole("button", { name: "ElementToFocus" });
 
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(null);
-                }, 80);
-            });
+            await asyncTimeout(20);
+
             expect(button).not.toHaveFocus();
+        });
+
+        test("does nothing if element ID is empty", async () => {
+            const originalGetElementByID = document.getElementById;
+            document.getElementById = jest.fn();
+
+            render(<StubComponent elementId={""}/>);
+
+            await asyncTimeout(20);
+
+            expect(document.getElementById).toHaveBeenCalledTimes(0);
+
+            document.getElementById = originalGetElementByID;
         });
     });
 });
