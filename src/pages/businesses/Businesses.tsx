@@ -16,7 +16,7 @@ export function Businesses() {
         return (
             <div className={"category-section"} key={`${categorizedBusinesses.category.name}-container`}>
                 <h2
-                    className={"businesses-header"}
+                    className={"businesses-heading"}
                     tabIndex={-1}
                     key={`${categorizedBusinesses.category.name}-heading`}>
                     {(categorizedBusinesses.category.displayName)}
@@ -28,10 +28,10 @@ export function Businesses() {
     });
 
     return (
-        <>
-            <h1>{HEADER_TEXT}</h1>
+        <div className={"page-container"}>
+            <h1 className={"page-heading"}>{HEADER_TEXT}</h1>
             {categories}
-        </>
+        </div>
     );
 }
 
