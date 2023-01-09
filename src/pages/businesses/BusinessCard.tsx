@@ -8,6 +8,7 @@ type BusinessCardProps = {
 export const BusinessCard = ({ business }: BusinessCardProps) => {
     const businessAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(businessAddress)}`;
+    const shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
     return (
         <div className={"business-card"}>
             <table>
@@ -26,7 +27,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                     <th scope={"row"}>Website</th>
                     <td>
                         <a href={business.website} target={"_blank"} rel="noreferrer">
-                            {business.website}
+                            {shortWebsite}
                         </a>
                     </td>
                 </tr>

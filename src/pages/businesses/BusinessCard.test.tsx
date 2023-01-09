@@ -44,10 +44,11 @@ describe(BusinessCard.name, () => {
             const websiteRow = rows[1];
             expect(within(websiteRow).getByRole("rowheader", { name: "Website" })).toBeVisible();
 
-            const websiteCell = within(websiteRow).getByRole("cell", { name: business.website });
+            const shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
+            const websiteCell = within(websiteRow).getByRole("cell", { name: shortWebsite });
             expect(websiteCell).toBeVisible();
 
-            const websiteLink: HTMLAnchorElement = within(websiteCell).getByRole("link", { name: business.website });
+            const websiteLink: HTMLAnchorElement = within(websiteCell).getByRole("link", { name: shortWebsite });
             expect(websiteLink.href).toEqual(`${business.website}/`);
             expect(websiteLink.target).toEqual(`_blank`);
             expect(websiteLink.rel).toEqual(`noreferrer`);
