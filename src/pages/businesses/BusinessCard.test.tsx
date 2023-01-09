@@ -37,6 +37,8 @@ describe(BusinessCard.name, () => {
                 .replace(/,/g, "%2C");
 
             expect(addressLink.href).toEqual(`https://www.google.com/maps/dir/?api=1&destination=${urlEscapedAddress}`);
+            expect(addressLink.target).toEqual(`_blank`);
+            expect(addressLink.rel).toEqual(`noreferrer`);
         });
         test("shows the business' website", () => {
             const websiteRow = rows[1];
@@ -47,6 +49,8 @@ describe(BusinessCard.name, () => {
 
             const websiteLink: HTMLAnchorElement = within(websiteCell).getByRole("link", { name: business.website });
             expect(websiteLink.href).toEqual(`${business.website}/`);
+            expect(websiteLink.target).toEqual(`_blank`);
+            expect(websiteLink.rel).toEqual(`noreferrer`);
         });
         test("shows the business' phone number", () => {
             const phoneRow = rows[2];

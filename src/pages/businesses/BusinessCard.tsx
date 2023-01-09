@@ -7,6 +7,7 @@ type BusinessCardProps = {
 
 export const BusinessCard = ({ business }: BusinessCardProps) => {
     const businessAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(businessAddress)}`;
     return (
         <div className={"business-card"}>
             <table>
@@ -15,7 +16,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                 <tr>
                     <th scope={"row"}>Address</th>
                     <td>
-                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(businessAddress)}`}>
+                        <a href={mapsUrl} target={"_blank"} rel="noreferrer">
                             {businessAddress}
                         </a>
                     </td>
@@ -24,7 +25,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                 <tr>
                     <th scope={"row"}>Website</th>
                     <td>
-                        <a href={business.website}>
+                        <a href={business.website} target={"_blank"} rel="noreferrer">
                             {business.website}
                         </a>
                     </td>
