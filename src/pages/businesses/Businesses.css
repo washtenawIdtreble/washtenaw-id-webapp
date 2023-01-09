@@ -1,20 +1,23 @@
 .businesses-heading {
     display: block;
+    flex: 0 0 auto;
     font-size: 1.5rem;
-    margin: 0.5rem;
+    margin: 0;
     text-align: center;
     width: 100%;
 }
 
 .category-section {
-    align-items: center;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
+    margin-bottom: 2rem;
+    row-gap: 1.5rem;
 }
 
 .business-card {
     border: 2px solid black;
-    margin: 1rem;
+    flex: 0 0 auto;
     padding: 0.5rem 0;
     width: 100%;
 }
@@ -25,6 +28,7 @@ caption {
 
 th {
     padding: 0.5rem;
+    text-align: left;
 }
 
 td {
@@ -32,7 +36,14 @@ td {
 }
 
 @media (min-aspect-ratio: 5/4) {
+    .category-section {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
     .business-card {
-        width: 50%;
+        flex: 1 1 auto;
+        max-width: 49%;
     }
 }
