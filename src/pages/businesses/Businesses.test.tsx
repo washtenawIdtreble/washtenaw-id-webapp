@@ -37,6 +37,13 @@ describe(Businesses.name, () => {
             expect(categoryNames).toEqual(titleCaseCategories);
         });
 
+        test("category headings have IDs to allow focusing them", () => {
+            const ids = categoryHeadings.map(h2 => h2.id);
+            const expectedIds = TEST_CATEGORIZED_BUSINESSES.map(b => b.category.name);
+
+            expect(ids).toEqual(expectedIds);
+        });
+
         test("contains a business card for each business in a category", async () => {
             expect(TEST_CATEGORIZED_BUSINESSES.length).not.toBe(0);
             TEST_CATEGORIZED_BUSINESSES.forEach(category => {

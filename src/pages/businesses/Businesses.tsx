@@ -16,6 +16,7 @@ export function Businesses() {
         return (
             <div className={"category-section"} key={`${categorizedBusinesses.category.name}-container`}>
                 <h2
+                    id={categorizedBusinesses.category.name}
                     className={"businesses-heading"}
                     tabIndex={-1}
                     key={`${categorizedBusinesses.category.name}-heading`}>
