@@ -38,6 +38,11 @@ td {
     padding: 0.5rem 0.5rem 0.5rem 0;
 }
 
+.business-card-link:focus {
+    outline: 3px dashed #c39738;
+    outline-offset: 2px;
+}
+
 @media (min-aspect-ratio: 5/4) {
     .category-section {
         display: flex;

@@ -17,7 +17,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                 <tr>
                     <th scope={"row"}>Address</th>
                     <td>
-                        <a href={mapsUrl} target={"_blank"} rel="noreferrer">
+                        <a href={mapsUrl} className={"business-card-link"} target={"_blank"} rel="noreferrer">
                             {businessAddress}
                         </a>
                     </td>
@@ -26,7 +26,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                 <tr>
                     <th scope={"row"}>Website</th>
                     <td>
-                        <a href={business.website} target={"_blank"} rel="noreferrer">
+                        <a href={business.website} className={"business-card-link"} target={"_blank"} rel="noreferrer">
                             {shortWebsite}
                         </a>
                     </td>
@@ -35,7 +35,7 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
                 <tr>
                     <th scope={"row"}>Phone</th>
                     <td>
-                        <a href={`tel:${business.phone}`}>
+                        <a href={`tel:${business.phone}`} className={"business-card-link"}>
                             {business.phone}
                         </a>
                     </td>
