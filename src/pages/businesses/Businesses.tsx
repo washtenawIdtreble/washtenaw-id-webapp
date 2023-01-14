@@ -15,13 +15,15 @@ export function Businesses() {
     const categories = categorizedBusinesses.map(categorizedBusinesses => {
         return (
             <div className={"category-section"} key={`${categorizedBusinesses.category.name}-container`}>
-                <h2
-                    id={categorizedBusinesses.category.name}
-                    className={"businesses-heading"}
-                    tabIndex={-1}
-                    key={`${categorizedBusinesses.category.name}-heading`}>
-                    {(categorizedBusinesses.category.displayName)}
-                </h2>
+                <div className={"category-heading-container"}>
+                    <h2
+                        id={categorizedBusinesses.category.name}
+                        className={"category-heading"}
+                        tabIndex={-1}
+                        key={`${categorizedBusinesses.category.name}-heading`}>
+                        {(categorizedBusinesses.category.displayName)}
+                    </h2>
+                </div>
                 {categorizedBusinesses.businesses.map(business => {
                     return <BusinessCard business={business} key={business.name}/>;
                 })}

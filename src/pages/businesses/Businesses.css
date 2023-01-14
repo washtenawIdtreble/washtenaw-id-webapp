@@ -1,18 +1,21 @@
-.businesses-heading {
-    display: block;
-    flex: 0 0 auto;
-    font-size: 1.5rem;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-}
-
 .category-section {
     box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 2rem;
     row-gap: 1.5rem;
+}
+
+.category-heading-container {
+    text-align: center;
+    width: 100%;
+}
+
+.category-heading {
+    display: inline;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0.25rem 0.5rem;
 }
 
 .business-card {
