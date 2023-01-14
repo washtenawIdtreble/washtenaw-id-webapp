@@ -11,6 +11,9 @@ export const NavLinks = () => {
             <RefreshingLink to={PAGE_ENDPOINTS.categories} className={"nav-link"}>Business Categories</RefreshingLink>
         </li>
         <li className={"nav-list-item"}>
+            <RefreshingLink to={PAGE_ENDPOINTS.contactUs} className={"nav-link"}>Contact Us</RefreshingLink>
+        </li>
+        <li className={"nav-list-item"}>
             <RefreshingLink to={PAGE_ENDPOINTS.accessibilityIssues} className={"nav-link"}>Accessibility
                 Issues</RefreshingLink>
         </li>

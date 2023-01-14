@@ -43,6 +43,13 @@ describe(RouterOutlet.name, () => {
                 expect(screen.getByText("Report Accessibility Issues")).toBeInTheDocument();
             });
         });
+
+        test("contact us page", async () => {
+            await user.click(screen.getByText("Contact"));
+            await waitFor(() => {
+                expect(screen.getByText("Contact Us")).toBeInTheDocument();
+            });
+        });
     });
 });
 
@@ -52,6 +59,7 @@ const TestingRouterWithLinks = () => {
             <RouterOutlet/>
             <Link to={"/businesses"}>Businesses</Link>
             <Link to={"/accessibility-issues"}>Accessibility Issues</Link>
+            <Link to={"/contact-us"}>Contact</Link>
         </MemoryRouter>
     );
 };

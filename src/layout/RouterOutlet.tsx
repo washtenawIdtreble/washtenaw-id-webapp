@@ -3,11 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import { Categories } from "../pages/categories/Categories";
 import { Businesses } from "../pages/businesses/Businesses";
 import { AccessibilityIssues } from "../pages/accessibility-issues/AccessibilityIssues";
+import { ContactUs } from "../pages/contact-us/ContactUs";
 
 export const PAGE_ENDPOINTS = {
     categories: "/",
     businesses: "/businesses",
-    accessibilityIssues: "accessibility-issues",
+    accessibilityIssues: "/accessibility-issues",
+    contactUs: "/contact-us",
 };
 
 export const RouterOutlet = () => {
@@ -17,6 +19,7 @@ export const RouterOutlet = () => {
                 <Route path={PAGE_ENDPOINTS.categories} element={<Categories/>}/>
                 <Route path={PAGE_ENDPOINTS.businesses} element={<Businesses/>}/>
                 <Route path={PAGE_ENDPOINTS.accessibilityIssues} element={<AccessibilityIssues/>}/>
+                <Route path={PAGE_ENDPOINTS.contactUs} element={<ContactUs/>}/>
             </Routes>
         </div>
     );

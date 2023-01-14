@@ -12,7 +12,7 @@ describe(NavLinks.name, () => {
         const list = screen.getByRole("list");
         const listItems = within(list).getAllByRole("listitem");
         const links = listItems.map(listItem => within(listItem).getByRole("link"));
-        expect(links.length).toEqual(3);
+        expect(links.length).toEqual(4);
     });
     test("has a link to the all businesses page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "All Businesses" });
@@ -21,6 +21,10 @@ describe(NavLinks.name, () => {
     test("has a link to the categories page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "Business Categories" });
         expect(link.href).toContain(PAGE_ENDPOINTS.categories);
+    });
+    test("has a link to the contact us page", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: "Contact Us" });
+        expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
     });
     test("has a link to the accessibility issues form page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "Accessibility Issues" });
