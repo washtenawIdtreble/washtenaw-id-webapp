@@ -1,8 +1,9 @@
 import { ChildrenProps } from "../../utilities/children-props";
 import React, { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import "./Form.css";
+import "../userMessage/UserMessageNotification.css";
 import { usePOST } from "../../hooks/fetch/usePost";
-import { FormSubmitMessage } from "./FormSubmitMessage";
+import { UserMessageNotification } from "../userMessage/UserMessageNotification";
 import { FormProvider } from "../../contexts/FormContext";
 import { Observable } from "../../utilities/observable";
 
@@ -67,12 +68,12 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     }, [postFormData, onSubmitObservable]);
 
     return (<div className={"form-container"}>
-            {showSuccessMessage && <FormSubmitMessage message={successMessage} clearMessage={removeResponseMessage}
-                                                      ref={responseMessage} className={"submit-success"}/>
+            {showSuccessMessage && <UserMessageNotification message={successMessage} clearMessage={removeResponseMessage}
+                                                      ref={responseMessage} className={"success"}/>
             }
 
-            {errorMessage && <FormSubmitMessage message={errorMessage} clearMessage={removeResponseMessage}
-                                                ref={responseMessage} className={"submit-error"}/>
+            {errorMessage && <UserMessageNotification message={errorMessage} clearMessage={removeResponseMessage}
+                                                ref={responseMessage} className={"error"}/>
             }
             <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>
