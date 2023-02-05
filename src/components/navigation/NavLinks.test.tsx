@@ -23,7 +23,7 @@ describe(NavLinks.name, () => {
         expect(link.href).toContain(PAGE_ENDPOINTS.categories);
     });
     test("has a link to the contact us page", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: "Contact Us" });
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: "contact us" });
         expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
     });
     test("has a link to the accessibility issues form page", () => {

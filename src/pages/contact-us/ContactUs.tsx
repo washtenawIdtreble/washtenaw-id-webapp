@@ -18,7 +18,7 @@ export const ContactUs = () => {
     const [successMessage] = useState("Your message has been sent, thank you!");
     return (
         <div className={"page-container"}>
-            <h1 id={"form-label"} className={"page-heading"}>Contact Us</h1>
+            <h1 id={"form-label"} className={"page-heading"} aria-label={"contact us"}>Contact Us</h1>
 
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"}
                   submitEndpoint={SERVER_ENDPOINTS.CONTACT_US}>

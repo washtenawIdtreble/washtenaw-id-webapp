@@ -44,7 +44,7 @@ describe(`${ContactUs.name} form`, () => {
     });
 
     test("has a page heading", () => {
-        const pageHeading = screen.getByRole("heading", { level: 1 });
+        const pageHeading = screen.getByRole("heading", { level: 1, name: "contact us" });
         expect(pageHeading.textContent).toEqual(formLabelText);
     });
 
