@@ -12,7 +12,7 @@ export const ErrorMessageNotification = ({message}: MessageProp) => {
 
     useEffect(() => {
         focus(messageElement);
-    }, [])
+    }, [focus])
 
     return (
         <UserMessageNotification ref={messageElement} message={message} className={"error"} clearMessage={() => {}}/>

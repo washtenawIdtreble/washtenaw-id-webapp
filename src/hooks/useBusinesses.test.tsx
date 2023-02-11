@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, screen } from "@testing-library/react";
 import { CategorizedBusinesses, useBusinesses, BUSINESS_ERROR_MESSAGE } from "./useBusinesses";
 import {
     customBusinessesResolver,
@@ -31,9 +31,9 @@ describe(useBusinesses.name, () => {
             });
         });        
         test("should have no error", async () => {
-            await waitFor(() => {
-                expect(response.error).toBeUndefined;
-            });
+            await screen.findByText("Done");
+            
+            expect(response.error).toBeUndefined;
         });
         describe("on rerender", () => {
             beforeEach(() => {
@@ -70,6 +70,8 @@ let response: {categorizedBusinesses: CategorizedBusinesses[], error: ErrorMessa
 function StubComponent() {
     response = useBusinesses();
     return (
-        <div/>
+        <div>
+        {response.categorizedBusinesses.length > 0 && <span>Done</span>}
+    </div>
     );
 }

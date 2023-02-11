@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, screen } from "@testing-library/react";
 import { useCategories, Category, ErrorMessage, CATEGORY_ERROR_MESSAGE } from "./useCategories";
 import {
     customCategoriesResolver,
@@ -25,9 +25,9 @@ describe(useCategories.name, () => {
             });
         });
         test("should have no error", async () => {
-            await waitFor(() => {
-                expect(response.error).toBeUndefined;
-            });
+            await screen.findByText("Done");
+            
+            expect(response.error).toBeUndefined;
         });
         describe("on rerender", () => {
             beforeEach(() => {
@@ -64,6 +64,8 @@ let response: {categories: Category[], error: ErrorMessage | undefined};
 function StubComponent() {
     response = useCategories();
     return (
-        <div/>
+        <div>
+            {response.categories.length > 0 && <span>Done</span>}
+        </div>
     );
 }
