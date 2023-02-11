@@ -1,7 +1,7 @@
 import React from "react";
 import { Businesses } from "./Businesses";
 import { render, screen, waitFor } from "@testing-library/react";
-import { TEST_CATEGORIZED_BUSINESSES, errorBusinessesResolver } from "../../mock-server/businesses-resolver";
+import { errorBusinessesResolver, TEST_CATEGORIZED_BUSINESSES } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { axe } from "jest-axe";
 import { Container } from "react-dom";
@@ -54,7 +54,7 @@ describe(Businesses.name, () => {
             TEST_CATEGORIZED_BUSINESSES.forEach(category => {
                 expect(category.businesses.length).not.toBe(0);
                 category.businesses.forEach(business => {
-                    expect(screen.getByRole("table", { name: business.name })).toBeVisible();
+                    expect(screen.getByRole("heading", { level: 3, name: business.name })).toBeVisible();
                 });
             });
         });
@@ -63,7 +63,7 @@ describe(Businesses.name, () => {
     describe("on error loading businesses", () => {
         beforeEach(() => {
             mockServer.use(
-                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, errorBusinessesResolver(400, "No businesses!"))
+                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, errorBusinessesResolver(400, "No businesses!")),
             );
             ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
         });

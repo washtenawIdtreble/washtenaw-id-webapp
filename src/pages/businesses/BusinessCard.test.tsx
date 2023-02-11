@@ -1,72 +1,95 @@
 import { BusinessCard } from "./BusinessCard";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Business } from "../../hooks/useBusinesses";
 import { stubBusiness } from "../../../test/test-factories";
 
 describe(BusinessCard.name, () => {
     let business: Business;
-    let businessAddress: string;
-    let tableElement: HTMLTableElement;
     beforeEach(() => {
         business = stubBusiness();
-        businessAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
         render(<BusinessCard business={business}/>);
-        tableElement = screen.getByRole("table", { name: business.name });
     });
-    test("shows business' name as a table's name", () => {
-        expect(tableElement).toBeVisible();
+    test("shows business' name as a heading", () => {
+        expect(screen.getByRole("heading", { level: 3, name: business.name })).toBeVisible();
     });
-    describe("table data", () => {
-        let rows: HTMLTableRowElement[];
-        beforeEach(() => {
-            rows = within(screen.getByRole("rowgroup")).getAllByRole("row");
-        });
-        test("shows the business' address", () => {
-            const addressRow = rows[0];
-            expect(within(addressRow).getByRole("rowheader", { name: "Address" })).toBeVisible();
-            expect(within(addressRow).getByRole("cell", { name: businessAddress })).toBeVisible();
-        });
-        test("business address is a link to Google Maps", () => {
-            const addressRow = rows[0];
-            const addressCell = within(addressRow).getByRole("cell", { name: businessAddress });
-            const addressLink: HTMLAnchorElement = within(addressCell).getByRole("link", { name: businessAddress });
+    describe("address", () => {
+        let businessAddress: string;
+        let urlEscapedAddress: string;
+        let addressBox: HTMLDivElement;
+        let addressLink: HTMLAnchorElement;
 
-            const urlEscapedAddress = businessAddress
+        beforeEach(() => {
+            businessAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
+            urlEscapedAddress = businessAddress
                 .replace(/ /g, "%20")
                 .replace(/,/g, "%2C");
 
+            addressBox = screen.getByText("Address");
+            addressLink = screen.getByRole("link", { name: businessAddress });
+        });
+        test("shows the address label", () => {
+            expect(addressBox).toBeVisible();
+        });
+        test("shows the address link", () => {
+            expect(addressLink).toBeVisible();
+        });
+        test("links to google maps", () => {
             expect(addressLink.href).toEqual(`https://www.google.com/maps/dir/?api=1&destination=${urlEscapedAddress}`);
+        });
+        test("opens in a new tab", () => {
             expect(addressLink.target).toEqual(`_blank`);
             expect(addressLink.rel).toEqual(`noreferrer`);
         });
-        test("shows the business' website", () => {
-            const websiteRow = rows[1];
-            expect(within(websiteRow).getByRole("rowheader", { name: "Website" })).toBeVisible();
+    });
+    describe("website", () => {
+        let websiteBox: HTMLDivElement;
+        let websiteLink: HTMLAnchorElement;
+        let shortWebsite: string;
 
-            const shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
-            const websiteCell = within(websiteRow).getByRole("cell", { name: shortWebsite });
-            expect(websiteCell).toBeVisible();
-
-            const websiteLink: HTMLAnchorElement = within(websiteCell).getByRole("link", { name: shortWebsite });
+        beforeEach(() => {
+            shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
+            websiteBox = screen.getByText("Website");
+            websiteLink = screen.getByRole("link", { name: shortWebsite });
+        });
+        test("shows the website label", () => {
+            expect(websiteBox).toBeVisible();
+        });
+        test("shows the website link", () => {
+            expect(websiteLink).toBeVisible();
+        });
+        test("links to the business' website", () => {
             expect(websiteLink.href).toEqual(`${business.website}/`);
+        });
+        test("opens in a new tab", () => {
             expect(websiteLink.target).toEqual(`_blank`);
             expect(websiteLink.rel).toEqual(`noreferrer`);
         });
-        test("shows the business' phone number", () => {
-            const phoneRow = rows[2];
-            expect(within(phoneRow).getByRole("rowheader", { name: "Phone" })).toBeVisible();
+    });
+    describe("phone", () => {
+        let phoneBox: HTMLDivElement;
+        let phoneLink: HTMLAnchorElement;
 
-            const phoneCell = within(phoneRow).getByRole("cell", { name: business.phone });
-            expect(phoneCell).toBeVisible();
-
-            const phoneLink: HTMLAnchorElement = within(phoneCell).getByRole("link", { name: business.phone });
+        beforeEach(() => {
+            phoneBox = screen.getByText("Phone");
+            phoneLink = screen.getByRole("link", { name: business.phone });
+        });
+        test("shows the phone label", () => {
+            expect(phoneBox).toBeVisible();
+        });
+        test("shows the phone link", () => {
+            expect(phoneLink).toBeVisible();
+        });
+        test("has a tel link", () => {
             expect(phoneLink.href).toEqual(`tel:${business.phone}`);
         });
-        test("shows the business' description", () => {
-            const descriptionRow = rows[3];
-            expect(within(descriptionRow).getByRole("rowheader", { name: "About" })).toBeVisible();
-            expect(within(descriptionRow).getByRole("cell", { name: business.description })).toBeVisible();
+    });
+    describe("description", () => {
+        test("shows the description label", () => {
+            expect(screen.getByText("About")).toBeVisible();
+        });
+        test("shows the description", () => {
+            expect(screen.getByText(business.description)).toBeVisible();
         });
     });
 });

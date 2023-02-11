@@ -11,44 +11,35 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
     const shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
     return (
         <div className={"business-card"}>
-            <table>
-                <caption>{business.name}</caption>
-                <tbody>
-                <tr>
-                    <th scope={"row"}>Address</th>
-                    <td>
-                        <a href={mapsUrl} className={"business-card-link"} target={"_blank"} rel="noreferrer">
-                            {businessAddress}
-                        </a>
-                    </td>
-                </tr>
+            <h3 className={"business-card-heading"}>{business.name}</h3>
 
-                <tr>
-                    <th scope={"row"}>Website</th>
-                    <td>
-                        <a href={business.website} className={"business-card-link"} target={"_blank"} rel="noreferrer">
-                            {shortWebsite}
-                        </a>
-                    </td>
-                </tr>
+            <div className={"bussines-card-row"}>
+                <span className={"business-card-label"}>Address</span>
+                <a href={mapsUrl} className={"business-card-link business-card-value"} target={"_blank"}
+                   rel="noreferrer">
+                    {businessAddress}
+                </a>
+            </div>
 
-                <tr>
-                    <th scope={"row"}>Phone</th>
-                    <td>
-                        <a href={`tel:${business.phone}`} className={"business-card-link"}>
-                            {business.phone}
-                        </a>
-                    </td>
-                </tr>
+            <div className={"bussines-card-row"}>
+                <span className={"business-card-label"}>Website</span>
+                <a href={business.website} className={"business-card-link business-card-value"} target={"_blank"}
+                   rel="noreferrer">
+                    {shortWebsite}
+                </a>
+            </div>
 
-                <tr>
-                    <th scope={"row"}>About</th>
-                    <td>
-                        {business.description}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div className={"bussines-card-row"}>
+                <span className={"business-card-label"}>Phone</span>
+                <a href={`tel:${business.phone}`} className={"business-card-link business-card-value"}>
+                    {business.phone}
+                </a>
+            </div>
+
+            <div className={"bussines-card-row"}>
+                <span className={"business-card-label"}>About</span>
+                <span className={"business-card-value"}>{business.description}</span>
+            </div>
         </div>
     );
 };

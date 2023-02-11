@@ -20,27 +20,37 @@
 
 .business-card {
     border: 2px solid black;
+    box-sizing: border-box;
+    display: flex;
     flex: 0 0 auto;
-    padding: 0.5rem 0;
+    flex-direction: column;
+    padding: 0.5rem 1rem 1rem;
+    row-gap: 1rem;
     width: 100%;
 }
 
-caption {
+.business-card-heading {
     font-size: 1.25rem;
+    margin: 0;
+    text-align: center;
 }
 
-th {
-    padding: 0.5rem;
-    text-align: left;
+.bussines-card-row {
+    display: flex;
+    width: 100%;
 }
 
-td {
-    padding: 0.5rem 0.5rem 0.5rem 0;
+.business-card-label {
+    width: 25%;
+}
+
+.business-card-value {
+    width: 75%;
 }
 
 .business-card-link:focus {
     outline: 3px dashed #c39738;
-    outline-offset: 2px;
+    outline-offset: 4px;
 }
 
 @media (min-aspect-ratio: 5/4) {
@@ -53,5 +63,13 @@ td {
     .business-card {
         flex: 1 1 auto;
         max-width: 49%;
+    }
+
+    .business-card-label {
+        width: 15%;
+    }
+
+    .business-card-value {
+        width: 85%;
     }
 }
