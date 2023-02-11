@@ -4,7 +4,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { BASE_URL } from "../../utilities/base-url";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
 import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
-import { TEST_CATEGORIES, errorCategoriesResolver } from "../../mock-server/resolvers/categories-resolver";
+import { errorCategoriesResolver, TEST_CATEGORIES } from "../../mock-server/resolvers/categories-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { Container } from "react-dom";
 import { axe } from "jest-axe";
@@ -29,11 +29,8 @@ describe(Categories.name, () => {
         });
 
         test("contains a list of categories", async () => {
-            let listElement: HTMLUListElement;
-            await waitFor(() => {
-                listElement = screen.getByRole("list");
-            });
-            const categoryListItems: HTMLLIElement[]= within(listElement).getAllByRole("listitem");
+            const listElement: HTMLUListElement = await screen.findByRole("list");
+            const categoryListItems: HTMLLIElement[] = within(listElement).getAllByRole("listitem");
 
             const categoryNames = categoryListItems
                 .map(li => within(li).getByRole("link"))
@@ -62,7 +59,7 @@ describe(Categories.name, () => {
     describe("on error loading categories", () => {
         beforeEach(() => {
             mockServer.use(
-                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`, errorCategoriesResolver(400, "No categories!"))
+                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.CATEGORIES}`, errorCategoriesResolver(400, "No categories!")),
             );
             ({ container } = render(<Categories/>, { wrapper: MemoryRouter }));
         });

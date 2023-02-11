@@ -1,6 +1,6 @@
 import React from "react";
-import { render, waitFor, screen } from "@testing-library/react";
-import { CategorizedBusinesses, useBusinesses, BUSINESS_ERROR_MESSAGE } from "./useBusinesses";
+import { render, screen, waitFor } from "@testing-library/react";
+import { BUSINESS_ERROR_MESSAGE, CategorizedBusinesses, useBusinesses } from "./useBusinesses";
 import {
     customBusinessesResolver,
     productionBusinessesResolver,
@@ -29,11 +29,11 @@ describe(useBusinesses.name, () => {
             await waitFor(() => {
                 expect(response.categorizedBusinesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
             });
-        });        
+        });
         test("should have no error", async () => {
             await screen.findByText("Done");
-            
-            expect(response.error).toBeUndefined;
+
+            expect(response.error).toBeUndefined();
         });
         describe("on rerender", () => {
             beforeEach(() => {
@@ -59,19 +59,19 @@ describe(useBusinesses.name, () => {
         });
         test("should show an error message", async () => {
             await waitFor(() => {
-                expect(response.error.message).toEqual(BUSINESS_ERROR_MESSAGE);
+                expect(response!.error!.message).toEqual(BUSINESS_ERROR_MESSAGE);
             });
         });
     });
 });
 
-let response: {categorizedBusinesses: CategorizedBusinesses[], error: ErrorMessage | undefined};
+let response: { categorizedBusinesses: CategorizedBusinesses[], error: ErrorMessage | undefined };
 
 function StubComponent() {
     response = useBusinesses();
     return (
         <div>
-        {response.categorizedBusinesses.length > 0 && <span>Done</span>}
-    </div>
+            {response.categorizedBusinesses.length > 0 && <span>Done</span>}
+        </div>
     );
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import { render, waitFor, screen } from "@testing-library/react";
-import { useCategories, Category, ErrorMessage, CATEGORY_ERROR_MESSAGE } from "./useCategories";
+import { render, screen, waitFor } from "@testing-library/react";
+import { Category, CATEGORY_ERROR_MESSAGE, ErrorMessage, useCategories } from "./useCategories";
 import {
     customCategoriesResolver,
     errorCategoriesResolver,
@@ -26,13 +26,16 @@ describe(useCategories.name, () => {
         });
         test("should have no error", async () => {
             await screen.findByText("Done");
-            
-            expect(response.error).toBeUndefined;
+
+            expect(response.error).toBeUndefined();
         });
         describe("on rerender", () => {
             beforeEach(() => {
                 mockServer.use(
-                    rest.get(`${BASE_URL()}/categories`, customCategoriesResolver([{displayName: "anything", name: "any category" }])),
+                    rest.get(`${BASE_URL()}/categories`, customCategoriesResolver([{
+                        displayName: "anything",
+                        name: "any category",
+                    }])),
                 );
                 rerender(<StubComponent/>);
             });
@@ -53,13 +56,13 @@ describe(useCategories.name, () => {
         });
         test("should show an error message", async () => {
             await waitFor(() => {
-                expect(response.error.message).toEqual(CATEGORY_ERROR_MESSAGE);
+                expect(response!.error!.message).toEqual(CATEGORY_ERROR_MESSAGE);
             });
         });
     });
 });
 
-let response: {categories: Category[], error: ErrorMessage | undefined};
+let response: { categories: Category[], error: ErrorMessage | undefined };
 
 function StubComponent() {
     response = useCategories();
