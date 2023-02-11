@@ -1,10 +1,15 @@
 import React from "react";
 import { Businesses } from "./Businesses";
 import { render, screen, waitFor } from "@testing-library/react";
-import { TEST_CATEGORIZED_BUSINESSES } from "../../mock-server/businesses-resolver";
+import { TEST_CATEGORIZED_BUSINESSES, errorBusinessesResolver } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
 import { axe } from "jest-axe";
 import { Container } from "react-dom";
+import { mockServer } from "../../mock-server/mock-server";
+import { rest } from "msw";
+import { BASE_URL } from "../../utilities/base-url";
+import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
+import { BUSINESS_ERROR_MESSAGE } from "../../hooks/useBusinesses";
 
 describe(Businesses.name, () => {
     let container: Container;
@@ -51,6 +56,27 @@ describe(Businesses.name, () => {
                 category.businesses.forEach(business => {
                     expect(screen.getByRole("table", { name: business.name })).toBeVisible();
                 });
+            });
+        });
+    });
+
+    describe("on error loading businesses", () => {
+        beforeEach(() => {
+            mockServer.use(
+                rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, errorBusinessesResolver(400, "No businesses!"))
+            );
+            ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
+        });
+        test("has no AxE violations", async () => {
+            await waitFor(() => {
+                screen.getByText(BUSINESS_ERROR_MESSAGE);
+            });
+            const page = await axe(container as Element);
+            expect(page).toHaveNoViolations();
+        });
+        test("should show an error alert", async () => {
+            await waitFor(() => {
+                expect(screen.getByText(BUSINESS_ERROR_MESSAGE)).toBeInTheDocument();
             });
         });
     });

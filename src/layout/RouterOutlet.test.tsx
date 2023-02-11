@@ -15,7 +15,9 @@ describe(RouterOutlet.name, () => {
     });
 
     test("shows the categories page by default", async () => {
-        expect(screen.getByTestId("categories-page")).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByTestId("categories-page")).toBeInTheDocument();
+        });
     });
 
     describe("shows the correct page for each route - ", () => {

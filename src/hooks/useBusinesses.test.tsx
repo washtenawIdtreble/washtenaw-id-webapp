@@ -1,6 +1,6 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { CategorizedBusinesses, useBusinesses } from "./useBusinesses";
+import { CategorizedBusinesses, useBusinesses, BUSINESS_ERROR_MESSAGE } from "./useBusinesses";
 import {
     customBusinessesResolver,
     productionBusinessesResolver,
@@ -8,10 +8,9 @@ import {
 } from "../mock-server/businesses-resolver";
 import { rest } from "msw";
 import { mockServer } from "../mock-server/mock-server";
-import { AlertContext, AlertContextValue } from "../contexts/AlertContext";
-import { buildMockAlertContext, stubAlertData } from "../../test/test-factories";
 import { BASE_URL } from "../utilities/base-url";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
+import { ErrorMessage } from "./useCategories";
 
 describe(useBusinesses.name, () => {
     describe("on successful load", () => {
@@ -24,11 +23,16 @@ describe(useBusinesses.name, () => {
             unmount();
         });
         test("should return an empty list of businesses before fetch is complete", () => {
-            expect(businesses).toEqual([]);
+            expect(response.categorizedBusinesses).toEqual([]);
         });
         test("should update the businesses with the response from fetch", async () => {
             await waitFor(() => {
-                expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
+                expect(response.categorizedBusinesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
+            });
+        });        
+        test("should have no error", async () => {
+            await waitFor(() => {
+                expect(response.error).toBeUndefined;
             });
         });
         describe("on rerender", () => {
@@ -40,37 +44,31 @@ describe(useBusinesses.name, () => {
             });
             test("should not fetch again", async () => {
                 await waitFor(() => {
-                    expect(businesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
+                    expect(response.categorizedBusinesses).toEqual(TEST_CATEGORIZED_BUSINESSES);
                 });
             });
         });
     });
     describe("on error loading businesses", () => {
         const errorMessage = "Doesn't matter!";
-        let alertContext: AlertContextValue;
         beforeEach(() => {
-            alertContext = buildMockAlertContext({ showAlert: jest.fn().mockName("showAlert") });
             mockServer.use(
                 rest.get(`${BASE_URL()}/${SERVER_ENDPOINTS.BUSINESSES}`, productionBusinessesResolver(500, errorMessage)),
             );
-            render(<AlertContext.Provider value={alertContext}><StubComponent/></AlertContext.Provider>);
+            render(<StubComponent/>);
         });
-        test("should show an error alert", async () => {
-            const alertData = stubAlertData({
-                heading: "Error",
-                message: "Failed to load the businesses. Please reload the page or try again later.",
-            });
+        test("should show an error message", async () => {
             await waitFor(() => {
-                expect(alertContext.showAlert).toHaveBeenCalledWith(alertData);
+                expect(response.error.message).toEqual(BUSINESS_ERROR_MESSAGE);
             });
         });
     });
 });
 
-let businesses: CategorizedBusinesses[];
+let response: {categorizedBusinesses: CategorizedBusinesses[], error: ErrorMessage | undefined};
 
 function StubComponent() {
-    businesses = useBusinesses();
+    response = useBusinesses();
     return (
         <div/>
     );

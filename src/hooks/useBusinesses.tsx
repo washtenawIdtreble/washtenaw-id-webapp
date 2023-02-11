@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { AlertContext } from "../contexts/AlertContext";
+import { useEffect, useState } from "react";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
-import { Category } from "./useCategories";
+import { Category, ErrorMessage } from "./useCategories";
 import { useGET } from "./fetch/useGet";
 
 export type CategorizedBusinesses = { category: Category, businesses: Business[] }
@@ -17,9 +16,11 @@ export type Business = {
     description: string;
 }
 
-export function useBusinesses(): { category: Category, businesses: Business[] }[] {
+export const BUSINESS_ERROR_MESSAGE = "Failed to load the businesses. Please reload the page or try again later.";
+
+export function useBusinesses(): { categorizedBusinesses: CategorizedBusinesses[], error: ErrorMessage | undefined } {
     const [businesses, setBusinesses] = useState<CategorizedBusinesses[]>([]);
-    const { showAlert } = useContext(AlertContext);
+    const [error, setError] = useState<ErrorMessage>();
 
     const getBusinesses = useGET<CategorizedBusinesses[]>(SERVER_ENDPOINTS.BUSINESSES);
 
@@ -28,12 +29,9 @@ export function useBusinesses(): { category: Category, businesses: Business[] }[
             if (ok) {
                 setBusinesses(response);
             } else {
-                showAlert({
-                    heading: "Error",
-                    message: "Failed to load the businesses. Please reload the page or try again later.",
-                });
+                setError({message: BUSINESS_ERROR_MESSAGE});
             }
         });
-    }, [getBusinesses, showAlert]);
-    return businesses;
+    }, [getBusinesses]);
+    return {categorizedBusinesses: businesses, error: error};
 }

@@ -1,13 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { AlertContext } from "../contexts/AlertContext";
+import { useEffect, useState } from "react";
 import { SERVER_ENDPOINTS } from "../utilities/server-endpoints";
 import { useGET } from "./fetch/useGet";
 
 export type Category = { displayName: string, name: string };
+export type ErrorMessage = { message: string };
 
-export function useCategories(): Category[] {
+export const CATEGORY_ERROR_MESSAGE = "Failed to load the categories. Please reload the page or try again later.";
+
+export function useCategories(): { categories: Category[], error: ErrorMessage | undefined }  {
     const [categories, setCategories] = useState<Category[]>([]);
-    const { showAlert } = useContext(AlertContext);
+    const [error, setError] = useState<ErrorMessage>();
 
     const getCategories = useGET<Category[]>(SERVER_ENDPOINTS.CATEGORIES);
 
@@ -16,12 +18,10 @@ export function useCategories(): Category[] {
             if (ok) {
                 setCategories(response);
             } else {
-                showAlert({
-                    heading: "Error",
-                    message: "Failed to load the categories. Please reload the page or try again later.",
-                });
+                setError({message: CATEGORY_ERROR_MESSAGE});
             }
         });
-    }, [getCategories, showAlert]);
-    return categories;
+    }, [getCategories]);
+    return {categories: categories, error: error};
 }
+
