@@ -25,6 +25,7 @@ describe(NavLinks.name, () => {
     test("has a link to the contact us page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "contact us" });
         expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
+        expect(link.textContent).toEqual("Contact Us");
     });
     test("has a link to the accessibility issues form page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "Accessibility Issues" });
