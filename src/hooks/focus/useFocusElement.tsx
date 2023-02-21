@@ -6,6 +6,6 @@ export const useFocusElement = (): FocusElement => {
     return useCallback((element) => {
         setTimeout(() => {
             element.current?.focus();
-        }, parseInt(process.env.FOCUS_TIMEOUT ?? "2000"));
+        }, parseInt(process.env.REACT_APP_FOCUS_TIMEOUT ?? "2000"));
     }, []);
 };

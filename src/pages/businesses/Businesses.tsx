@@ -1,17 +1,15 @@
 import React from "react";
 import { useBusinesses } from "../../hooks/useBusinesses";
 import "./Businesses.css";
-import { useFocusOnLoad } from "../../hooks/useFocusOnLoad";
-import { useLocation } from "react-router-dom";
+import "../Pages.css";
 import { BusinessCard } from "./BusinessCard";
 import { ErrorMessageNotification } from "../../components/userMessage/ErrorMessageNotification";
+import { MainHeading } from "../../components/MainHeading";
+
+export const BUSINESSES_PAGE_HEADING = "Businesses that accept the ID";
 
 export function Businesses() {
-    const HEADER_TEXT = "Businesses that accept the ID";
     const { categorizedBusinesses, error } = useBusinesses();
-    const { hash } = useLocation();
-
-    useFocusOnLoad(hash.replace("#", ""));
 
     const categories = categorizedBusinesses.map(categorizedBusinesses => {
         return (
@@ -32,11 +30,11 @@ export function Businesses() {
     });
 
     return (
-        <div className={"page-container"}>
-            <h1 className={"page-heading"}>{HEADER_TEXT}</h1>
-            {categorizedBusinesses.length > 0 && categories}
+        <>
+            <MainHeading>{BUSINESSES_PAGE_HEADING}</MainHeading>
+            {categories.length > 0 && categories}
             {error && <ErrorMessageNotification message={error.message}/>}
-        </div>
+        </>
     );
 }
 

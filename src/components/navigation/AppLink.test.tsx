@@ -1,17 +1,17 @@
-import { RefreshingLink } from "./RefreshingLink";
+import { AppLink } from "./AppLink";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 
-describe(RefreshingLink.name, () => {
+describe(AppLink.name, () => {
     const activeRoute = "/active";
     const activeLinkText = "You Are Here";
     const inactiveRoute = "/inactive";
     const inactiveLinkText = "Click Here";
     beforeEach(() => {
         render(<MemoryRouter initialEntries={[activeRoute]}>
-                <RefreshingLink to={activeRoute}>{activeLinkText}</RefreshingLink>
-                <RefreshingLink to={inactiveRoute}>{inactiveLinkText}</RefreshingLink>
+                <AppLink to={activeRoute}>{activeLinkText}</AppLink>
+                <AppLink to={inactiveRoute}>{inactiveLinkText}</AppLink>
             </MemoryRouter>,
         );
     });

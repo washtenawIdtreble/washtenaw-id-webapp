@@ -4,12 +4,13 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
+import { DocumentStateContext } from "../contexts/DocumentStateContext";
 
 describe(Layout.name, () => {
     let user: UserEvent;
     beforeEach(() => {
         user = userEvent.setup();
-        render(<Layout/>, { wrapper: MemoryRouter });
+        render(<TestingLayout/>);
     });
     afterEach(async () => {
         await waitFor(() => {
@@ -31,6 +32,7 @@ describe(Layout.name, () => {
     });
     test("main content should be focusable for Safari so skip nav link works", () => {
         const main = screen.getByRole("main");
+        expect(main.hasAttribute("tabindex")).toBe(true);
         expect(main.tabIndex).toEqual(-1);
     });
     test("should render the header bar component in the header", () => {
@@ -44,3 +46,13 @@ describe(Layout.name, () => {
         expect(routerOutlet).toBeInTheDocument();
     });
 });
+
+const TestingLayout = () => {
+    return (
+        <MemoryRouter>
+            <DocumentStateContext.Provider value={{ documentIsNew: true, documentHasBeenLoaded: () => {} }}>
+                <Layout/>
+            </DocumentStateContext.Provider>
+        </MemoryRouter>
+    );
+};

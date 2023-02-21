@@ -3,7 +3,7 @@ import { NAV_MENU_BUTTON_ID, NavMenu } from "./NavMenu";
 import { NavLinks } from "./NavLinks";
 
 export const WINDOW_RESIZE_EVENT = "resize";
-const SMALL_SCREEN_MEDIA_QUERY = "(max-width: 767px)";
+export const SMALL_SCREEN_MEDIA_QUERY = "(max-width: 767px)";
 
 export const Navigation = () => {
     const [isSmallScreen, setIsSmallScreen] = useState<boolean>(window.matchMedia(SMALL_SCREEN_MEDIA_QUERY).matches);

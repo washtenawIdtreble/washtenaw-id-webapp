@@ -1,5 +1,5 @@
 import React from "react";
-import { Categories } from "./Categories";
+import { Categories, CATEGORIES_PAGE_HEADING } from "./Categories";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { BASE_URL } from "../../utilities/base-url";
 import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
@@ -18,6 +18,17 @@ describe(Categories.name, () => {
     describe("on successfully loading categories", () => {
         beforeEach(() => {
             ({ container } = render(<Categories/>, { wrapper: MemoryRouter }));
+        });
+
+        test("exports its page heading", () => {
+            expect(CATEGORIES_PAGE_HEADING).toBe("Business Categories");
+        });
+
+        test("has an h1 that can be focused programmatically", () => {
+            const h1 = screen.getByRole("heading", { level: 1, name: CATEGORIES_PAGE_HEADING });
+            expect(h1).toBeVisible();
+            expect(h1.hasAttribute("tabindex")).toBe(true);
+            expect(h1.tabIndex).toBe(-1);
         });
 
         test("has no AxE violations", async () => {

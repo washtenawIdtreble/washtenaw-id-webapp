@@ -6,6 +6,7 @@ import { FormField, FormFieldType } from "../../components/form/FormField";
 import { validateEmail } from "../../hooks/form-validation/validateEmail";
 import { validatePhone } from "../../hooks/form-validation/validatePhone";
 import { validateRequired } from "../../hooks/form-validation/validateRequired";
+import { MainHeading } from "../../components/MainHeading";
 
 export type ContactFormData = {
     name?: string
@@ -14,11 +15,15 @@ export type ContactFormData = {
     description: string
 }
 
+export const CONTACT_PAGE_HEADING = "Contact Us";
+
 export const ContactUs = () => {
     const [successMessage] = useState("Your message has been sent, thank you!");
     return (
-        <div className={"page-container"}>
-            <h1 id={"form-label"} className={"page-heading"} aria-label={"contact us"}>Contact Us</h1>
+        <>
+            <MainHeading id={"form-label"} ariaLabel={CONTACT_PAGE_HEADING.toLocaleLowerCase()}>
+                {CONTACT_PAGE_HEADING}
+            </MainHeading>
 
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"}
                   submitEndpoint={SERVER_ENDPOINTS.CONTACT_US}>
@@ -32,6 +37,6 @@ export const ContactUs = () => {
                 <FormField id={"description"} name={"description"} validator={validateRequired}
                            inputType={FormFieldType.TEXTAREA}/>
             </Form>
-        </div>
+        </>
     );
 };

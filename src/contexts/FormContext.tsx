@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { Field } from "../hooks/form-validation/useValidation";
 import { ChildrenProps } from "../utilities/children-props";
 import { Observable } from "../utilities/observable";
-import { useFocusElement } from "../hooks/useFocusElement";
+import { useFocusElement } from "../hooks/focus/useFocusElement";
 
 export type FormContextValue = {
     registerValidation: (field: Field) => void;

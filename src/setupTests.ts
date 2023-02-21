@@ -8,7 +8,7 @@ import { setupTestingServer } from "./mock-server/setup-testing-server";
 import { toHaveNoViolations } from "jest-axe";
 
 process.env.REACT_APP_API = "test";
-process.env.FOCUS_TIMEOUT = "10";
+process.env.REACT_APP_FOCUS_TIMEOUT = "10";
 
 setupTestingServer();
 
@@ -17,7 +17,5 @@ global.matchMedia = global.matchMedia || function () {
         matches: false,
     };
 };
-
-HTMLElement.prototype.scrollIntoView = jest.fn();
 
 expect.extend(toHaveNoViolations);
