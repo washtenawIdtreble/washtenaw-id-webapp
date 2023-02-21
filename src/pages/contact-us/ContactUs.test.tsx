@@ -13,7 +13,7 @@ import { INVALID_EMAIL_MESSAGE } from "../../hooks/form-validation/validateEmail
 import { INVALID_PHONE_MESSAGE } from "../../hooks/form-validation/validatePhone";
 import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRequired";
 import { Container } from "react-dom";
-import { ContactFormData, ContactUs } from "./ContactUs";
+import { CONTACT_PAGE_HEADING, ContactFormData, ContactUs } from "./ContactUs";
 
 describe(`${ContactUs.name} form`, () => {
     const formLabelText = "Contact Us";
@@ -43,9 +43,15 @@ describe(`${ContactUs.name} form`, () => {
         expect(page).toHaveNoViolations();
     });
 
-    test("has a page heading", () => {
-        const pageHeading = screen.getByRole("heading", { level: 1, name: "contact us" });
-        expect(pageHeading.textContent).toEqual(formLabelText);
+    test("exports its page heading", () => {
+        expect(CONTACT_PAGE_HEADING).toBe("Contact Us");
+    });
+
+    test("has an h1 that can be focused programmatically", () => {
+        const h1 = screen.getByRole("heading", { level: 1, name: CONTACT_PAGE_HEADING.toLocaleLowerCase() });
+        expect(h1).toBeVisible();
+        expect(h1.hasAttribute("tabindex")).toBe(true);
+        expect(h1.tabIndex).toBe(-1);
     });
 
     test("labels the form with the page heading text", () => {
