@@ -6,6 +6,7 @@ import { FormField, FormFieldType } from "../../components/form/FormField";
 import { validateEmail } from "../../hooks/form-validation/validateEmail";
 import { validatePhone } from "../../hooks/form-validation/validatePhone";
 import { validateRequired } from "../../hooks/form-validation/validateRequired";
+import { MainHeading } from "../../components/MainHeading";
 
 export type AccessibilityFormData = {
     name?: string
@@ -14,11 +15,13 @@ export type AccessibilityFormData = {
     description: string
 }
 
+export const ACCESSIBILITY_PAGE_HEADING = "Report Accessibility Issues";
+
 export const AccessibilityIssues = () => {
     const [successMessage] = useState("Your issue has been reported, thank you!");
     return (
-        <div className={"page-container"}>
-            <h1 id={"form-label"} className={"page-heading"}>Report Accessibility Issues</h1>
+        <>
+            <MainHeading id={"form-label"}>{ACCESSIBILITY_PAGE_HEADING}</MainHeading>
 
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"}
                   submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}>
@@ -32,6 +35,6 @@ export const AccessibilityIssues = () => {
                 <FormField id={"description"} name={"description"} validator={validateRequired}
                            inputType={FormFieldType.TEXTAREA}/>
             </Form>
-        </div>
+        </>
     );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Businesses } from "./Businesses";
+import { Businesses, BUSINESSES_PAGE_HEADING } from "./Businesses";
 import { render, screen, waitFor } from "@testing-library/react";
 import { errorBusinessesResolver, TEST_CATEGORIZED_BUSINESSES } from "../../mock-server/businesses-resolver";
 import { MemoryRouter } from "react-router-dom";
@@ -18,9 +18,15 @@ describe(Businesses.name, () => {
         ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
     });
 
-    test("has a heading", () => {
-        const pageHeader = screen.getByRole("heading", { level: 1 });
-        expect(pageHeader.textContent).toBe("Businesses that accept the ID");
+    test("exports its page heading", () => {
+        expect(BUSINESSES_PAGE_HEADING).toBe("Businesses that accept the ID");
+    });
+
+    test("has an h1 that can be focused programmatically", () => {
+        const h1 = screen.getByRole("heading", { level: 1, name: BUSINESSES_PAGE_HEADING });
+        expect(h1).toBeVisible();
+        expect(h1.hasAttribute("tabindex")).toBe(true);
+        expect(h1.tabIndex).toBe(-1);
     });
 
     describe("after businesses are loaded", () => {

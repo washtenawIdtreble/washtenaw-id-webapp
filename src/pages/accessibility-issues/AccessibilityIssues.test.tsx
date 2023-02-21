@@ -1,4 +1,4 @@
-import { AccessibilityFormData, AccessibilityIssues } from "./AccessibilityIssues";
+import { ACCESSIBILITY_PAGE_HEADING, AccessibilityFormData, AccessibilityIssues } from "./AccessibilityIssues";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import { rest } from "msw";
@@ -16,7 +16,6 @@ import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRe
 import { Container } from "react-dom";
 
 describe(`${AccessibilityIssues.name} form`, () => {
-    const formLabelText = "Report Accessibility Issues";
     const successMessage = "Your issue has been reported, thank you!";
     let capturedFormData: AccessibilityFormData;
     let user: UserEvent;
@@ -43,13 +42,19 @@ describe(`${AccessibilityIssues.name} form`, () => {
         expect(page).toHaveNoViolations();
     });
 
-    test("has a page heading", () => {
-        const pageHeading = screen.getByRole("heading", { level: 1 });
-        expect(pageHeading.textContent).toEqual(formLabelText);
+    test("exports its page heading", () => {
+        expect(ACCESSIBILITY_PAGE_HEADING).toBe("Report Accessibility Issues");
+    });
+
+    test("has an h1 that can be focused programmatically", () => {
+        const h1 = screen.getByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
+        expect(h1).toBeVisible();
+        expect(h1.hasAttribute("tabindex")).toBe(true);
+        expect(h1.tabIndex).toBe(-1);
     });
 
     test("labels the form with the page heading text", () => {
-        expect(screen.getByLabelText(formLabelText)).toBe(form);
+        expect(screen.getByLabelText(ACCESSIBILITY_PAGE_HEADING)).toBe(form);
     });
 
     describe("when the form data is valid", () => {

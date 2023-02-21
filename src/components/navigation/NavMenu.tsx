@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Disclosure, DisclosureContent, useDisclosureState } from "reakit";
 import { ChildrenProps } from "../../utilities/children-props";
 import { MenuIcon } from "./MenuIcon";
+import { useLocation } from "react-router-dom";
 
 export const NAV_MENU_CONTAINER_ID = "nav-menu";
 export const NAV_MENU_ID = "id-navigation-menu";
@@ -21,6 +22,7 @@ enum Keyboard {
 
 export const NavMenu = ({ children }: ChildrenProps) => {
     const disclosure = useDisclosureState({ visible: false });
+    const hideDisclosure = disclosure.hide;
 
     useEffect(() => {
         const mainLandmark = document.querySelector("main");
@@ -30,6 +32,12 @@ export const NavMenu = ({ children }: ChildrenProps) => {
             mainLandmark!.style.overflowY = "scroll";
         }
     }, [disclosure.visible]);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        hideDisclosure();
+    }, [hideDisclosure, location]);
 
     const menuOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
         const menu = document.getElementById(NAV_MENU_CONTAINER_ID);

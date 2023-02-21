@@ -23,7 +23,8 @@ describe(BusinessCard.name, () => {
             businessAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
             urlEscapedAddress = businessAddress
                 .replace(/ /g, "%20")
-                .replace(/,/g, "%2C");
+                .replace(/,/g, "%2C")
+                .replace(/'/g, "%27");
 
             addressBox = screen.getByText("Address");
             addressLink = screen.getByRole("link", { name: businessAddress });
