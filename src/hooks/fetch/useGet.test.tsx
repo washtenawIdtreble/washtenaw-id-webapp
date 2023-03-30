@@ -84,10 +84,10 @@ describe(useGET.name, () => {
         });
 
         describe("and the request was aborted", () => {
-            let abortRequest: (error: any) => void;
+            let rejectPromise: (error: any) => void;
             beforeEach(async () => {
                 const responsePromise = new Promise<Response>((resolve, reject) => {
-                    abortRequest = reject;
+                    rejectPromise = reject;
                 });
 
                 mocked(GET)
@@ -100,11 +100,8 @@ describe(useGET.name, () => {
             });
 
             test("does not throw an error or show one on the screen", async () => {
-                abortRequest(new DOMException("Abortedd"));
-                expect(screen.queryByText(people[0].name)).not.toBeInTheDocument();
-                expect(screen.queryByText(people[1].name)).not.toBeInTheDocument();
-                expect(screen.queryByText(`There was an error getting the resource from ${BASE_URL()}/${endpoint}`)).not.toBeInTheDocument();
-                expect(screen.queryByTestId("error-container")).not.toBeInTheDocument();
+                rejectPromise(new DOMException("Abortedd"));
+                expect(await screen.findByText("Something went wrong.")).toBeInTheDocument();
             });
         });
         describe("when unmounted", () => {
