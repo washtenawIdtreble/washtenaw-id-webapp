@@ -18,6 +18,13 @@ describe(Businesses.name, () => {
         ({ container } = render(<Businesses/>, { wrapper: MemoryRouter }));
     });
 
+    afterEach(async () => {
+        // wait for API call to resolve to avoid "can't update an unmounted component" error message
+        await waitFor(() => {
+            screen.getAllByRole("heading", { level: 2 });
+        });
+    });
+
     test("exports its page heading", () => {
         expect(BUSINESSES_PAGE_HEADING).toBe("Businesses that accept the ID");
     });

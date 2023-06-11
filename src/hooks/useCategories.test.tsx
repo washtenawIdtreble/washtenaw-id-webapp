@@ -16,6 +16,12 @@ describe(useCategories.name, () => {
         beforeEach(() => {
             ({ rerender } = render(<StubComponent/>));
         });
+        afterEach(async () => {
+            // wait for API call to resolve to avoid "can't update an unmounted component" error message
+            await waitFor(() => {
+                screen.getByText("Done");
+            });
+        });
         test("should return an empty list of categories before fetch is complete", () => {
             expect(response.categories).toEqual([]);
         });

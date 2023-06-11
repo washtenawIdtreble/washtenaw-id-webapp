@@ -20,6 +20,13 @@ describe(Categories.name, () => {
             ({ container } = render(<Categories/>, { wrapper: MemoryRouter }));
         });
 
+        afterEach(async () => {
+            // wait for API call to resolve to avoid "can't update an unmounted component" error message
+            await waitFor(() => {
+                screen.getByRole("list");
+            });
+        });
+
         test("exports its page heading", () => {
             expect(CATEGORIES_PAGE_HEADING).toBe("Business Categories");
         });
