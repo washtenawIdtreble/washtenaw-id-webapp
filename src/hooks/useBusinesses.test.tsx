@@ -15,12 +15,14 @@ import { ErrorMessage } from "./useCategories";
 describe(useBusinesses.name, () => {
     describe("on successful load", () => {
         let rerender: any;
-        let unmount: any;
         beforeEach(() => {
-            ({ rerender, unmount } = render(<StubComponent/>));
+            ({ rerender } = render(<StubComponent/>));
         });
-        afterEach(() => {
-            unmount();
+        afterEach(async () => {
+            // wait for API call to resolve to avoid "can't update an unmounted component" error message
+            await waitFor(() => {
+                screen.getByText("Done");
+            });
         });
         test("should return an empty list of businesses before fetch is complete", () => {
             expect(response.categorizedBusinesses).toEqual([]);
