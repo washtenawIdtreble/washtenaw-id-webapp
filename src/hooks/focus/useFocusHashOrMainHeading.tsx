@@ -10,10 +10,8 @@ export function useFocusHashOrMainHeading(): void {
 
     const focusHeading1 = useCallback(() => {
         if (!documentIsNew) {
-            setTimeout(() => {
-                const heading1 = document.querySelector("h1");
-                heading1?.focus();
-            }, parseInt(process.env.REACT_APP_FOCUS_TIMEOUT ?? "2000"));
+            const heading1 = document.querySelector("h1");
+            heading1?.focus();
         }
 
         /**
