@@ -12,6 +12,5 @@ export const AppLink = (props: Omit<LinkProps, "reloadDocument">) => {
         {...props}
         className={match ? `${props.className} matched-link` : props.className}
         aria-current={match ? "page" : undefined}
-        data-testid={`refreshing-link-${props.to}`}
     />);
 };

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { NAV_MENU_BUTTON_ID, NavMenu } from "./NavMenu";
 import { NavLinks } from "./NavLinks";
+import "./Navigation.css";
 
 export const WINDOW_RESIZE_EVENT = "resize";
 export const SMALL_SCREEN_MEDIA_QUERY = "(max-width: 767px)";
