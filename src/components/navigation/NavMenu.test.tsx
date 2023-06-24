@@ -38,14 +38,11 @@ describe(NavMenu.name, () => {
                 linkList = screen.getByRole("list") as HTMLUListElement;
                 links = within(linkList).getAllByRole("link");
             });
-            test("should display the menu", async () => {
+            test("should display the list of links", async () => {
                 expect(linkList).toBeVisible();
             });
             test("should show child links", () => {
                 expect(links.length).toBeGreaterThan(0);
-            });
-            test("should prevent scrolling", () => {
-                expect(screen.getByRole("main").style.overflowY).toEqual("hidden");
             });
             describe("and the menu button is clicked again", () => {
                 beforeEach(async () => {
@@ -53,9 +50,6 @@ describe(NavMenu.name, () => {
                 });
                 test("should close the menu", () => {
                     expect(linkList).not.toBeVisible();
-                });
-                test("should re-enable scrolling", () => {
-                    expect(screen.getByRole("main").style.overflowY).toEqual("scroll");
                 });
             });
         });
@@ -105,7 +99,7 @@ describe(NavMenu.name, () => {
                 expect(linkList).not.toBeVisible();
                 expect(menuButton).toHaveFocus();
             });
-            test("can navigate links with the tab key", async () => {
+            test("can navigate links with the tab key NO KEYBOARD TRAP", async () => {
                 await user.tab();
 
                 for (const link of links) {
@@ -113,37 +107,54 @@ describe(NavMenu.name, () => {
                     await user.tab();
                 }
 
-                expect(menuButton).toHaveFocus();
+                expect(document.body).toHaveFocus();
             });
-            test("can navigate links with the tab key in reverse", async () => {
-                await user.tab({ shift: true });
+            test("can navigate links with the tab key in reverse NO KEYBOARD TRAP", async () => {
+                const reverseLinks = [...links].reverse();
+                reverseLinks[0].focus();
 
-                for (const link of [...links].reverse()) {
-                    expect(link).toHaveFocus();
+                for (const link of reverseLinks.slice(1)) {
                     await user.tab({ shift: true });
-                }
-
-                expect(menuButton).toHaveFocus();
-            });
-            test("can navigate links down with the arrow keys", async () => {
-                await user.keyboard(KEYS.arrows.down);
-
-                for (const link of links) {
                     expect(link).toHaveFocus();
-                    await user.keyboard(KEYS.arrows.down);
                 }
 
+                await user.tab({ shift: true });
                 expect(menuButton).toHaveFocus();
+
+                await user.tab({ shift: true });
+                expect(document.body).toHaveFocus();
             });
-            test("can navigate links up with the arrow keys", async () => {
-                await user.keyboard(KEYS.arrows.up);
+            const downCases = [
+                KEYS.arrows.down,
+                KEYS.arrows.right,
+            ];
+            downCases.forEach(key => {
+                test(`can navigate links down with the arrow keys - ${key}`, async () => {
+                    await user.keyboard(key);
 
-                for (const link of [...links].reverse()) {
-                    expect(link).toHaveFocus();
-                    await user.keyboard(KEYS.arrows.up);
-                }
+                    for (const link of links) {
+                        expect(link).toHaveFocus();
+                        await user.keyboard(key);
+                    }
 
-                expect(menuButton).toHaveFocus();
+                    expect(menuButton).toHaveFocus();
+                });
+            });
+            const upCases = [
+                KEYS.arrows.up,
+                KEYS.arrows.left,
+            ];
+            upCases.forEach(key => {
+                test(`can navigate links up with the arrow keys - ${key}`, async () => {
+                    await user.keyboard(key);
+
+                    for (const link of [...links].reverse()) {
+                        expect(link).toHaveFocus();
+                        await user.keyboard(key);
+                    }
+
+                    expect(menuButton).toHaveFocus();
+                });
             });
             describe("and a link is focused", () => {
                 beforeEach(async () => {

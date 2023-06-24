@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Disclosure, DisclosureContent, useDisclosureState } from "reakit";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChildrenProps } from "../../utilities/children-props";
 import { MenuIcon } from "./MenuIcon";
 import { useLocation } from "react-router-dom";
@@ -8,38 +7,34 @@ export const NAV_MENU_CONTAINER_ID = "nav-menu";
 export const NAV_MENU_ID = "id-navigation-menu";
 export const NAV_MENU_BUTTON_ID = "id-navigation-menu-button";
 
-enum Direction {
-    up = -1,
-    down = 1,
-}
+type Direction = 1 | -1;
 
-enum Keyboard {
-    arrowUp = "ArrowUp",
-    arrowDown = "ArrowDown",
-    escape = "Escape",
-    tab = "Tab",
-}
+const UP: Direction = -1;
+const DOWN: Direction = 1;
+
+const Keyboard = {
+    UP: "ArrowUp",
+    RIGHT: "ArrowRight",
+    DOWN: "ArrowDown",
+    LEFT: "ArrowLeft",
+    ESCAPE: "Escape",
+    TAB: "Tab",
+};
 
 export const NavMenu = ({ children }: ChildrenProps) => {
-    const disclosure = useDisclosureState({ visible: false });
-    const hideDisclosure = disclosure.hide;
-
-    useEffect(() => {
-        const mainLandmark = document.querySelector("main");
-        if (disclosure.visible) {
-            mainLandmark!.style.overflowY = "hidden";
-        } else {
-            mainLandmark!.style.overflowY = "scroll";
-        }
-    }, [disclosure.visible]);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const location = useLocation();
 
-    useEffect(() => {
-        hideDisclosure();
-    }, [hideDisclosure, location]);
+    const toggleMenu = useCallback(() => {
+        setIsMenuOpen(currentValue => !currentValue);
+    }, []);
 
-    const menuOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [location]);
+
+    const menuOnKeyDown = useCallback((event: React.KeyboardEvent<HTMLElement>) => {
         const menu = document.getElementById(NAV_MENU_CONTAINER_ID);
         const links = Array.from(menu!.querySelectorAll("a"));
         const lastLink = links[links.length - 1];
@@ -52,48 +47,54 @@ export const NavMenu = ({ children }: ChildrenProps) => {
             links[focusedIndex + direction].focus();
         }
 
-        if (event.key === Keyboard.escape) {
-            menuButton?.focus();
-            disclosure.hide();
-        } else if (disclosure.visible && links && links.length) {
-            if ((event.key === Keyboard.tab && event.shiftKey) || event.key === Keyboard.arrowUp) {
-                event.preventDefault();
-                if (focusedElement === menuButton) {
-                    lastLink.focus();
-                } else {
-                    if (document.activeElement === firstLink) {
+        if (isMenuOpen) {
+            if (event.key === Keyboard.ESCAPE) {
+                menuButton?.focus();
+                setIsMenuOpen(false);
+            } else if (links && links.length) {
+                if ([Keyboard.UP, Keyboard.LEFT].includes(event.key)) {
+                    event.preventDefault();
+                    if (focusedElement === menuButton) {
+                        lastLink.focus();
+                    } else {
+                        if (document.activeElement === firstLink) {
+                            menuButton?.focus();
+                        } else {
+                            shiftFocus(UP);
+                        }
+                    }
+                } else if ([Keyboard.DOWN, Keyboard.RIGHT].includes(event.key)) {
+                    event.preventDefault();
+                    if (document.activeElement === lastLink) {
                         menuButton?.focus();
                     } else {
-                        shiftFocus(Direction.up);
+                        shiftFocus(DOWN);
                     }
-                }
-            } else if (event.key === Keyboard.tab || event.key === Keyboard.arrowDown) {
-                event.preventDefault();
-                if (document.activeElement === lastLink) {
-                    menuButton?.focus();
-                } else {
-                    shiftFocus(Direction.down);
                 }
             }
         }
-    };
+    }, [isMenuOpen]);
 
     return (
-        <div className={"nav-menu-container"} id={NAV_MENU_CONTAINER_ID}
-             data-testid={"nav-menu"} onKeyDown={menuOnKeyDown}>
-            <Disclosure {...disclosure}
-                        tabIndex={0}
-                        id={NAV_MENU_BUTTON_ID}
-                        className={"menu-button"}
-                        aria-label="Navigation Menu"
-                        aria-controls={NAV_MENU_ID}>
+        <div onKeyDown={menuOnKeyDown}
+             className={"nav-menu-container"}
+             id={NAV_MENU_CONTAINER_ID}
+             data-testid={"nav-menu"}>
+            <button onClick={toggleMenu}
+                    id={NAV_MENU_BUTTON_ID}
+                    className={"menu-button"}
+                    aria-label="Navigation Menu"
+                    aria-controls={NAV_MENU_ID}
+                    aria-expanded={isMenuOpen}>
                 <MenuIcon/>Menu
-            </Disclosure>
-            <DisclosureContent {...disclosure}
-                               className={"menu"}
-                               id={NAV_MENU_ID}>
+            </button>
+            <div className={"menu-disclosure"}
+                 id={NAV_MENU_ID}
+                 style={{
+                     display: isMenuOpen ? "" : "none"
+                 }}>
                 {children}
-            </DisclosureContent>
+            </div>
         </div>
     );
 };
