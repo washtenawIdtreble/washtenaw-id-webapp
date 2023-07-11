@@ -5,6 +5,7 @@ import { asyncTimeout } from "../../../test/async-timeout";
 import { ChildrenProps } from "../../utilities/children-props";
 import { DocumentStateContext } from "../../contexts/DocumentStateContext";
 import { Location, useLocation } from "react-router-dom";
+import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../../utilities/environment-variables";
 import mocked = jest.mocked;
 
 jest.mock("react-router-dom");
@@ -131,7 +132,7 @@ describe(useFocusHashOrMainHeading.name, () => {
 
             test("does NOT change the default focus", async () => {
                 const h1 = screen.getByRole("heading", { level: 1, name: heading1 });
-                await asyncTimeout(parseInt(process.env.REACT_APP_FOCUS_TIMEOUT!) * 2);
+                await asyncTimeout(getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_FOCUS_TIMEOUT) * 2);
                 expect(h1).not.toHaveFocus();
             });
         });
@@ -170,7 +171,7 @@ describe(useFocusHashOrMainHeading.name, () => {
 
                 test("does NOT change the default focus", async () => {
                     const h1 = screen.getByRole("heading", { level: 1, name: heading1 });
-                    await asyncTimeout(parseInt(process.env.REACT_APP_FOCUS_TIMEOUT!) * 2);
+                    await asyncTimeout(getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_FOCUS_TIMEOUT) * 2);
                     expect(h1).not.toHaveFocus();
                 });
             });
@@ -191,7 +192,7 @@ describe(useFocusHashOrMainHeading.name, () => {
 
                 test("does NOT change the default focus", async () => {
                     const h1 = screen.getByRole("heading", { level: 1, name: heading1 });
-                    await asyncTimeout(parseInt(process.env.REACT_APP_FOCUS_TIMEOUT!) * 2);
+                    await asyncTimeout(getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_FOCUS_TIMEOUT) * 2);
                     expect(h1).not.toHaveFocus();
                 });
             });

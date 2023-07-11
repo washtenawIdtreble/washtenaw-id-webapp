@@ -69,12 +69,13 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     }, [postFormData, onSubmitObservable]);
 
     return (<div className={"form-container"}>
-            {showSuccessMessage && <UserMessageNotification message={successMessage} clearMessage={removeResponseMessage}
-                                                      ref={responseMessage} className={"success"}/>
+            {showSuccessMessage &&
+                <UserMessageNotification message={successMessage} clearMessage={removeResponseMessage}
+                                         ref={responseMessage} className={"success"}/>
             }
 
             {errorMessage && <UserMessageNotification message={errorMessage} clearMessage={removeResponseMessage}
-                                                ref={responseMessage} className={"error"}/>
+                                                      ref={responseMessage} className={"error"}/>
             }
             <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>
@@ -82,7 +83,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                     {children}
                 </FormProvider>
                 <button type={"submit"} className={"form-submit"} disabled={submitting}>Submit</button>
-                <div aria-live={"polite"} ref={liveRegion} data-testid={"live-region"}>
+                <div aria-live={"polite"} ref={liveRegion} data-testid={"form-live-region"}>
                     {submitting && <span>Submitting...</span>}
                 </div>
             </form>

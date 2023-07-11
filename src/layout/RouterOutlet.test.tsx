@@ -12,6 +12,7 @@ import { CATEGORIES_PAGE_HEADING } from "../pages/categories/Categories";
 import { DocumentStateContext } from "../contexts/DocumentStateContext";
 import { AppLink } from "../components/navigation/AppLink";
 import { asyncTimeout } from "../../test/async-timeout";
+import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
 
 describe(RouterOutlet.name, () => {
     let user: UserEvent;
@@ -40,7 +41,7 @@ describe(RouterOutlet.name, () => {
             expect(document.title).toEqual(`${CATEGORIES_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
         });
         test("the main heading is NOT focused because the document is new", async () => {
-            await asyncTimeout(parseInt(process.env.REACT_APP_FOCUS_TIMEOUT!) + 1);
+            await asyncTimeout(getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_FOCUS_TIMEOUT) + 1);
             expect(h1).not.toHaveFocus();
         });
     });

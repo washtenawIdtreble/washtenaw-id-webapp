@@ -5,6 +5,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { DEFAULT_ERROR_MESSAGE, GET } from "./fetch";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
+import { LoadingContext } from "../../contexts/LoadingContext";
+import { ChildrenProps } from "../../utilities/children-props";
 import mocked = jest.mocked;
 
 jest.mock("./fetch");
@@ -49,24 +51,36 @@ describe(useGET.name, () => {
                     responsePromise: Promise.resolve(response),
                 });
 
-            ({ unmount } = render(<FetchingComponent/>));
+            ({ unmount } = render(<FetchingComponent/>, { wrapper: TestLoadingContext }));
 
             button = screen.getByRole("button");
         });
+
         test("makes a GET call to the correct endpoint", async () => {
             await user.click(button);
             await waitFor(() => {
                 expect(mocked(GET)).toHaveBeenCalledWith(`${BASE_URL()}/${endpoint}`);
             });
         });
+
+        test("starts loading", async () => {
+            await user.click(button);
+            expect(await screen.findByText("LOADING STARTED: true")).toBeInTheDocument();
+        });
+
         describe("and the response has a body", () => {
             beforeEach(async () => {
                 await user.click(button);
             });
+
             test("resolves the value from the server", async () => {
                 await user.click(button);
                 expect(screen.getByText(people[0].name)).toBeInTheDocument();
                 expect(screen.getByText(people[1].name)).toBeInTheDocument();
+            });
+
+            test("stops loading", async () => {
+                expect(await screen.findByText("LOADING FINISHED: true")).toBeInTheDocument();
             });
         });
 
@@ -80,6 +94,10 @@ describe(useGET.name, () => {
                 await waitFor(() => {
                     expect(screen.getByText(`There was an error getting the resource from ${BASE_URL()}/${endpoint}`)).toBeInTheDocument();
                 });
+            });
+
+            test("stops loading", async () => {
+                expect(await screen.findByText("LOADING FINISHED: true")).toBeInTheDocument();
             });
         });
 
@@ -102,6 +120,10 @@ describe(useGET.name, () => {
             test("does not throw an error or show one on the screen", async () => {
                 rejectPromise(new DOMException("Abortedd"));
                 expect(await screen.findByText("Something went wrong.")).toBeInTheDocument();
+            });
+
+            test("stops loading", async () => {
+                expect(await screen.findByText("LOADING FINISHED: true")).toBeInTheDocument();
             });
         });
         describe("when unmounted", () => {
@@ -135,15 +157,20 @@ describe(useGET.name, () => {
                     responsePromise: Promise.resolve(response),
                 });
 
-                render(<FetchingComponent/>);
+                render(<FetchingComponent/>, { wrapper: TestLoadingContext });
 
                 button = screen.getByRole("button");
             });
+
             test("rejects with the value from the server", async () => {
                 await user.click(button);
                 await waitFor(() => {
                     expect(screen.getByText(errorMessage)).toBeInTheDocument();
                 });
+            });
+
+            test("stops loading", async () => {
+                expect(await screen.findByText("LOADING FINISHED: true")).toBeInTheDocument();
             });
         });
 
@@ -159,15 +186,20 @@ describe(useGET.name, () => {
                     responsePromise: Promise.resolve(response),
                 });
 
-                render(<FetchingComponent/>);
+                render(<FetchingComponent/>, { wrapper: TestLoadingContext });
 
                 button = screen.getByRole("button");
             });
+
             test("rejects with the value from the server", async () => {
                 await user.click(button);
                 await waitFor(() => {
                     expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
                 });
+            });
+
+            test("stops loading", async () => {
+                expect(await screen.findByText("LOADING FINISHED: true")).toBeInTheDocument();
             });
         });
     });
@@ -198,4 +230,18 @@ const FetchingComponent = () => {
             <button onClick={onClick}>get</button>
         </>
     );
+};
+
+const TestLoadingContext = ({ children }: ChildrenProps) => {
+    const [loadingStarted, setLoadingStarted] = useState("false");
+    const [loadingFinished, setLoadingFinished] = useState("false");
+
+    const startLoading = useCallback(() => setLoadingStarted("true"), []);
+    const finishLoading = useCallback(() => setLoadingFinished("true"), []);
+
+    return <LoadingContext.Provider value={{ startLoading, finishLoading }}>
+        {children}
+        <span>LOADING STARTED: {loadingStarted}</span>
+        <span>LOADING FINISHED: {loadingFinished}</span>
+    </LoadingContext.Provider>;
 };

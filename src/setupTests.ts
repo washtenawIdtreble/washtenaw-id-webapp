@@ -9,6 +9,8 @@ import { toHaveNoViolations } from "jest-axe";
 
 process.env.REACT_APP_API = "test";
 process.env.REACT_APP_FOCUS_TIMEOUT = "10";
+process.env.REACT_APP_LOADING_TIMEOUT = "10";
+process.env.REACT_APP_LIVE_REGION_CLEAR_TIMEOUT = "100";
 
 setupTestingServer();
 
