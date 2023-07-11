@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import { BASE_URL } from "../../utilities/base-url";
 import { DEFAULT_ERROR_MESSAGE, GET, ResponseCallback } from "./fetch";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
 type GetFunction<ResponseBody> = (responseCallback: ResponseCallback<ResponseBody>) => void;
 
 export function useGET<T>(endpoint: string): GetFunction<T> {
     const abortRef = useRef<Array<() => void>>([]);
+    const { startLoading, finishLoading } = useContext(LoadingContext);
 
     useEffect(() => {
         return () => {
@@ -17,7 +19,12 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
         };
     }, []);
 
+    useEffect(() => {
+        finishLoading();
+    }, [finishLoading])
+
     return useCallback(async (responseCallback) => {
+        startLoading();
         const { responsePromise, abort } = GET(`${BASE_URL()}/${endpoint}`);
 
         abortRef.current.push(abort);
@@ -34,8 +41,10 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
             const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
 
             responseCallback(ok, body as T, errorMessage);
-        } catch { 
+        } catch {
             responseCallback(false, undefined as unknown as T, "Something went wrong.");
+        } finally {
+            finishLoading();
         }
-    }, [endpoint]);
+    }, [endpoint, finishLoading, startLoading]);
 }

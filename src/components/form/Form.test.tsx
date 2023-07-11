@@ -50,7 +50,7 @@ describe(Form.name, () => {
             ({ container } = render(<FormWithInputs/>));
 
             form = screen.getByRole("form");
-            liveRegion = screen.getByTestId("live-region");
+            liveRegion = screen.getByTestId("form-live-region");
         });
 
         test("has no AxE violations", async () => {
@@ -89,7 +89,7 @@ describe(Form.name, () => {
                 render(<FormWithInputs validator={() => nameErrorMessage}/>);
 
                 form = screen.getByRole("form");
-                liveRegion = screen.getByTestId("live-region");
+                liveRegion = screen.getByTestId("form-live-region");
 
                 nameInput = within(form).getByRole("textbox", { name: "Name" });
                 ageInput = within(form).getByRole("textbox", { name: "Age" });
@@ -138,7 +138,7 @@ describe(Form.name, () => {
                 render(<FormWithInputs/>);
 
                 form = screen.getByRole("form");
-                liveRegion = screen.getByTestId("live-region");
+                liveRegion = screen.getByTestId("form-live-region");
 
                 nameInput = within(form).getByRole("textbox", { name: "Name" });
                 ageInput = within(form).getByRole("textbox", { name: "Age" });
