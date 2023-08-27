@@ -28,7 +28,7 @@ describe(`${NavMenu.name} (Integration Test)`, () => {
                 </MemoryRouter>
             </DocumentStateProvider>
         );
-        menuButton = screen.getByRole("button", { name: "Navigation Menu" });
+        menuButton = screen.getByRole("button", { name: "Menu" });
     });
     describe("when the user navigates via the nav menu links", () => {
         let links: HTMLAnchorElement[];

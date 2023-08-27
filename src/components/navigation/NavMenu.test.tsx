@@ -22,7 +22,7 @@ describe(NavMenu.name, () => {
                 </MemoryRouter>
             </main>,
         );
-        menuButton = screen.getByRole("button", { name: "Navigation Menu" });
+        menuButton = screen.getByRole("button", { name: "Menu" });
         linkList = screen.queryByRole("list");
     });
 
