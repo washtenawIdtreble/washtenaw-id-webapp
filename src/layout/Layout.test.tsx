@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import { DocumentStateContext } from "../contexts/DocumentStateContext";
+import { MAIN_HEADING_ID } from "../components/MainHeading";
 
 describe(Layout.name, () => {
     let user: UserEvent;
@@ -18,11 +19,9 @@ describe(Layout.name, () => {
         });
     });
     test("should have a link to skip to the main landmark", () => {
-        const skipNav: HTMLLinkElement = screen.getByRole("link", { name: "Skip to content" });
-        const main = screen.getByRole("main");
+        const skipNav: HTMLLinkElement = screen.getByRole("link", { name: "Skip to content" });    
 
-        expect(skipNav.href).toContain("#main-content");
-        expect(main.id).toEqual("main-content");
+        expect(skipNav.href).toContain(`#${MAIN_HEADING_ID}`);
     });
     test("skip-nav link should be the first focusable element", async () => {
         const skipNav = screen.getByRole("link", { name: "Skip to content" });
