@@ -83,7 +83,6 @@ export const NavMenu = ({ children }: ChildrenProps) => {
             <button onClick={toggleMenu}
                     id={NAV_MENU_BUTTON_ID}
                     className={"menu-button"}
-                    aria-label="Navigation Menu"
                     aria-controls={NAV_MENU_ID}
                     aria-expanded={isMenuOpen}>
                 <MenuIcon/>Menu

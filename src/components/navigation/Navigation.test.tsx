@@ -66,7 +66,7 @@ describe(Navigation.name, () => {
             expect(navMenu).toBeInTheDocument();
         });
         test("shows the nav links within the nav menu", async () => {
-            await user.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
+            await user.click(within(navElement).getByRole("button", { name: "Menu" }));
             expect(within(navElement).getAllByRole("link").length).toBeGreaterThan(0);
         });
         describe("and becomes wide", () => {
@@ -85,7 +85,7 @@ describe(Navigation.name, () => {
         });
         describe("and becomes wide with focus on the menu button", () => {
             beforeEach(async () => {
-                const navMenuButton = within(navElement).getByRole("button", { name: "Navigation Menu" });
+                const navMenuButton = within(navElement).getByRole("button", { name: "Menu" });
                 navMenuButton.focus();
                 mocked(window.matchMedia).mockReturnValue({ matches: false } as MediaQueryList);
                 await waitFor(() => {
@@ -100,7 +100,7 @@ describe(Navigation.name, () => {
         describe("and becomes wide with focus on a link in the menu", () => {
             let focusedLinkIndex: number;
             beforeEach(async () => {
-                await user.click(within(navElement).getByRole("button", { name: "Navigation Menu" }));
+                await user.click(within(navElement).getByRole("button", { name: "Menu" }));
 
                 const links = within(navElement).getAllByRole("link");
                 focusedLinkIndex = Math.floor(Math.random() * links.length);
@@ -141,7 +141,7 @@ describe(Navigation.name, () => {
                 });
             });
             test("the nav menu button appears", () => {
-                const navMenuButton = within(navElement).getByRole("button", { name: "Navigation Menu" });
+                const navMenuButton = within(navElement).getByRole("button", { name: "Menu" });
                 expect(navMenuButton).toBeInTheDocument();
             });
         });
@@ -157,7 +157,7 @@ describe(Navigation.name, () => {
                 });
             });
             test("the nav menu button gains focus", () => {
-                const navMenuButton = within(navElement).getByRole("button", { name: "Navigation Menu" });
+                const navMenuButton = within(navElement).getByRole("button", { name: "Menu" });
                 expect(navMenuButton).toHaveFocus();
             });
         });
