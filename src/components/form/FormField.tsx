@@ -1,6 +1,7 @@
 import React, { RefObject, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useValidation, Validator } from "../../hooks/form-validation/useValidation";
 import { FormContext } from "../../contexts/FormContext";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export enum FormFieldType {
     INPUT,
@@ -13,14 +14,16 @@ export type FormFieldProps = {
     validator?: Validator
     autoComplete?: string
     inputType?: FormFieldType
+    pageIdentifier: string
 }
 
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
-export const FormField = ({ id, name, validator, autoComplete, inputType = FormFieldType.INPUT }: FormFieldProps) => {
+export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, inputType = FormFieldType.INPUT }: FormFieldProps) => {
     const { registerValidation } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const { save } = useLocalStorage(`${pageIdentifier}-${id}`);
 
     const validation = useValidation({ validator, inputRef, setErrorMessage });
 
@@ -34,6 +37,10 @@ export const FormField = ({ id, name, validator, autoComplete, inputType = FormF
         }
     }, [validation, errorMessage]);
 
+    const onChange = useCallback((event) => {
+        save(event.target.value);
+    }, []);
+
     const invalid = errorMessage !== "";
     const errorMessageId = invalid ? `form-error-message-for-${id}` : "";
 
@@ -41,12 +48,12 @@ export const FormField = ({ id, name, validator, autoComplete, inputType = FormF
         ? <input id={id} name={name} ref={inputRef as RefObject<HTMLInputElement>}
                  aria-describedby={errorMessageId}
                  aria-invalid={invalid} aria-errormessage={errorMessageId}
-                 onBlur={onBlur} autoComplete={autoComplete} className={"form-input"}
+                 onBlur={onBlur} onChange={onChange} autoComplete={autoComplete} className={"form-input"}
         />
         : <textarea id={id} name={name} ref={inputRef as RefObject<HTMLTextAreaElement>}
                     aria-describedby={errorMessageId}
                     aria-invalid={invalid} aria-errormessage={errorMessageId}
-                    onBlur={onBlur} autoComplete={autoComplete} className={"form-textarea"}
+                    onBlur={onBlur} onChange={onChange} autoComplete={autoComplete} className={"form-textarea"}
         />;
 
     const errorClass = invalid ? "invalid-form-field" : "";

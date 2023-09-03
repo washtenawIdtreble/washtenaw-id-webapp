@@ -1,4 +1,4 @@
-import { ACCESSIBILITY_PAGE_HEADING, AccessibilityFormData, AccessibilityIssues } from "./AccessibilityIssues";
+import { ACCESSIBILITY_PAGE_HEADING, AccessibilityFormData, AccessibilityIssues, ACCESSIBILITY_PAGE_IDENTIFIER } from "./AccessibilityIssues";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import { rest } from "msw";
@@ -55,6 +55,14 @@ describe(`${AccessibilityIssues.name} form`, () => {
 
     test("labels the form with the page heading text", () => {
         expect(screen.getByLabelText(ACCESSIBILITY_PAGE_HEADING)).toBe(form);
+    });
+
+    test("saves to local storage with correct key", async() => {
+        const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
+        const input: string = "Seth";
+        await user.type(nameInput, input);
+
+        expect(window.localStorage.getItem(`${ACCESSIBILITY_PAGE_IDENTIFIER}-name`)).toEqual(input);
     });
 
     describe("when the form data is valid", () => {

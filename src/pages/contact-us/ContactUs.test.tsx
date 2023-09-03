@@ -13,7 +13,7 @@ import { INVALID_EMAIL_MESSAGE } from "../../hooks/form-validation/validateEmail
 import { INVALID_PHONE_MESSAGE } from "../../hooks/form-validation/validatePhone";
 import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRequired";
 import { Container } from "react-dom";
-import { CONTACT_PAGE_HEADING, ContactFormData, ContactUs } from "./ContactUs";
+import { CONTACT_PAGE_HEADING, ContactFormData, ContactUs, CONTACT_PAGE_IDENTIFIER } from "./ContactUs";
 
 describe(`${ContactUs.name} form`, () => {
     const formLabelText = "Contact Us";
@@ -56,6 +56,14 @@ describe(`${ContactUs.name} form`, () => {
 
     test("labels the form with the page heading text", () => {
         expect(screen.getByLabelText(formLabelText)).toBe(form);
+    });
+
+    test("saves to local storage with correct key", async() => {
+        const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
+        const input: string = "Seth";
+        await user.type(nameInput, input);
+
+        expect(window.localStorage.getItem(`${CONTACT_PAGE_IDENTIFIER}-name`)).toEqual(input);
     });
 
     describe("when the form data is valid", () => {

@@ -17,6 +17,7 @@ export type AccessibilityFormData = {
 };
 
 export const ACCESSIBILITY_PAGE_HEADING = 'Report Accessibility Issues';
+export const ACCESSIBILITY_PAGE_IDENTIFIER = 'accessibility-issues';
 
 export const AccessibilityIssues = () => {
     const [successMessage] = useState(
@@ -34,12 +35,16 @@ export const AccessibilityIssues = () => {
                 <label htmlFor={'name'} className={'form-label'}>
                     Your Name (optional)
                 </label>
-                <FormField id={'name'} autoComplete={'name'} name={'name'} />
+                <FormField id={'name'} 
+                    pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER} 
+                    autoComplete={'name'} 
+                    name={'name'} />
                 <label htmlFor={'email'} className={'form-label'}>
                     Your email (optional)
                 </label>
                 <FormField
                     id={'email'}
+                    pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
                     name={'email'}
                     validator={validateEmail}
                     autoComplete={'email'}
@@ -49,6 +54,7 @@ export const AccessibilityIssues = () => {
                 </label>
                 <FormField
                     id={'phone'}
+                    pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
                     name={'phone'}
                     validator={validatePhone}
                     autoComplete={'tel'}
@@ -58,6 +64,7 @@ export const AccessibilityIssues = () => {
                 </label>
                 <FormField
                     id={'description'}
+                    pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
                     name={'description'}
                     validator={validateRequired}
                     inputType={FormFieldType.TEXTAREA}

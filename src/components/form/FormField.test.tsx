@@ -9,6 +9,7 @@ import { Observable } from "../../utilities/observable";
 describe(FormField.name, () => {
     const id = "id";
     const name = "name";
+    const pageIdentifier = "my-page";
     let textBox: HTMLInputElement;
     let user: UserEvent;
 
@@ -16,10 +17,14 @@ describe(FormField.name, () => {
         user = userEvent.setup();
     });
 
-    describe("when there is no validation error", () => {
+    afterEach(() => {
+        window.localStorage.clear();
+    });
+
+    describe("under normal circumstances - input", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"}/>);
+            render(<FormField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -37,7 +42,17 @@ describe(FormField.name, () => {
         test("passes autocomplete to the input", () => {
             expect(textBox.autocomplete).toEqual("tel");
         });
-        describe("and the field is blurred with an invalid value", () => {
+        test("writes to local storage when input changes", async() => {
+            const typedInValue = "AB";
+            await user.type(textBox, typedInValue);
+
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual(typedInValue);
+
+            await user.type(textBox, "C");
+
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
+        });
+        describe("when the field is blurred with an invalid value", () => {
             beforeEach(async () => {
                 textBox.focus();
                 await user.tab();
@@ -47,9 +62,47 @@ describe(FormField.name, () => {
             });
         });
     });
-    test("allows creating a textarea instead of an input", () => {
-        render(<FormField id={id} name={name} inputType={FormFieldType.TEXTAREA}/>);
-        expect(screen.getByRole("textbox")).toBeVisible();
+
+    describe("under normal circumstances - textarea", () => {
+        const errorMessage = "error message";
+        beforeEach(() => {
+            render(<FormField id={id} name={name} validator={() => errorMessage} inputType={FormFieldType.TEXTAREA} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
+            textBox = screen.getByRole("textbox");
+        });
+        test("shows an input", () => {
+            expect(textBox).toBeVisible();
+        });
+        test("passes id to input", () => {
+            expect(textBox.id).toEqual(id);
+        });
+        test("passes name to input", () => {
+            expect(textBox.name).toEqual(name);
+        });
+        test("error message container is not present", () => {
+            expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+        });
+        test("passes autocomplete to the input", () => {
+            expect(textBox.autocomplete).toEqual("tel");
+        });
+        test("writes to local storage when input changes", async() => {
+            const typedInValue = "AB";
+            await user.type(textBox, typedInValue);
+
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual(typedInValue);
+
+            await user.type(textBox, "C");
+
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
+        });
+        describe("when the field is blurred with an invalid value", () => {
+            beforeEach(async () => {
+                textBox.focus();
+                await user.tab();
+            });
+            test("error message container is not present", () => {
+                expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+            });
+        });
     });
     describe("when there is a validation error", () => {
         const invalidValue = "cheese";
@@ -63,7 +116,7 @@ describe(FormField.name, () => {
             };
 
             render(
-                <FormWithField id={id} name={name} validator={validator}/>,
+                <FormWithField id={id} name={name} validator={validator} pageIdentifier={pageIdentifier}/>,
             );
             textBox = screen.getByRole("textbox");
         });
@@ -129,7 +182,7 @@ const FormWithField = (props: FormFieldProps) => {
 
     return (<>
         <FormProvider onSubmit={onSubmit}>
-            <FormField id={props.id} name={props.name} validator={props.validator}/>
+            <FormField id={props.id} name={props.name} validator={props.validator} pageIdentifier={props.pageIdentifier}/>
             <button onClick={onClick}>SUBMIT</button>
         </FormProvider>
     </>);
