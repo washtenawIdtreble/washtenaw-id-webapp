@@ -17,6 +17,7 @@ export type ContactFormData = {
 };
 
 export const CONTACT_PAGE_HEADING = 'Contact Us';
+export const CONTACT_PAGE_IDENTIFIER = 'contact-us';
 
 export const ContactUs = () => {
     const [successMessage] = useState('Your message has been sent, thank you!');
@@ -34,12 +35,17 @@ export const ContactUs = () => {
                 <label htmlFor={'name'} className={'form-label'}>
                     Your Name (optional)
                 </label>
-                <FormField id={'name'} autoComplete={'name'} name={'name'} />
+                <FormField 
+                    id={'name'} 
+                    pageIdentifier={CONTACT_PAGE_IDENTIFIER} 
+                    autoComplete={'name'} 
+                    name={'name'} />
                 <label htmlFor={'email'} className={'form-label'}>
                     Your email (optional)
                 </label>
                 <FormField
                     id={'email'}
+                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
                     name={'email'}
                     validator={validateEmail}
                     autoComplete={'email'}
@@ -49,6 +55,7 @@ export const ContactUs = () => {
                 </label>
                 <FormField
                     id={'phone'}
+                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
                     name={'phone'}
                     validator={validatePhone}
                     autoComplete={'tel'}
@@ -58,6 +65,7 @@ export const ContactUs = () => {
                 </label>
                 <FormField
                     id={'description'}
+                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
                     name={'description'}
                     validator={validateRequired}
                     inputType={FormFieldType.TEXTAREA}
