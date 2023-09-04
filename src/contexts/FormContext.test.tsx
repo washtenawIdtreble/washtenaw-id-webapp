@@ -20,11 +20,15 @@ describe("Form Context", () => {
     test("Runs all validations when the onSubmit is triggered", async () => {
         const submit = screen.getByRole("button", { name: "SUBMIT" });
         await user.click(submit);
-        await waitFor(() => {
-            expect(screen.getByText(`${nameLabel} input is invalid`)).toBeInTheDocument();
-        });
+        expect(await screen.findByText(`${nameLabel} input is invalid`)).toBeInTheDocument();
         expect(screen.getByText(`${colorLabel} input is invalid`)).toBeInTheDocument();
         expect(screen.getByText(`${cityLabel} input is invalid`)).toBeInTheDocument();
+    });
+    test("Notifies observer when onClear is triggered", async () => {
+        const clear = screen.getByRole("button", { name: "CLEAR" });
+        await user.click(clear);
+        const clearedElements = await screen.findAllByText("CLEARED: true");
+        expect(clearedElements.length).toBe(3);
     });
     test("Returns the value to the obervable", async () => {
         expect(screen.getByText("OBSERVED: false")).toBeVisible();
@@ -53,6 +57,7 @@ describe("Form Context", () => {
 
 const TestFormWithProvider = ({ children }: ChildrenProps) => {
     const [onSubmitObservable] = useState(new Observable());
+    const [onClearObservable] = useState(new Observable());
     const [observed, setObserved] = useState("false");
 
     const onSubmit = useCallback(() => {
@@ -62,17 +67,23 @@ const TestFormWithProvider = ({ children }: ChildrenProps) => {
         }
     }, [onSubmitObservable]);
 
-    return (<FormProvider onSubmit={onSubmitObservable}>
+    const onClear = useCallback(() => {
+        onClearObservable.notify();
+    }, []);
+
+    return (<FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
         {children}
         <span>OBSERVED: {observed}</span>
         <button onClick={onSubmit}>SUBMIT</button>
+        <button onClick={onClear}>CLEAR</button>
     </FormProvider>);
 };
 
 const TestInputFormConsumer = ({ label }: { label: string }) => {
-    const { registerValidation } = useContext(FormContext);
+    const { registerField } = useContext(FormContext);
     const input = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState("");
+    const [cleared, setCleared] = useState("false");
 
     const validation = useCallback(() => {
         if (input.current!.value === validValue) {
@@ -85,9 +96,13 @@ const TestInputFormConsumer = ({ label }: { label: string }) => {
         return message;
     }, [label]);
 
+    const clear = useCallback(() => {
+        setCleared("true");
+    }, []);
+
     useEffect(() => {
-        registerValidation({ validation, inputRef: input });
-    }, [registerValidation, validation]);
+        registerField({ validation, inputRef: input, clear });
+    }, [registerField, validation]);
 
     return (<>
         <label>{label}
@@ -96,6 +111,7 @@ const TestInputFormConsumer = ({ label }: { label: string }) => {
         {errorMessage &&
             <span>{errorMessage}</span>
         }
+        <span>CLEARED: {cleared}</span>
     </>);
 };
 

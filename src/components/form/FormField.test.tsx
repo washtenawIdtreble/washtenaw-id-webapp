@@ -41,7 +41,7 @@ describe(FormField.name, () => {
     describe("under normal circumstances - input", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
+            render(<FormWithField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -73,13 +73,21 @@ describe(FormField.name, () => {
             textBox.focus();
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+        });
+        test("clears value and local storage when onClear observable fires", async() => {
+            await user.type(textBox, "some email");
+            const clearButton = screen.getByRole("button", {name: "CLEAR"});
+            await user.click(clearButton);
+            
+            expect(textBox.value).toBe("");
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toBe(null);
         });
     });
 
     describe("under normal circumstances - textarea", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormField id={id} name={name} validator={() => errorMessage} inputType={FormFieldType.TEXTAREA} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
+            render(<FormWithField id={id} name={name} validator={() => errorMessage} inputType={FormFieldType.TEXTAREA} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -111,6 +119,14 @@ describe(FormField.name, () => {
             textBox.focus();
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+        });
+        test("clears value and local storage when onClear observable fires", async() => {
+            await user.type(textBox, "some email");
+            const clearButton = screen.getByRole("button", {name: "CLEAR"});
+            await user.click(clearButton);
+            
+            expect(textBox.value).toBe("");
+            expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toBe(null);
         });
     });
 
@@ -133,7 +149,7 @@ describe(FormField.name, () => {
 
         test(`shows the error message`, async () => {
             await user.type(textBox, invalidValue);
-            await user.click(screen.getByRole("button"));
+            await user.click(screen.getByRole("button", {name: "SUBMIT"}));
             let errorMessage: HTMLSpanElement;
 
             await waitFor(() => {
@@ -157,7 +173,7 @@ describe(FormField.name, () => {
             test("removes error message if it has been fixed", async () => {
                 // add value and validate to create multiple error messages
                 await user.type(textBox, invalidValue);
-                await user.click(screen.getByRole("button"));
+                await user.click(screen.getByRole("button", {name: "SUBMIT"}));
                 await waitFor(() => {
                     expect(textBox).toHaveFocus();
                 });
@@ -184,16 +200,22 @@ describe(FormField.name, () => {
 });
 
 const FormWithField = (props: FormFieldProps) => {
-    const [onSubmit] = useState(new Observable());
+    const [onSubmitObservable] = useState(new Observable());
+    const [onClearObservable] = useState(new Observable());
 
-    const onClick = useCallback(() => {
-        onSubmit.notify();
-    }, [onSubmit]);
+    const onSubmit = useCallback(() => {
+        onSubmitObservable.notify();
+    }, [onSubmitObservable]);
+    
+    const onClear = useCallback(()=> {
+        onClearObservable.notify();
+    },[]);
 
     return (<>
-        <FormProvider onSubmit={onSubmit}>
-            <FormField id={props.id} name={props.name} validator={props.validator} pageIdentifier={props.pageIdentifier}/>
-            <button onClick={onClick}>SUBMIT</button>
+        <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
+            <FormField {...props}/>
+            <button onClick={onSubmit}>SUBMIT</button>
+            <button onClick={onClear}>CLEAR</button>
         </FormProvider>
     </>);
 };

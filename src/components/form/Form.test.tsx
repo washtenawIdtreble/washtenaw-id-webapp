@@ -16,6 +16,7 @@ const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
 
 const successMessage = "Your issue has been reported, thank you!";
+const pageIdentifier = "test-page";
 
 describe(Form.name, () => {
     let capturedFormData: AccessibilityFormData;
@@ -184,6 +185,11 @@ describe(Form.name, () => {
                     expect(ageInput.value).toBe("");
                 });
 
+                test("the local storage for fields is cleared", async () => {
+                    expect(window.localStorage.getItem(`${pageIdentifier}-name`)).toBe(null);
+                    expect(window.localStorage.getItem(`${pageIdentifier}-age`)).toBe(null);
+                });
+
                 test("the success message is focused", async () => {
                     await waitFor(() => {
                         expect(successElement).toHaveFocus();
@@ -264,9 +270,9 @@ const FormWithInputs = (props: { validator?: Validator }) => {
             <span id="form-label">{formLabelText}</span>
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
                 <label htmlFor={"name"}>Name</label>
-                <FormField id={"name"} name={"name"} validator={props.validator} pageIdentifier=""/>
+                <FormField id={"name"} name={"name"} validator={props.validator} pageIdentifier={pageIdentifier}/>
                 <label htmlFor={"age"}>Age</label>
-                <FormField id={"age"} name={"age"} pageIdentifier=""/>
+                <FormField id={"age"} name={"age"} pageIdentifier={pageIdentifier}/>
             </Form>
         </>
     );

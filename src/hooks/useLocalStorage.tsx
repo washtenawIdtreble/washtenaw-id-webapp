@@ -10,9 +10,9 @@ export const useLocalStorage = (storageKey : string) => {
         setCurrentValue(input);
     }, [key]);
 
-    const remove = useCallback(() => {
+    const clearStorage = useCallback(() => {
         window.localStorage.removeItem(storageKey);
     }, [key]);
 
-    return { save, currentValue, remove };
+    return { save, currentValue, clearStorage };
 };

@@ -39,6 +39,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     }, []);
 
     const [onSubmitObservable] = useState(new Observable());
+    const [onClearObservable] = useState(new Observable());
 
     const onSubmit = useCallback(async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -57,7 +58,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 setServerResponded(true);
 
                 if (ok) {
-                    form.reset();
+                    onClearObservable.notify();
                     setShowSuccessMessage(true);
                 } else {
                     setErrorMessage(error);
@@ -77,7 +78,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
             }
             <form onSubmit={onSubmit} aria-labelledby={ariaLabelledBy} className={"form"}
                   data-testid={"form-component"}>
-                <FormProvider onSubmit={onSubmitObservable}>
+                <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
                     {children}
                 </FormProvider>
                 <button type={"submit"} className={"form-submit"} disabled={submitting}>Submit</button>
