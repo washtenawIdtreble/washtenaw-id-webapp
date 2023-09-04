@@ -21,6 +21,23 @@ describe(FormField.name, () => {
         window.localStorage.clear();
     });
 
+    test("reads from local storage on mount", () => {
+        const inputId = "input";
+        const textAreaId = "text-area";
+        window.localStorage.setItem(`${pageIdentifier}-${inputId}`, "input Value Saved Earlier");
+        window.localStorage.setItem(`${pageIdentifier}-${textAreaId}`, "textarea Value Saved Earlier");
+
+        render(<>
+            <FormField id={inputId} name={name} pageIdentifier={pageIdentifier}/>
+            <FormField id={textAreaId} name={name} inputType={FormFieldType.TEXTAREA} pageIdentifier={pageIdentifier}/>
+        </>);
+
+        const fields = screen.getAllByRole("textbox") as HTMLInputElement[];
+
+        expect(fields[0].value).toEqual("input Value Saved Earlier");
+        expect(fields[1].value).toEqual("textarea Value Saved Earlier");
+    });
+
     describe("under normal circumstances - input", () => {
         const errorMessage = "error message";
         beforeEach(() => {
@@ -52,14 +69,10 @@ describe(FormField.name, () => {
 
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
         });
-        describe("when the field is blurred with an invalid value", () => {
-            beforeEach(async () => {
-                textBox.focus();
-                await user.tab();
-            });
-            test("error message container is not present", () => {
-                expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
-            });
+        test("error message container is not present", async () => {
+            textBox.focus();
+            await user.tab();
+            expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
     });
 
@@ -94,16 +107,13 @@ describe(FormField.name, () => {
 
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
         });
-        describe("when the field is blurred with an invalid value", () => {
-            beforeEach(async () => {
-                textBox.focus();
-                await user.tab();
-            });
-            test("error message container is not present", () => {
-                expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
-            });
+        test("error message container is not present", async () => {
+            textBox.focus();
+            await user.tab();
+            expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
     });
+
     describe("when there is a validation error", () => {
         const invalidValue = "cheese";
 
