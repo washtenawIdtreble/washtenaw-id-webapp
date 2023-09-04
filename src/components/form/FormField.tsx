@@ -30,6 +30,13 @@ export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, i
     useEffect(() => {
         registerValidation({ validation, inputRef });
     }, [registerValidation, validation]);
+    
+    useEffect(() => {
+        if (inputRef.current)
+        {
+            inputRef.current.value = window.localStorage.getItem(`${pageIdentifier}-${id}`) ?? "";
+        }
+    }, []);
 
     const onBlur = useCallback(() => {
         if (errorMessage !== "") {

@@ -38,6 +38,11 @@ describe(Form.name, () => {
             })),
         );
     });
+
+    afterEach(() => {
+        window.localStorage.clear();
+    });
+
     describe("before submitting the form", () => {
         let container: any;
         beforeEach(() => {
@@ -259,9 +264,9 @@ const FormWithInputs = (props: { validator?: Validator }) => {
             <span id="form-label">{formLabelText}</span>
             <Form successMessage={successMessage} ariaLabelledBy={"form-label"} submitEndpoint={submitEndpoint}>
                 <label htmlFor={"name"}>Name</label>
-                <FormField id={"name"} name={"name"} validator={props.validator}/>
+                <FormField id={"name"} name={"name"} validator={props.validator} pageIdentifier=""/>
                 <label htmlFor={"age"}>Age</label>
-                <FormField id={"age"} name={"age"}/>
+                <FormField id={"age"} name={"age"} pageIdentifier=""/>
             </Form>
         </>
     );
