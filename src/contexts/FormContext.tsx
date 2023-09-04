@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Field } from "../hooks/form-validation/useValidation";
 import { ChildrenProps } from "../utilities/children-props";
 import { Observable } from "../utilities/observable";
 import { useFocusElement } from "../hooks/focus/useFocusElement";
+import { Field } from "../components/form/Field";
 
 export type FormContextValue = {
-    registerValidation: (field: Field) => void;
+    registerField: (field: Field) => void;
 }
 
-const defaultValue = { registerValidation: () => {} };
+const defaultValue = { registerField: () => {} };
 export const FormContext = React.createContext<FormContextValue>(defaultValue);
 
 type FormProviderProps = {
-    onSubmit: Observable
+    onSubmit: Observable,
+    onClear: Observable
 }
 
-export const FormProvider = ({ onSubmit, children }: FormProviderProps & ChildrenProps) => {
+export const FormProvider = ({ onSubmit, onClear, children }: FormProviderProps & ChildrenProps) => {
     const fields = useRef<Field[]>([]);
 
-    const registerValidation = useCallback((field: Field) => {
+    const registerField = useCallback((field: Field) => {
         fields.current = [...fields.current, field];
     }, []);
 
@@ -36,15 +37,22 @@ export const FormProvider = ({ onSubmit, children }: FormProviderProps & Childre
         return invalidFieldFound;
     }, [focusElement]);
 
+    const clearFields = useCallback(() => {
+        for(const field of fields.current) {
+            field.clear();
+        }
+    }, []);
+
     useEffect(() => {
         onSubmit.subscribe(runValidations);
+        onClear.subscribe(clearFields);
         return () => {
             onSubmit.unsubscribe();
         };
     }, [onSubmit, runValidations]);
 
     const providerValue: FormContextValue = {
-        registerValidation,
+        registerField,
     };
     return (
         <FormContext.Provider value={providerValue}>

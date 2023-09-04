@@ -1,5 +1,5 @@
 import React, { RefObject, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useValidation, Validator } from "../../hooks/form-validation/useValidation";
+import { useValidation, Validator, Validation } from "../../hooks/form-validation/useValidation";
 import { FormContext } from "../../contexts/FormContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
@@ -20,16 +20,22 @@ export type FormFieldProps = {
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
 export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, inputType = FormFieldType.INPUT }: FormFieldProps) => {
-    const { registerValidation } = useContext(FormContext);
+    const { registerField } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const { save } = useLocalStorage(`${pageIdentifier}-${id}`);
+    const { save, clearStorage } = useLocalStorage(`${pageIdentifier}-${id}`);
 
     const validation = useValidation({ validator, inputRef, setErrorMessage });
+    const clear = useCallback(() => {
+        if (inputRef.current) {
+            inputRef.current.value = "";
+            clearStorage();
+        }
+    }, []);
 
     useEffect(() => {
-        registerValidation({ validation, inputRef });
-    }, [registerValidation, validation]);
+        registerField({ validation, inputRef, clear });
+    }, [registerField, validation]);
     
     useEffect(() => {
         if (inputRef.current)

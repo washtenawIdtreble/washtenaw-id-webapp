@@ -50,14 +50,14 @@ describe(useLocalStorage.name, () => {
 });
 
 function StubComponent () {
-    const { save, currentValue, remove } = useLocalStorage(storageKey);
+    const { save, currentValue, clearStorage } = useLocalStorage(storageKey);
 
     const saveToLocalStorage = useCallback(() => {
         save(valueToSave);
     }, [save]);
 
     const removeFromLocalStorage = useCallback(() => {
-        remove();
+        clearStorage();
     }, [save]);
 
     return (

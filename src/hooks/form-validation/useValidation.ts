@@ -3,10 +3,6 @@ import { FormFieldElement } from "../../components/form/FormField";
 
 export type Validator = (value: string) => string;
 export type Validation = () => string;
-export type Field = {
-    inputRef: RefObject<FormFieldElement>
-    validation: Validation,
-}
 
 type UseValidationInput = {
     validator?: Validator
