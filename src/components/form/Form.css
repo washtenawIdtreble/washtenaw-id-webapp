@@ -59,12 +59,10 @@
 }
 
 .form-input {
-    box-sizing: border-box;
     width: 100%;
 }
 
 .form-textarea {
-    box-sizing: border-box;
     height: 100%;
     width: 100%;
 }
@@ -81,10 +79,11 @@
 .form-submit {
     font-size: 2rem;
     margin-top: 1rem;
+    outline-offset: -6px;
     padding: 1rem 0;
 }
 
-@media (min-aspect-ratio: 5/4) {
+@media (min-width: 1200px) {
     .form-container {
         padding: 0 12.5%;
     }

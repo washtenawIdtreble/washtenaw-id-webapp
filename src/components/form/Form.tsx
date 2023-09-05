@@ -82,7 +82,8 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
                     {children}
                 </FormProvider>
-                <button type={"submit"} className={"form-submit"} disabled={submitting}>Submit</button>
+                <button type={"submit"} className={"form-submit light-focus-outline"} disabled={submitting}>Submit
+                </button>
                 <div aria-live={"polite"} ref={liveRegion} data-testid={"form-live-region"}>
                     {submitting && <span>Submitting...</span>}
                 </div>

@@ -1,4 +1,4 @@
-import { Navigation, WINDOW_RESIZE_EVENT } from "./Navigation";
+import { Navigation, SMALL_SCREEN_MEDIA_QUERY, WINDOW_RESIZE_EVENT } from "./Navigation";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
@@ -18,7 +18,7 @@ describe(Navigation.name, () => {
         jest.spyOn(window, "matchMedia").mockImplementation(jest.fn());
 
         when(window.matchMedia)
-            .calledWith("(max-width: 767px)")
+            .calledWith(SMALL_SCREEN_MEDIA_QUERY)
             .mockReturnValue({ matches: true } as MediaQueryList);
 
         jest.spyOn(window, "addEventListener").mockImplementation(jest.fn());
@@ -34,6 +34,10 @@ describe(Navigation.name, () => {
 
     test("uses the correct event when listening for window resize", () => {
         expect(WINDOW_RESIZE_EVENT).toEqual("resize");
+    });
+
+    test("has the correct small screen media query", () => {
+        expect(SMALL_SCREEN_MEDIA_QUERY).toEqual("(max-width: 960px)");
     });
 
     describe("when the component is mounted", () => {
@@ -121,7 +125,7 @@ describe(Navigation.name, () => {
     describe("when the screen is wide", () => {
         beforeEach(() => {
             when(window.matchMedia)
-                .calledWith("(max-width: 767px)")
+                .calledWith(SMALL_SCREEN_MEDIA_QUERY)
                 .mockReturnValue({ matches: false } as MediaQueryList);
 
             render(<Navigation/>, { wrapper: NavigationBarTestWrapper });

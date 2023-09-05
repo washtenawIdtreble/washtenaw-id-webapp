@@ -56,15 +56,11 @@ nav {
     text-decoration: none;
 }
 
-.nav-link:hover {
-    text-decoration: underline;
-}
-
 .matched-link {
     color: #c39738;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 961px) {
     .nav-list {
         flex-direction: row;
         height: 100%;

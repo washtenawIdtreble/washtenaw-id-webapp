@@ -3,7 +3,12 @@
     src: local("src/assets/Karla-VariableFont_wght.ttf");
 }
 
+a:focus, a:hover {
+    text-decoration: underline;
+}
+
 body {
+    background-color: #eeeeec;
     font-family: Karla, sans-serif;
     -webkit-font-smoothing: antialiased;
     font-weight: bold;
@@ -12,8 +17,12 @@ body {
 }
 
 :focus {
-    outline: 3px dashed #c39738;
+    outline: 3px dashed #a98332;
     outline-offset: -4px;
+}
+
+.light-focus-outline:focus {
+    outline-color: #c39738;
 }
 
 button {
@@ -26,29 +35,34 @@ button {
 }
 
 button:hover {
-    background-color: #052238;
+    background-color: #0a4471;
 }
 
 button:active {
     background-color: #031727;
-    cursor: pointer;
 }
 
 button:disabled {
     background-color: #808080;
 }
 
-input {
+input, textarea {
+    background-color: #fafafa;
+    border-radius: 6px;
+    box-sizing: border-box;
     font-family: Karla, sans-serif;
     font-size: 1rem;
+    padding: 1rem 0.66rem;
+}
+
+input {
     height: 2rem;
-    padding: 0 0.3rem;
+    /*padding: 0 0.3rem;*/
 }
 
 textarea {
-    font-family: Karla, sans-serif;
-    font-size: 1rem;
-    padding: 0.3rem;
+    /*padding: 0.3rem;*/
+    padding: 0.5rem 0.66rem;
 }
 
 .visually-hidden {

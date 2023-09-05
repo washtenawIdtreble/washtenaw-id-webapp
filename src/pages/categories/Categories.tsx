@@ -21,7 +21,7 @@ export function Categories() {
                             className={"category-item"}
                             key={category.name}>
                             <AppLink to={`${PAGE_ENDPOINTS.businesses}#${category.name}`}
-                                     className={"category-link"}>
+                                     className={"category-link light-focus-outline"}>
                                 {category.displayName}
                             </AppLink>
                         </li>)}
