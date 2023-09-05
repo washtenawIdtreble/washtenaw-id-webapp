@@ -18,14 +18,13 @@
     box-sizing: border-box;
     color: #062d47;
     display: flex;
-    height: 3rem;
     justify-content: center;
-    position: absolute;
     top: -10rem;
-    width: 100vw;
 }
 
 .skip-nav:focus {
+    height: 3rem;
     outline: 3px dashed #062d47;
     top: 0;
+    width: 100vw;
 }
