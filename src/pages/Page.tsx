@@ -6,6 +6,7 @@ import "./Pages.css";
 import { HeadingCheck } from "../components/dev-only/HeadingCheck";
 import { LoadingContextProvider } from "../contexts/LoadingContext";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
+import { useLiveRegionText } from "../hooks/useLiveRegionText";
 
 type PageProps = {
     title: string
@@ -18,8 +19,8 @@ export const Page = ({ title, children }: PageProps) => {
     const [loadingIndicatorNeeded, setLoadingIndicatorNeeded] = useState(false);
     const loadingTimerRef: React.MutableRefObject<NodeJS.Timeout | undefined> = useRef();
     const loadingTimerExpiredRef = useRef(false);
-    const [liveRegionText, setLiveRegionText] = useState("");
-    const liveRegionTimerRef: React.MutableRefObject<NodeJS.Timeout | undefined> = useRef();
+    const [liveRegionText, setLiveRegionText] = useLiveRegionText("");
+    // const liveRegionTimerRef: React.MutableRefObject<NodeJS.Timeout | undefined> = useRef();
 
     const setIsLoading = useCallback((isLoading: boolean) => {
         if (isLoading) {
@@ -35,18 +36,13 @@ export const Page = ({ title, children }: PageProps) => {
             if (loadingTimerExpiredRef.current) {
                 setLiveRegionText("finished loading");
                 setLoadingIndicatorNeeded(false);
-
-                liveRegionTimerRef.current = setTimeout(() => {
-                    setLiveRegionText("");
-                }, getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_LIVE_REGION_CLEAR_TIMEOUT));
             }
         }
-    }, []);
+    }, [setLiveRegionText]);
 
     useEffect(() => {
         return () => {
             if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current);
-            if (liveRegionTimerRef.current) clearTimeout(liveRegionTimerRef.current);
         };
     }, []);
 
