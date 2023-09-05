@@ -6,6 +6,8 @@ import { usePOST } from "../../hooks/fetch/usePost";
 import { UserMessageNotification } from "../userMessage/UserMessageNotification";
 import { FormProvider } from "../../contexts/FormContext";
 import { Observable } from "../../utilities/observable";
+import { SubmitLoadingIcon } from "./SubmitLoadingIcon";
+import { useLiveRegionText } from "../../hooks/useLiveRegionText";
 
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
@@ -20,7 +22,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     const [serverResponded, setServerResponded] = useState<boolean>(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const liveRegion = useRef<HTMLDivElement | null>(null);
+    const [liveRegionText, setLiveRegionText] = useLiveRegionText("");
 
     const postFormData = usePOST(submitEndpoint);
 
@@ -50,6 +52,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
 
             const form = event.target as HTMLFormElement;
             setSubmitting(true);
+            setLiveRegionText("submitting");
 
             const formData = extractFormData(form);
 
@@ -82,10 +85,12 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
                     {children}
                 </FormProvider>
-                <button type={"submit"} className={"form-submit light-focus-outline"} disabled={submitting}>Submit
+                <button type={"submit"} className={"form-submit light-focus-outline"} disabled={submitting}>
+                    Submit
+                    {submitting && <SubmitLoadingIcon/>}
                 </button>
-                <div aria-live={"polite"} ref={liveRegion} data-testid={"form-live-region"}>
-                    {submitting && <span>Submitting...</span>}
+                <div aria-live={"polite"} data-testid={"form-live-region"} className={"visually-hidden"}>
+                    {liveRegionText}
                 </div>
             </form>
         </div>

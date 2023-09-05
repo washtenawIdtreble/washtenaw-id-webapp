@@ -155,8 +155,14 @@ describe(Form.name, () => {
                 expect(submitButton).toBeDisabled();
             });
 
-            test("an announcement appears in the live region", async () => {
-                expect(liveRegion.textContent).toEqual("Submitting...");
+            test("an announcement appears in the live region and disappears after a timeout", async () => {
+                await waitFor(() => {
+                    expect(liveRegion.textContent).toEqual("submitting");
+                });
+
+                await waitFor(() => {
+                    expect(liveRegion.textContent).toEqual("");
+                });
             });
 
             test("the form's data is sent to the server", async () => {
@@ -170,10 +176,6 @@ describe(Form.name, () => {
                     await waitFor(() => {
                         successElement = screen.getByText(successMessage);
                     });
-                });
-
-                test("the live region is cleared", async () => {
-                    expect(liveRegion.textContent).toEqual("");
                 });
 
                 test("the button is enabled", async () => {
@@ -222,10 +224,6 @@ describe(Form.name, () => {
                     await waitFor(() => {
                         errorMessage = screen.getByText(errorMessageText);
                     });
-                });
-
-                test("the live region is cleared", async () => {
-                    expect(liveRegion.textContent).toEqual("");
                 });
 
                 test("the button is enabled", async () => {

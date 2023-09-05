@@ -92,7 +92,7 @@ describe(Page.name, () => {
             expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
         });
 
-        test("Announces 'finished loading', then clears the live region when loading finishes", async () => {
+        test("When loading finishes, Announces 'finished loading', then clears the live region after a timeout", async () => {
             await user.click(screen.getByRole("button", { name: "START LOADING" }));
             await screen.findByText("Loading...");
 
