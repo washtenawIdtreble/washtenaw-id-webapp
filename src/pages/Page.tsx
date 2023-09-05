@@ -50,7 +50,7 @@ export const Page = ({ title, children }: PageProps) => {
         };
     }, []);
 
-    useFocusHashOrMainHeading();
+    useFocusHashOrMainHeading(loadingIndicatorNeeded);
 
     useEffect(() => {
         document.title = `${title}${DOCUMENT_TITLE_SUFFIX}`;

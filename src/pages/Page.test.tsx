@@ -124,6 +124,17 @@ describe(Page.name, () => {
 
             process.env.REACT_APP_LOADING_TIMEOUT = originalAppLoadingTimeout;
         });
+
+        test("focuses the right heading", async () => {
+            expect(useFocusHashOrMainHeading).toHaveBeenLastCalledWith(false);
+
+            await user.click(screen.getByRole("button", { name: "START LOADING" }));
+            await screen.findByText("Loading...");
+            expect(useFocusHashOrMainHeading).toHaveBeenLastCalledWith(true);
+
+            await user.click(screen.getByRole("button", { name: "STOP LOADING" }));
+            expect(useFocusHashOrMainHeading).toHaveBeenLastCalledWith(false);
+        });
     });
 
     describe("under error conditions", () => {

@@ -1,8 +1,9 @@
 import { useCallback, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { DocumentStateContext } from "../../contexts/DocumentStateContext";
+import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../../utilities/environment-variables";
 
-export function useFocusHashOrMainHeading(): void {
+export function useFocusHashOrMainHeading(loading: boolean): void {
     const { documentIsNew } = useContext(DocumentStateContext);
 
     const { hash } = useLocation();
@@ -22,32 +23,34 @@ export function useFocusHashOrMainHeading(): void {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const focusSubHeading = useCallback((element: HTMLElement) => {
-        element.scrollIntoView();
-        element.focus();
-    }, []);
+    const focusSubheading = useCallback(() => {
+        let count = 0;
+        const timer = setInterval(() => {
+
+            const element = document.getElementById(elementToFocus);
+            if (element) {
+                clearInterval(timer);
+                element.scrollIntoView();
+                element.focus();
+            } else if (count >= getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_SUBHEADING_FOCUS_ATTEMPTS)) {
+                clearInterval(timer);
+                focusHeading1();
+            }
+
+            count += 1;
+        }, getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_SUBHEADING_FOCUS_TIMEOUT));
+        return () => {
+            clearInterval(timer);
+        };
+    }, [elementToFocus, focusHeading1]);
 
     useEffect(() => {
         if (elementToFocus === "") {
             focusHeading1();
         } else {
-            let count = 0;
-            const timer = setInterval(() => {
-
-                const element = document.getElementById(elementToFocus);
-                if (element) {
-                    clearInterval(timer);
-                    focusSubHeading(element);
-                } else if (count >= 60) { // TODO: Figure out a good number for this
-                    clearInterval(timer);
-                    focusHeading1();
-                }
-
-                count += 1;
-            }, 5);
-            return () => {
-                clearInterval(timer);
-            };
+            if (!loading) {
+                return focusSubheading();
+            }
         }
-    }, [elementToFocus, focusHeading1, focusSubHeading]);
+    }, [elementToFocus, focusHeading1, focusSubheading, loading]);
 }
