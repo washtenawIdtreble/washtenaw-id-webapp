@@ -66,7 +66,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
             });
         }
 
-    }, [postFormData, onSubmitObservable]);
+    }, [onSubmitObservable, postFormData, onClearObservable]);
 
     return (<div className={"form-container"}>
             {showSuccessMessage &&

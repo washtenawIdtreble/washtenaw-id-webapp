@@ -1,5 +1,5 @@
 import React, { RefObject, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useValidation, Validator, Validation } from "../../hooks/form-validation/useValidation";
+import { useValidation, Validator } from "../../hooks/form-validation/useValidation";
 import { FormContext } from "../../contexts/FormContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
@@ -19,7 +19,14 @@ export type FormFieldProps = {
 
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
-export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, inputType = FormFieldType.INPUT }: FormFieldProps) => {
+export const FormField = ({
+                              id,
+                              name,
+                              validator,
+                              autoComplete,
+                              pageIdentifier,
+                              inputType = FormFieldType.INPUT
+                          }: FormFieldProps) => {
     const { registerField } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -31,18 +38,17 @@ export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, i
             inputRef.current.value = "";
             clearStorage();
         }
-    }, []);
+    }, [clearStorage]);
 
     useEffect(() => {
         registerField({ validation, inputRef, clear });
-    }, [registerField, validation]);
-    
+    }, [clear, registerField, validation]);
+
     useEffect(() => {
-        if (inputRef.current)
-        {
+        if (inputRef.current) {
             inputRef.current.value = window.localStorage.getItem(`${pageIdentifier}-${id}`) ?? "";
         }
-    }, []);
+    }, [id, pageIdentifier]);
 
     const onBlur = useCallback(() => {
         if (errorMessage !== "") {
@@ -52,7 +58,7 @@ export const FormField = ({ id, name, validator, autoComplete, pageIdentifier, i
 
     const onChange = useCallback((event) => {
         save(event.target.value);
-    }, []);
+    }, [save]);
 
     const invalid = errorMessage !== "";
     const errorMessageId = invalid ? `form-error-message-for-${id}` : "";
