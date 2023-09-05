@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, LinkProps, PathMatch, useMatch, useResolvedPath } from "react-router-dom";
+import { CurrentPageIcon } from "./CurrentPageIcon";
 
 export const AppLink = (props: Omit<LinkProps, "reloadDocument">) => {
     const resolved = useResolvedPath(props.to);
@@ -8,9 +9,12 @@ export const AppLink = (props: Omit<LinkProps, "reloadDocument">) => {
         end: true,
     });
 
-    return (<Link
-        {...props}
-        className={match ? `${props.className} matched-link` : props.className}
-        aria-current={match ? "page" : undefined}
-    />);
+    return (<>
+        {match && <CurrentPageIcon/>}
+        <Link
+            {...props}
+            className={match ? `${props.className} matched-link` : props.className}
+            aria-current={match ? "page" : undefined}
+        />
+    </>);
 };
