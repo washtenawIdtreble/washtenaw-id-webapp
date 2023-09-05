@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import '../Pages.css';
-import { Form } from '../../components/form/Form';
-import { SERVER_ENDPOINTS } from '../../utilities/server-endpoints';
-import { FormField, FormFieldType } from '../../components/form/FormField';
-import { validateEmail } from '../../hooks/form-validation/validateEmail';
-import { validatePhone } from '../../hooks/form-validation/validatePhone';
-import { validateRequired } from '../../hooks/form-validation/validateRequired';
-import { MainHeading } from '../../components/MainHeading';
-import { MAIN_HEADING_ID } from '../../components/MainHeading';
+import React, { useState } from "react";
+import "../Pages.css";
+import { Form } from "../../components/form/Form";
+import { SERVER_ENDPOINTS } from "../../utilities/server-endpoints";
+import { FormField, FormFieldType } from "../../components/form/FormField";
+import { validateEmail } from "../../hooks/form-validation/validateEmail";
+import { validatePhone } from "../../hooks/form-validation/validatePhone";
+import { validateRequired } from "../../hooks/form-validation/validateRequired";
+import { MAIN_HEADING_ID, MainHeading } from "../../components/MainHeading";
 
 export type ContactFormData = {
     name?: string;
@@ -16,11 +15,11 @@ export type ContactFormData = {
     description: string;
 };
 
-export const CONTACT_PAGE_HEADING = 'Contact Us';
-export const CONTACT_PAGE_IDENTIFIER = 'contact-us';
+export const CONTACT_PAGE_HEADING = "Contact Us";
+export const CONTACT_PAGE_IDENTIFIER = "contact-us";
 
 export const ContactUs = () => {
-    const [successMessage] = useState('Your message has been sent, thank you!');
+    const [successMessage] = useState("Your message has been sent, thank you!");
     return (
         <>
             <MainHeading ariaLabel={CONTACT_PAGE_HEADING.toLocaleLowerCase()}>
@@ -32,44 +31,44 @@ export const ContactUs = () => {
                 ariaLabelledBy={MAIN_HEADING_ID}
                 submitEndpoint={SERVER_ENDPOINTS.CONTACT_US}
             >
-                <label htmlFor={'name'} className={'form-label'}>
+                <label className={"form-label"}>
                     Your Name (optional)
+                    <FormField
+                        id={"name"}
+                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                        autoComplete={"name"}
+                        name={"name"}/>
                 </label>
-                <FormField 
-                    id={'name'} 
-                    pageIdentifier={CONTACT_PAGE_IDENTIFIER} 
-                    autoComplete={'name'} 
-                    name={'name'} />
-                <label htmlFor={'email'} className={'form-label'}>
+                <label htmlFor={"email"} className={"form-label"}>
                     Your email (optional)
+                    <FormField
+                        id={"email"}
+                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                        name={"email"}
+                        validator={validateEmail}
+                        autoComplete={"email"}
+                    />
                 </label>
-                <FormField
-                    id={'email'}
-                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                    name={'email'}
-                    validator={validateEmail}
-                    autoComplete={'email'}
-                />
-                <label htmlFor={'phone'} className={'form-label'}>
+                <label htmlFor={"phone"} className={"form-label"}>
                     Your phone number (optional)
+                    <FormField
+                        id={"phone"}
+                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                        name={"phone"}
+                        validator={validatePhone}
+                        autoComplete={"tel"}
+                    />
                 </label>
-                <FormField
-                    id={'phone'}
-                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                    name={'phone'}
-                    validator={validatePhone}
-                    autoComplete={'tel'}
-                />
-                <label htmlFor={'description'} className={'form-label'}>
+                <label htmlFor={"description"} className={"form-label"}>
                     What do you want to tell us? (required)
+                    <FormField
+                        id={"description"}
+                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                        name={"description"}
+                        validator={validateRequired}
+                        inputType={FormFieldType.TEXTAREA}
+                    />
                 </label>
-                <FormField
-                    id={'description'}
-                    pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                    name={'description'}
-                    validator={validateRequired}
-                    inputType={FormFieldType.TEXTAREA}
-                />
             </Form>
         </>
     );

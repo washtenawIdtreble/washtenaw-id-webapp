@@ -2,11 +2,11 @@
     box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
-    margin-bottom: 2rem;
-    row-gap: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .category-heading-container {
+    margin-bottom: 1rem;
     text-align: center;
     width: 100%;
 }
@@ -19,12 +19,15 @@
 }
 
 .business-card {
+    background-color: #fafafa;
     border: 2px solid black;
+    border-radius: 6px;
     box-sizing: border-box;
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
-    padding: 0.5rem 1rem 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
     row-gap: 1rem;
     width: 100%;
 }
@@ -45,15 +48,15 @@
 }
 
 .business-card-value {
-    width: 75%;
+    margin-left: 5%;
+    width: 70%;
 }
 
 .business-card-link:focus {
-    outline: 3px dashed #c39738;
     outline-offset: 4px;
 }
 
-@media (min-aspect-ratio: 5/4) {
+@media (min-width: 1200px) {
     .category-section {
         display: flex;
         flex-flow: row wrap;
@@ -70,6 +73,7 @@
     }
 
     .business-card-value {
+        margin-left: 0;
         width: 85%;
     }
 }
