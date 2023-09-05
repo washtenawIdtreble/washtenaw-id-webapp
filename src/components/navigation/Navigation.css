@@ -58,6 +58,11 @@ nav {
 
 .matched-link {
     color: #c39738;
+    padding-left: 0;
+}
+
+.current-page-icon {
+
 }
 
 @media (min-width: 961px) {

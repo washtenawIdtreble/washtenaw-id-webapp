@@ -16,11 +16,16 @@ describe(AppLink.name, () => {
         );
     });
     test("assigns class and aria-current for matched route", () => {
-        let activeLink = screen.getByRole("link", { name: activeLinkText, current: "page" });
+        const activeLink = screen.getByRole("link", { name: activeLinkText, current: "page" });
         expect(activeLink.className).toContain("matched-link");
     });
+    test("shows icon for matched route", () => {
+        const icon = screen.getByRole("img", { hidden: true });
+        expect(icon).toBeVisible();
+        expect(icon.getAttribute("src")).toContain("current-page.svg");
+    });
     test("doesn't assign class and aria-current for unmatched route", () => {
-        let inactiveLink = screen.getByRole("link", { name: inactiveLinkText, current: undefined });
+        const inactiveLink = screen.getByRole("link", { name: inactiveLinkText, current: undefined });
         expect(inactiveLink.className).not.toContain("matched-link");
     });
 });
