@@ -50,3 +50,11 @@ textarea {
     font-size: 1rem;
     padding: 0.3rem;
 }
+
+.visually-hidden {
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    top: -10000px;
+    width: 1px;
+}

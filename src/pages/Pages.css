@@ -5,3 +5,9 @@
     height: 100%;
     padding: 1.5rem 1rem;
 }
+
+.loading {
+    font-size: 2rem;
+    text-align: center;
+    width: 100vw;
+}

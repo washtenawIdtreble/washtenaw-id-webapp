@@ -65,8 +65,9 @@ export const Page = ({ title, children }: PageProps) => {
         <LoadingContextProvider setIsLoading={setIsLoading}>
             <div className={"page-container"}>
                 {children}
-                {loadingIndicatorNeeded && <span>Loading...</span>}
-                <div aria-live={"polite"} data-testid={"page-live-region"}>{liveRegionText}</div>
+                {loadingIndicatorNeeded && <span className={"loading"}>Loading...</span>}
+                <div aria-live={"polite"} data-testid={"page-live-region"}
+                     className={"visually-hidden"}>{liveRegionText}</div>
             </div>
         </LoadingContextProvider>
     </>);
