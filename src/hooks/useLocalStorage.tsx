@@ -1,18 +1,16 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
-export const useLocalStorage = (storageKey : string) => {
-    const [key] = useState(storageKey);
-
-    const [currentValue, setCurrentValue] = useState(window.localStorage.getItem(key) ?? "");
+export const useLocalStorage = (storageKey: string) => {
+    const [currentValue, setCurrentValue] = useState(window.localStorage.getItem(storageKey) ?? "");
 
     const save = useCallback((input: string) => {
-        window.localStorage.setItem(key, input);
+        window.localStorage.setItem(storageKey, input);
         setCurrentValue(input);
-    }, [key]);
+    }, [storageKey]);
 
     const clearStorage = useCallback(() => {
         window.localStorage.removeItem(storageKey);
-    }, [key]);
+    }, [storageKey]);
 
     return { save, currentValue, clearStorage };
 };
