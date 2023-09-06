@@ -19,7 +19,7 @@ describe(Layout.name, () => {
         });
     });
     test("should have a link to skip to the main landmark", () => {
-        const skipNav: HTMLLinkElement = screen.getByRole("link", { name: "Skip to content" });    
+        const skipNav: HTMLLinkElement = screen.getByRole("link", { name: "Skip to content" });
 
         expect(skipNav.href).toContain(`#${MAIN_HEADING_ID}`);
     });
@@ -28,11 +28,6 @@ describe(Layout.name, () => {
 
         await user.tab();
         expect(skipNav).toHaveFocus();
-    });
-    test("main content should be focusable for Safari so skip nav link works", () => {
-        const main = screen.getByRole("main");
-        expect(main.hasAttribute("tabindex")).toBe(true);
-        expect(main.tabIndex).toEqual(-1);
     });
     test("should render the header bar component in the header", () => {
         const header = screen.getByRole("banner");

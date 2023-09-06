@@ -19,6 +19,7 @@ describe(NavMenu.name, () => {
                     <NavMenu>
                         <NavLinks/>
                     </NavMenu>
+                    <div tabIndex={-1}>focus me</div>
                 </MemoryRouter>
             </main>,
         );
@@ -98,6 +99,15 @@ describe(NavMenu.name, () => {
                 await user.keyboard(KEYS.escape);
                 expect(linkList).not.toBeVisible();
                 expect(menuButton).toHaveFocus();
+            });
+            test("can close the menu with the Escape key when focus is outside the menu", async () => {
+                const elementOutsideMenu = screen.getByText("focus me");
+                elementOutsideMenu.focus();
+
+                await user.keyboard(KEYS.escape);
+                
+                expect(linkList).not.toBeVisible();
+                expect(elementOutsideMenu).toHaveFocus();
             });
             test("can navigate links with the tab key NO KEYBOARD TRAP", async () => {
                 await user.tab();
