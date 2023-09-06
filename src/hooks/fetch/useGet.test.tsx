@@ -117,9 +117,10 @@ describe(useGET.name, () => {
                 await user.click(button);
             });
 
-            test("does not throw an error or show one on the screen", async () => {
-                rejectPromise(new DOMException("Abortedd"));
-                expect(await screen.findByText("Something went wrong.")).toBeInTheDocument();
+            test("shows an error notification", async () => {
+                const exception = new DOMException("Abortedd");
+                rejectPromise(exception);
+                expect(await screen.findByText(`Something went wrong. ${exception}`)).toBeInTheDocument();
             });
 
             test("stops loading", async () => {

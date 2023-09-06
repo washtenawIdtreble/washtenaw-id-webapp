@@ -29,7 +29,9 @@ export function usePOST<ResponseBody>(endpoint: string): PostFunction<ResponseBo
             const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
 
             responseCallback(response.ok, body as ResponseBody, errorMessage);
-        } catch {}
+        } catch (error) {
+            responseCallback(false, undefined as unknown as ResponseBody, `Something went wrong submitting your message. ${error}`);
+        }
 
     }, [endpoint]);
 }
