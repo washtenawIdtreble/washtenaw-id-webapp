@@ -1,5 +1,6 @@
 import React from "react";
 import { Business } from "../../hooks/useBusinesses";
+import { OpensInANewTabLink } from "../../components/OpensInNewTab/OpensInANewTabLink";
 
 type BusinessCardProps = {
     business: Business;
@@ -15,18 +16,16 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
 
             <div className={"bussines-card-row"}>
                 <span className={"business-card-label"}>Address</span>
-                <a href={mapsUrl} className={"business-card-link business-card-value"} target={"_blank"}
-                   rel="noreferrer">
+                <OpensInANewTabLink href={mapsUrl} className={"business-card-link business-card-value"}>
                     {businessAddress}
-                </a>
+                </OpensInANewTabLink>
             </div>
 
             <div className={"bussines-card-row"}>
                 <span className={"business-card-label"}>Website</span>
-                <a href={business.website} className={"business-card-link business-card-value"} target={"_blank"}
-                   rel="noreferrer">
+                <OpensInANewTabLink href={business.website} className={"business-card-link business-card-value"}>
                     {shortWebsite}
-                </a>
+                </OpensInANewTabLink>
             </div>
 
             <div className={"bussines-card-row"}>

@@ -1,0 +1,10 @@
+.opens-in-new-tab-icon {
+    height: 0.8rem;
+    margin-left: 0.33rem;
+    width: 0.8rem;
+}
+
+.opens-in-new-tab-link {
+    align-items: center;
+    display: flex;
+}

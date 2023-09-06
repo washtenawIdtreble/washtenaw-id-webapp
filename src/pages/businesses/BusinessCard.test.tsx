@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Business } from "../../hooks/useBusinesses";
 import { stubBusiness } from "../../../test/test-factories";
+import { OPENS_IN_A_NEW_TAB } from "../../components/OpensInNewTab/OpensInANewTabLink";
 
 describe(BusinessCard.name, () => {
     let business: Business;
@@ -27,7 +28,7 @@ describe(BusinessCard.name, () => {
                 .replace(/'/g, "%27");
 
             addressBox = screen.getByText("Address");
-            addressLink = screen.getByRole("link", { name: businessAddress });
+            addressLink = screen.getByRole("link", { name: `${businessAddress} ${OPENS_IN_A_NEW_TAB}` });
         });
         test("shows the address label", () => {
             expect(addressBox).toBeVisible();
@@ -51,7 +52,7 @@ describe(BusinessCard.name, () => {
         beforeEach(() => {
             shortWebsite = business.website.replace(/http[s]?:\/\//g, "");
             websiteBox = screen.getByText("Website");
-            websiteLink = screen.getByRole("link", { name: shortWebsite });
+            websiteLink = screen.getByRole("link", { name: `${shortWebsite} ${OPENS_IN_A_NEW_TAB}` });
         });
         test("shows the website label", () => {
             expect(websiteBox).toBeVisible();
