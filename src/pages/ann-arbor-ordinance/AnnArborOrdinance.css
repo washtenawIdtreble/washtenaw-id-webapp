@@ -1,0 +1,11 @@
+.content-container {
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+@media (min-width: 961px) {
+    .content-container {
+        align-self: center;
+        max-width: 66%;
+    }
+}
