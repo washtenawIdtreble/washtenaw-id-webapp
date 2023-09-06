@@ -34,6 +34,19 @@ export const NavMenu = ({ children }: ChildrenProps) => {
         setIsMenuOpen(false);
     }, [location]);
 
+    const globalEscapeKeyHandler = useCallback((event: KeyboardEvent) => {
+        if (isMenuOpen && event.key === Keyboard.ESCAPE) {
+            setIsMenuOpen(false);
+        }
+    }, [isMenuOpen]);
+
+    useEffect(() => {
+        document.body.addEventListener("keydown", globalEscapeKeyHandler);
+        return () => {
+            document.body.removeEventListener("keydown", globalEscapeKeyHandler);
+        }
+    }, [globalEscapeKeyHandler])
+
     const menuOnKeyDown = useCallback((event: React.KeyboardEvent<HTMLElement>) => {
         const menu = document.getElementById(NAV_MENU_CONTAINER_ID);
         const links = Array.from(menu!.querySelectorAll("a"));

@@ -13,7 +13,7 @@ export const Layout = () => {
             <header>
                 <HeaderBar/>
             </header>
-            <main id={"main-content"} tabIndex={-1} className={"main-content"}>
+            <main id={"main-content"} className={"main-content"}>
                 <RouterOutlet/>
             </main>
         </div>
