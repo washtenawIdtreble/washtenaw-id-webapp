@@ -11,6 +11,11 @@ export const NavLinks = () => {
             </OpensInANewTabLink>
         </li>
         <li className={"nav-list-item"}>
+            <OpensInANewTabLink className={"nav-link"} href={"https://washtenawid.com/"} color={"#ffffff"}>
+                About the ID
+            </OpensInANewTabLink>
+        </li>
+        <li className={"nav-list-item"}>
             <AppLink to={PAGE_ENDPOINTS.businesses} className={"nav-link light-focus-outline"}>All Businesses</AppLink>
         </li>
         <li className={"nav-list-item"}>
