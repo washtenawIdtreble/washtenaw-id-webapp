@@ -1,6 +1,8 @@
 .opens-in-new-tab-icon {
     height: 0.8rem;
     margin-left: 0.33rem;
+    min-height: 0.8rem;
+    min-width: 0.8rem;
     width: 0.8rem;
 }
 

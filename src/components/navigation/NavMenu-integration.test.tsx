@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -8,6 +8,7 @@ import { NavMenu } from "./NavMenu";
 import { DocumentStateProvider } from "../../contexts/DocumentStateContext";
 import { when } from "jest-when";
 import { SMALL_SCREEN_MEDIA_QUERY } from "./Navigation";
+import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
 
 describe(`${NavMenu.name} (Integration Test)`, () => {
     let menuButton: HTMLButtonElement;
@@ -38,9 +39,11 @@ describe(`${NavMenu.name} (Integration Test)`, () => {
             links = within(linkList).getAllByRole("link");
         });
         test("closes the navigation menu", async () => {
-            await user.click(links.find(link => link.href !== "/")!);
+            await user.click(links.find(link => link.href.includes(PAGE_ENDPOINTS.businesses))!);
 
-            expect(linkList).not.toBeVisible();
+            await waitFor(() => {
+                expect(linkList).not.toBeVisible();
+            });
         });
     });
 });
