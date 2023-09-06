@@ -97,11 +97,10 @@ describe(usePOST.name, () => {
                 await user.click(button);
             });
 
-            test("does not throw an error or show one on the screen", async () => {
-                abortRequest(new DOMException("Abortedd"));
-                expect(screen.queryByText(ryan.name)).not.toBeInTheDocument();
-                expect(screen.queryByText("There was a successful, empty response")).not.toBeInTheDocument();
-                expect(screen.queryByTestId("error-container")).not.toBeInTheDocument();
+            test("shows an error notification", async () => {
+                const exception = new DOMException("Abortedd");
+                abortRequest(exception);
+                expect(await screen.findByText(`Something went wrong submitting your message. ${exception}`)).toBeInTheDocument();
             });
         });
 

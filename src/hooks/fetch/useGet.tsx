@@ -41,10 +41,11 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
             const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
 
             responseCallback(ok, body as T, errorMessage);
-        } catch {
-            responseCallback(false, undefined as unknown as T, "Something went wrong.");
+        } catch (error) {
+            responseCallback(false, undefined as unknown as T, `Something went wrong. ${error}`);
         } finally {
             finishLoading();
         }
+
     }, [endpoint, finishLoading, startLoading]);
 }
