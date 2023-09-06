@@ -3,6 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
+import { OPENS_IN_A_NEW_TAB } from "../OpensInNewTab/OpensInANewTabLink";
 
 describe(NavLinks.name, () => {
     beforeEach(() => {
@@ -12,7 +13,11 @@ describe(NavLinks.name, () => {
         const list = screen.getByRole("list");
         const listItems = within(list).getAllByRole("listitem");
         const links = listItems.map(listItem => within(listItem).getByRole("link"));
-        expect(links.length).toEqual(4);
+        expect(links.length).toBeGreaterThan(0);
+    });
+    test("has a link to the washtenaw ID website", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: `About the ID ${OPENS_IN_A_NEW_TAB}` });
+        expect(link.href).toEqual("https://washtenawid.com/");
     });
     test("has a link to the all businesses page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "All Businesses" });

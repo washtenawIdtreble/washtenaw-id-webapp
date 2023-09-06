@@ -40,6 +40,7 @@
 
 .bussines-card-row {
     display: flex;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -49,7 +50,7 @@
 
 .business-card-value {
     margin-left: 5%;
-    width: 70%;
+    width: 60%;
 }
 
 .business-card-link:focus {

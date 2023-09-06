@@ -52,7 +52,7 @@ nav {
 /* Nav link styles */
 .nav-link {
     color: white;
-    padding: 1rem;
+    outline-offset: 8px;
     text-decoration: none;
 }
 
@@ -61,11 +61,14 @@ nav {
     padding-left: 0;
 }
 
-.current-page-icon {
-
-}
-
 @media (min-width: 961px) {
+    .nav-link {
+        color: white;
+        outline-offset: -4px;
+        padding: 1rem;
+        text-decoration: none;
+    }
+
     .nav-list {
         flex-direction: row;
         height: 100%;
