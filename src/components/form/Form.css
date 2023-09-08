@@ -85,6 +85,19 @@
     padding: 1rem 0;
 }
 
+.disabled-form-submit {
+    background-color: #4F4F4F;
+    cursor: not-allowed;
+}
+
+.disabled-form-submit:active {
+    background-color: #4F4F4F;
+}
+
+.disabled-form-submit:hover {
+    background-color: #4F4F4F;
+}
+
 @media (min-width: 1200px) {
     .form-container {
         padding: 0 12.5%;

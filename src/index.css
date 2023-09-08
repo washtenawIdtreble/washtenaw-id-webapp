@@ -42,10 +42,6 @@ button:active {
     background-color: #031727;
 }
 
-button:disabled {
-    background-color: #808080;
-}
-
 input, textarea {
     background-color: #fafafa;
     border-radius: 6px;

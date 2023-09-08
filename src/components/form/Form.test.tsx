@@ -151,8 +151,17 @@ describe(Form.name, () => {
                 await user.keyboard("{Enter}");
             });
 
-            test("the submit button is disabled", async () => {
-                expect(submitButton).toBeDisabled();
+            test("the submit button is aria-disabled", async () => {
+                await waitFor(() => {
+                    expect(submitButton.className).toContain("disabled-form-submit");
+                });
+            });
+
+            test("the submit button is focused while submitting", async () => {
+                await waitFor(() => {
+                    expect(submitButton.className).toContain("disabled-form-submit");
+                });
+                expect(submitButton).toHaveFocus();
             });
 
             test("an announcement appears in the live region and disappears after a timeout", async () => {
@@ -179,7 +188,7 @@ describe(Form.name, () => {
                 });
 
                 test("the button is enabled", async () => {
-                    expect(submitButton).not.toBeDisabled();
+                    expect(submitButton.className).not.toContain("disabled-form-submit");
                 });
 
                 test("the form is cleared", async () => {
