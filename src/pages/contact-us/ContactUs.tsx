@@ -59,7 +59,7 @@ export const ContactUs = () => {
                         autoComplete={"tel"}
                     />
                 </label>
-                <label htmlFor={"description"} className={"form-label"}>
+                <label htmlFor={"description"} className={"form-label textarea-label"}>
                     What do you want to tell us? (required)
                     <FormField
                         id={"description"}

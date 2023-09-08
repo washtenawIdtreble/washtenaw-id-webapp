@@ -38,10 +38,14 @@
 }
 
 .form-field {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 1rem;
     width: 100%;
+}
+
+.textarea-label {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .form-field-error-message {
@@ -72,8 +76,6 @@
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     flex-grow: 1;
-    -webkit-flex-shrink: 1;
-    flex-shrink: 1;
 }
 
 .form-submit {
@@ -98,5 +100,9 @@
 
     .form-submit {
         width: 30%;
+    }
+
+    .textarea-label {
+        flex-grow: 0;
     }
 }
