@@ -28,7 +28,7 @@ describe(NavLinks.name, () => {
         expect(link.href).toEqual("https://washtenawid.com/");
     });
     test("has a link to the Ann Arbor Ordinance Page", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: `${LINK_TEXT.annArborOrdinance} ${OPENS_IN_A_NEW_TAB}` });
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborOrdinance });
         expect(link.href).toContain(PAGE_ENDPOINTS.annArborOrdinance);
     });
     test("has a link to the all businesses page", () => {

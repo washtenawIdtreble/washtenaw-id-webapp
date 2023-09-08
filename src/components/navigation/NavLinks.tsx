@@ -20,11 +20,9 @@ export const NavLinks = () => {
             </OpensInANewTabLink>
         </li>
         <li className={"nav-list-item"}>
-            <OpensInANewTabLink className={"nav-link"}
-                                href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN"}
-                                color={"#ffffff"}>
+            <AppLink className={"nav-link"} to={PAGE_ENDPOINTS.annArborOrdinance}>
                 {LINK_TEXT.annArborOrdinance}
-            </OpensInANewTabLink>
+            </AppLink>
         </li>
         <li className={"nav-list-item"}>
             <AppLink to={PAGE_ENDPOINTS.businesses} className={"nav-link light-focus-outline"}>
