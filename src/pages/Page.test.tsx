@@ -72,6 +72,12 @@ describe(Page.name, () => {
             liveRegion = screen.getByTestId("page-live-region");
         });
 
+        afterEach(async () => {
+            await waitFor(() => {
+                expect(liveRegion.textContent).toEqual("");
+            });
+        });
+
         test("anounces 'loading' after a timeout", async () => {
             await user.click(screen.getByRole("button", { name: "START LOADING" }));
             const loadingText = await within(liveRegion).findByText("loading");

@@ -8,9 +8,11 @@ type GetFunction<ResponseBody> = (responseCallback: ResponseCallback<ResponseBod
 export function useGET<T>(endpoint: string): GetFunction<T> {
     const abortRef = useRef<Array<() => void>>([]);
     const { startLoading, finishLoading } = useContext(LoadingContext);
+    const unmounted = useRef(false);
 
     useEffect(() => {
         return () => {
+            unmounted.current = true;
             // eslint-disable-next-line react-hooks/exhaustive-deps
             const abortFunctions = abortRef.current;
             if (abortFunctions) {
@@ -21,11 +23,17 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
 
     useEffect(() => {
         finishLoading();
-    }, [finishLoading])
+    }, [finishLoading]);
 
     return useCallback(async (responseCallback) => {
         startLoading();
         const { responsePromise, abort } = GET(`${BASE_URL()}/${endpoint}`);
+
+        const unmountSafeCallback: ResponseCallback<T> = (...args) => {
+            if (!unmounted.current) {
+                responseCallback(...args);
+            }
+        };
 
         abortRef.current.push(abort);
 
@@ -40,9 +48,9 @@ export function useGET<T>(endpoint: string): GetFunction<T> {
 
             const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
 
-            responseCallback(ok, body as T, errorMessage);
+            unmountSafeCallback(ok, body as T, errorMessage);
         } catch (error) {
-            responseCallback(false, undefined as unknown as T, `Something went wrong. ${error}`);
+            unmountSafeCallback(false, undefined as unknown as T, `Something went wrong. ${error}`);
         } finally {
             finishLoading();
         }

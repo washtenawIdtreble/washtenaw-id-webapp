@@ -6,9 +6,11 @@ type PostFunction<ResponseBody> = (body: any, responseCallback: ResponseCallback
 
 export function usePOST<ResponseBody>(endpoint: string): PostFunction<ResponseBody> {
     const abortRef = useRef<Array<() => void>>([]);
+    const unmounted = useRef(false);
 
     useEffect(() => {
         return () => {
+            unmounted.current = true;
             // eslint-disable-next-line react-hooks/exhaustive-deps
             const abortFunctions = abortRef.current;
             if (abortFunctions) {
@@ -20,6 +22,12 @@ export function usePOST<ResponseBody>(endpoint: string): PostFunction<ResponseBo
     return useCallback(async (requestBody, responseCallback) => {
         const { responsePromise, abort } = POST(`${BASE_URL()}/${endpoint}`, requestBody);
 
+        const unmountSafeCallback: ResponseCallback<ResponseBody> = (...args) => {
+            if (!unmounted.current) {
+                responseCallback(...args);
+            }
+        };
+
         abortRef.current.push(abort);
 
         try {
@@ -28,9 +36,9 @@ export function usePOST<ResponseBody>(endpoint: string): PostFunction<ResponseBo
 
             const errorMessage = body?.error ?? DEFAULT_ERROR_MESSAGE;
 
-            responseCallback(response.ok, body as ResponseBody, errorMessage);
+            unmountSafeCallback(response.ok, body as ResponseBody, errorMessage);
         } catch (error) {
-            responseCallback(false, undefined as unknown as ResponseBody, `Something went wrong submitting your message. ${error}`);
+            unmountSafeCallback(false, undefined as unknown as ResponseBody, `Something went wrong submitting your message. ${error}`);
         }
 
     }, [endpoint]);
