@@ -37,7 +37,7 @@ describe(Navigation.name, () => {
     });
 
     test("has the correct small screen media query", () => {
-        expect(SMALL_SCREEN_MEDIA_QUERY).toEqual("(max-width: 960px)");
+        expect(SMALL_SCREEN_MEDIA_QUERY).toEqual("(max-width: 1200px)");
     });
 
     describe("when the component is mounted", () => {

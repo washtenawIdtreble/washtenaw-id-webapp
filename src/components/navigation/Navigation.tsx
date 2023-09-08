@@ -4,7 +4,7 @@ import { NavLinks } from "./NavLinks";
 import "./Navigation.css";
 
 export const WINDOW_RESIZE_EVENT = "resize";
-export const SMALL_SCREEN_MEDIA_QUERY = "(max-width: 960px)";
+export const SMALL_SCREEN_MEDIA_QUERY = "(max-width: 1200px)";
 
 export const Navigation = () => {
     const [isSmallScreen, setIsSmallScreen] = useState<boolean>(window.matchMedia(SMALL_SCREEN_MEDIA_QUERY).matches);
