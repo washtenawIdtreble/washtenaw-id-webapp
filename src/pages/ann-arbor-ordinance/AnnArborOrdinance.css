@@ -1,6 +1,13 @@
 .content-container {
+    background-color: #fafafa;
+    border: 2px solid black;
+    border-radius: 6px;
     font-size: 1.5rem;
-    width: 100%;
+    padding: 1rem;
+}
+
+.ordinance-paragraph {
+    margin: 0 0 1rem 0;
 }
 
 @media (min-width: 961px) {
