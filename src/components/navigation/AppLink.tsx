@@ -10,11 +10,10 @@ export const AppLink = (props: Omit<LinkProps, "reloadDocument">) => {
     });
 
     return (<>
-        {match && <CurrentPageIcon/>}
         <Link
             {...props}
             className={match ? `${props.className} matched-link` : props.className}
             aria-current={match ? "page" : undefined}
-        />
+        >{match && <CurrentPageIcon/>}{props.children}</Link>
     </>);
 };
