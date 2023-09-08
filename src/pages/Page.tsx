@@ -20,7 +20,6 @@ export const Page = ({ title, children }: PageProps) => {
     const loadingTimerRef: React.MutableRefObject<NodeJS.Timeout | undefined> = useRef();
     const loadingTimerExpiredRef = useRef(false);
     const [liveRegionText, setLiveRegionText] = useLiveRegionText("");
-    // const liveRegionTimerRef: React.MutableRefObject<NodeJS.Timeout | undefined> = useRef();
 
     const setIsLoading = useCallback((isLoading: boolean) => {
         if (isLoading) {
