@@ -68,8 +68,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 }
             });
         }
-
-    }, [onSubmitObservable, postFormData, onClearObservable]);
+    }, [onSubmitObservable, setLiveRegionText, postFormData, onClearObservable]);
 
     return (<div className={"form-container"}>
             {showSuccessMessage &&
@@ -85,7 +84,9 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
                     {children}
                 </FormProvider>
-                <button type={"submit"} className={"form-submit light-focus-outline"} disabled={submitting}>
+                <button type={"submit"}
+                        className={`form-submit light-focus-outline ${submitting ? "disabled-form-submit" : ""}`}
+                        aria-disabled={submitting}>
                     Submit
                     {submitting && <SubmitLoadingIcon/>}
                 </button>
