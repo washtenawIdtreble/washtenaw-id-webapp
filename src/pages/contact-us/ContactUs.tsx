@@ -19,7 +19,7 @@ export const CONTACT_PAGE_HEADING = "Contact Us";
 export const CONTACT_PAGE_IDENTIFIER = "contact-us";
 
 export const ContactUs = () => {
-    const [successMessage] = useState("Your message has been sent, thank you!");
+    const [successMessage] = useState('Your message has been sent, thank you!');
     return (
         <>
             <MainHeading ariaLabel={CONTACT_PAGE_HEADING.toLocaleLowerCase()}>
