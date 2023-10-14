@@ -1,5 +1,5 @@
 import { AnnArborOrdinance, ORDINANCE_PAGE_HEADING } from "./AnnArborOrdinance";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { axe } from "jest-axe";
 import { Container } from "react-dom";
@@ -40,13 +40,13 @@ describe(AnnArborOrdinance.name, () => {
     });
     test("has a call-to-action about businesses that don't accept the ID", () => {
         const nonBreakingSpace = `\xa0`;
-        const paragraphText = `If a business in Ann Arbor refused to accept your Washtenaw County ID,${nonBreakingSpace}please tell us about your experience.`;
+        const paragraphText = `If a business in Ann Arbor refused to accept your Washtenaw County ID, please tell us about your experience.${nonBreakingSpace}`;
         const paragraph = screen.getByText((text, element) => {
-            return element?.textContent === paragraphText;
+            return element?.textContent?.startsWith(paragraphText) ?? false;
         });
         expect(paragraph).toBeVisible();
 
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: "please tell us about your experience" });
+        const link: HTMLAnchorElement = within(paragraph).getByRole("link", { name: "Click here to contact us." });
         expect(link).toBeVisible();
         expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
     });

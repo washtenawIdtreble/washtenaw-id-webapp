@@ -17,11 +17,11 @@ export const AnnArborOrdinance = () => {
                 href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN"}>See
                 the law on Municode</OpensInANewTabLink></p>
             <p className={"ordinance-paragraph"}>
-                If a business in Ann Arbor refused to accept your Washtenaw County ID,&nbsp;
+                If a business in Ann Arbor refused to accept your Washtenaw County ID, please tell us about your
+                experience.&nbsp;
                 <AppLink to={PAGE_ENDPOINTS.contactUs}>
-                    please tell us about your experience
+                    Click here to contact us.
                 </AppLink>
-                .
             </p>
         </div>
     </>);
