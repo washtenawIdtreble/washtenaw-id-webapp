@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChildrenProps } from "../../utilities/children-props";
 import { MenuIcon } from "./MenuIcon";
 import { useLocation } from "react-router-dom";
@@ -30,24 +30,20 @@ export const NavMenu = ({ children }: ChildrenProps) => {
         setIsMenuOpen(currentValue => !currentValue);
     }, []);
 
+    const menuContainerRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         setIsMenuOpen(false);
     }, [location]);
 
     const globalEscapeKeyHandler = useCallback((event: KeyboardEvent) => {
+
         if (isMenuOpen && event.key === Keyboard.ESCAPE) {
             setIsMenuOpen(false);
         }
     }, [isMenuOpen]);
 
-    useEffect(() => {
-        document.body.addEventListener("keydown", globalEscapeKeyHandler);
-        return () => {
-            document.body.removeEventListener("keydown", globalEscapeKeyHandler);
-        }
-    }, [globalEscapeKeyHandler])
-
-    const menuOnKeyDown = useCallback((event: React.KeyboardEvent<HTMLElement>) => {
+    const menuOnKeyDown = useCallback((event: KeyboardEvent) => {
         const menu = document.getElementById(NAV_MENU_CONTAINER_ID);
         const links = Array.from(menu!.querySelectorAll("a"));
         const lastLink = links[links.length - 1];
@@ -62,8 +58,9 @@ export const NavMenu = ({ children }: ChildrenProps) => {
 
         if (isMenuOpen) {
             if (event.key === Keyboard.ESCAPE) {
-                menuButton?.focus();
                 setIsMenuOpen(false);
+                menuButton?.focus();
+                event.stopPropagation();
             } else if (links && links.length) {
                 if ([Keyboard.UP, Keyboard.LEFT].includes(event.key)) {
                     event.preventDefault();
@@ -88,8 +85,20 @@ export const NavMenu = ({ children }: ChildrenProps) => {
         }
     }, [isMenuOpen]);
 
+    useEffect(() => {
+        document.body.addEventListener("keydown", globalEscapeKeyHandler);
+
+        const menuContainer = menuContainerRef.current;
+        menuContainer?.addEventListener("keydown", menuOnKeyDown);
+
+        return () => {
+            document.body.removeEventListener("keydown", globalEscapeKeyHandler);
+            menuContainer?.removeEventListener("keydown", menuOnKeyDown);
+        };
+    }, [globalEscapeKeyHandler, menuOnKeyDown]);
+
     return (
-        <div onKeyDown={menuOnKeyDown}
+        <div ref={menuContainerRef}
              className={"nav-menu-container"}
              id={NAV_MENU_CONTAINER_ID}
              data-testid={"nav-menu"}>
