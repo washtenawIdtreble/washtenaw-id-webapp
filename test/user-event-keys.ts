@@ -1,4 +1,4 @@
-export const KEYS = {
+export const USER_EVENT_KEYS_FOR_TESTING_ONLY = {
     arrows: {
         down: "{ArrowDown}",
         left: "{ArrowLeft}",
