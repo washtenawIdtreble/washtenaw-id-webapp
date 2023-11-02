@@ -5,10 +5,8 @@ import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import { DOCUMENT_TITLE_SUFFIX } from "../pages/Page";
-import { BUSINESSES_PAGE_HEADING } from "../pages/businesses/Businesses";
 import { CONTACT_PAGE_HEADING } from "../pages/contact-us/ContactUs";
 import { ACCESSIBILITY_PAGE_HEADING } from "../pages/accessibility-issues/AccessibilityIssues";
-import { CATEGORIES_PAGE_HEADING } from "../pages/categories/Categories";
 import { DocumentStateContext } from "../contexts/DocumentStateContext";
 import { AppLink } from "../components/navigation/AppLink";
 import { asyncTimeout } from "../../test/async-timeout";
@@ -60,44 +58,6 @@ describe(RouterOutlet.name, () => {
             });
             test("the document title is correct", () => {
                 expect(document.title).toEqual(`${ORDINANCE_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
-            });
-            test("the main heading is focused", async () => {
-                await waitFor(() => {
-                    expect(h1).toHaveFocus();
-                });
-            });
-        });
-
-        describe("Categories", () => {
-            beforeEach(async () => {
-                await user.click(screen.getByRole("link", { name: LINK_TEXT.categories }));
-                h1 = await screen.findByRole("heading", { level: 1, name: CATEGORIES_PAGE_HEADING });
-                await screen.findByText("Banks"); // wait for Categories API call to resolve
-            });
-            test("they see the categories page", () => {
-                expect(h1).toBeVisible();
-            });
-            test("the document title is correct", () => {
-                expect(document.title).toEqual(`${CATEGORIES_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
-            });
-            test("the main heading is focused", async () => {
-                await waitFor(() => {
-                    expect(h1).toHaveFocus();
-                });
-            });
-        });
-
-        describe("BusinessesPage", () => {
-            beforeEach(async () => {
-                await user.click(screen.getByRole("link", { name: LINK_TEXT.businesses }));
-                h1 = await screen.findByRole("heading", { level: 1, name: BUSINESSES_PAGE_HEADING });
-                await screen.findAllByRole("heading", { level: 2 }); // wait for Businesses API call to resolve
-            });
-            test("they see the businesses page", () => {
-                expect(h1).toBeVisible();
-            });
-            test("the document title is correct", () => {
-                expect(document.title).toEqual(`${BUSINESSES_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
             });
             test("the main heading is focused", async () => {
                 await waitFor(() => {

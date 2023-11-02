@@ -25,16 +25,6 @@ export const NavLinks = () => {
             </AppLink>
         </li>
         <li className={"nav-list-item"}>
-            <AppLink to={PAGE_ENDPOINTS.businesses} className={"nav-link light-focus-outline"}>
-                {LINK_TEXT.businesses}
-            </AppLink>
-        </li>
-        <li className={"nav-list-item"}>
-            <AppLink to={PAGE_ENDPOINTS.categories} className={"nav-link light-focus-outline"}>
-                {LINK_TEXT.categories}
-            </AppLink>
-        </li>
-        <li className={"nav-list-item"}>
             <AppLink to={PAGE_ENDPOINTS.contactUs} className={"nav-link light-focus-outline"} aria-label={"contact us"}>
                 {LINK_TEXT.contactUs}
             </AppLink>

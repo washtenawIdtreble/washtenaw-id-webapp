@@ -31,14 +31,6 @@ describe(NavLinks.name, () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborOrdinance });
         expect(link.href).toContain(PAGE_ENDPOINTS.annArborOrdinance);
     });
-    test("has a link to the all businesses page", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.businesses });
-        expect(link.href).toContain(PAGE_ENDPOINTS.businesses);
-    });
-    test("has a link to the categories page", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.categories });
-        expect(link.href).toContain(PAGE_ENDPOINTS.categories);
-    });
     test("has a link to the contact us page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "contact us" });
         expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
