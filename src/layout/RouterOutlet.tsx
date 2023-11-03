@@ -1,11 +1,12 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ACCESSIBILITY_PAGE_HEADING, AccessibilityIssues } from "../pages/accessibility-issues/AccessibilityIssues";
 import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
 import { AnnArborOrdinance, ORDINANCE_PAGE_HEADING } from "../pages/ann-arbor-ordinance/AnnArborOrdinance";
 
 export const PAGE_ENDPOINTS = {
+    home: "/",
     annArborOrdinance: "/",
     categories: "/categories",
     businesses: "/businesses",
@@ -25,6 +26,7 @@ export const RouterOutlet = () => {
                                       key={ACCESSIBILITY_PAGE_HEADING}><AccessibilityIssues/></Page>}/>
                 <Route path={PAGE_ENDPOINTS.contactUs}
                        element={<Page title={CONTACT_PAGE_HEADING} key={CONTACT_PAGE_HEADING}><ContactUs/></Page>}/>
+                <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home}/>}/>
             </Routes>
         </div>
     );

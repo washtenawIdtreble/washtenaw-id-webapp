@@ -29,15 +29,15 @@ describe(NavLinks.name, () => {
     });
     test("has a link to the Ann Arbor Ordinance Page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborOrdinance });
-        expect(link.href).toContain(PAGE_ENDPOINTS.annArborOrdinance);
+        expect(link.href.endsWith(PAGE_ENDPOINTS.annArborOrdinance)).toBe(true);
     });
     test("has a link to the contact us page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "contact us" });
-        expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
+        expect(link.href.endsWith(PAGE_ENDPOINTS.contactUs)).toBe(true);
         expect(link.textContent).toEqual(LINK_TEXT.contactUs);
     });
     test("has a link to the accessibility issues form page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.accessibilityIssues });
-        expect(link.href).toContain(PAGE_ENDPOINTS.accessibilityIssues);
+        expect(link.href.endsWith(PAGE_ENDPOINTS.accessibilityIssues)).toBe(true);
     });
 });
