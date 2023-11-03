@@ -13,6 +13,9 @@ import { asyncTimeout } from "../../test/async-timeout";
 import { ORDINANCE_PAGE_HEADING } from "../pages/ann-arbor-ordinance/AnnArborOrdinance";
 import { LINK_TEXT } from "../components/navigation/NavLinks";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
+import { faker } from "@faker-js/faker";
+
+const unknownPageLinkName = "UNKNOWN PAGE";
 
 describe(RouterOutlet.name, () => {
     let user: UserEvent;
@@ -23,6 +26,7 @@ describe(RouterOutlet.name, () => {
     });
 
     test("has the correct page endpoints", () => {
+        expect(PAGE_ENDPOINTS.home).toBe("/");
         expect(PAGE_ENDPOINTS.annArborOrdinance).toBe("/");
         expect(PAGE_ENDPOINTS.categories).toBe("/categories");
         expect(PAGE_ENDPOINTS.businesses).toBe("/businesses");
@@ -101,6 +105,20 @@ describe(RouterOutlet.name, () => {
                 });
             });
         });
+
+        describe("Unknown page", () => {
+            beforeEach(async () => {
+                // navigate away from the home page first
+                await user.click(screen.getByRole("link", { name: LINK_TEXT.accessibilityIssues }));
+                await screen.findByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
+
+                await user.click(screen.getByRole("link", { name: unknownPageLinkName }));
+                h1 = await screen.findByRole("heading", { level: 1, name: ORDINANCE_PAGE_HEADING });
+            });
+            test("they see the ordinance page", () => {
+                expect(h1).toBeVisible();
+            });
+        });
     });
 });
 
@@ -118,6 +136,7 @@ const TestingRouterWithLinks = () => {
                 <AppLink to={PAGE_ENDPOINTS.businesses}>{LINK_TEXT.businesses}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.accessibilityIssues}>{LINK_TEXT.accessibilityIssues}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.contactUs}>{LINK_TEXT.contactUs}</AppLink>
+                <AppLink to={faker.random.alpha(10)}>{unknownPageLinkName}</AppLink>
             </DocumentStateContext.Provider>
         </MemoryRouter>
     );
