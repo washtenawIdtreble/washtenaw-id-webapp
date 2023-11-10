@@ -19,14 +19,16 @@ export type FormFieldProps = {
 
 export type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
-export const FormField = ({
-                              id,
-                              name,
-                              validator,
-                              autoComplete,
-                              pageIdentifier,
-                              inputType = FormFieldType.INPUT
-                          }: FormFieldProps) => {
+export const FormField = (
+    {
+        id,
+        name,
+        validator,
+        autoComplete,
+        pageIdentifier,
+        inputType = FormFieldType.INPUT
+    }: FormFieldProps) => {
+
     const { registerField } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
