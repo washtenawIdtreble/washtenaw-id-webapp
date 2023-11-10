@@ -5,6 +5,7 @@ import { ChildrenProps } from "../utilities/children-props";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import userEvent from "@testing-library/user-event";
 import { Observable } from "../utilities/observable";
+import { useFocusElement } from "../hooks/focus/useFocusElement";
 
 const validValue = "valid";
 const nameLabel = "NAME";
@@ -36,9 +37,7 @@ describe("Form Context", () => {
         const submit = screen.getByRole("button", { name: "SUBMIT" });
         await user.click(submit);
 
-        await waitFor(() => {
-            expect(screen.getByText("OBSERVED: true")).toBeVisible();
-        });
+        expect(await screen.findByText("OBSERVED: true")).toBeVisible();
     });
     test("Focuses earliest input that has an error", async () => {
         const nameInput = screen.getByLabelText(nameLabel);
@@ -69,7 +68,7 @@ const TestFormWithProvider = ({ children }: ChildrenProps) => {
 
     const onClear = useCallback(() => {
         onClearObservable.notify();
-    }, []);
+    }, [onClearObservable]);
 
     return (<FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
         {children}
@@ -81,12 +80,13 @@ const TestFormWithProvider = ({ children }: ChildrenProps) => {
 
 const TestInputFormConsumer = ({ label }: { label: string }) => {
     const { registerField } = useContext(FormContext);
-    const input = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [cleared, setCleared] = useState("false");
+    const focusElement = useFocusElement();
 
     const validation = useCallback(() => {
-        if (input.current!.value === validValue) {
+        if (inputRef.current!.value === validValue) {
             setErrorMessage("");
             return "";
         }
@@ -100,13 +100,17 @@ const TestInputFormConsumer = ({ label }: { label: string }) => {
         setCleared("true");
     }, []);
 
+    const focus = useCallback(() => {
+        focusElement(inputRef);
+    }, [focusElement]);
+
     useEffect(() => {
-        registerField({ validation, inputRef: input, clear });
-    }, [registerField, validation]);
+        registerField({ validation, clear, focus });
+    }, [clear, focus, registerField, validation]);
 
     return (<>
         <label>{label}
-            <input ref={input}/>
+            <input ref={inputRef}/>
         </label>
         {errorMessage &&
             <span>{errorMessage}</span>

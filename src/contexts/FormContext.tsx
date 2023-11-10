@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { ChildrenProps } from "../utilities/children-props";
 import { Observable } from "../utilities/observable";
-import { useFocusElement } from "../hooks/focus/useFocusElement";
 import { Field } from "../components/form/Field";
 
 export type FormContextValue = {
@@ -23,22 +22,20 @@ export const FormProvider = ({ onSubmit, onClear, children }: FormProviderProps 
         fields.current = [...fields.current, field];
     }, []);
 
-    const focusElement = useFocusElement();
-
     const runValidations = useCallback(() => {
         let invalidFieldFound = false;
         for (const field of fields.current) {
             const errors = field.validation();
             if (errors.length && !invalidFieldFound) {
-                focusElement(field.inputRef);
+                field.focus();
                 invalidFieldFound = true;
             }
         }
         return invalidFieldFound;
-    }, [focusElement]);
+    }, []);
 
     const clearFields = useCallback(() => {
-        for(const field of fields.current) {
+        for (const field of fields.current) {
             field.clear();
         }
     }, []);
@@ -49,7 +46,7 @@ export const FormProvider = ({ onSubmit, onClear, children }: FormProviderProps 
         return () => {
             onSubmit.unsubscribe();
         };
-    }, [onSubmit, runValidations]);
+    }, [clearFields, onClear, onSubmit, runValidations]);
 
     const providerValue: FormContextValue = {
         registerField,
