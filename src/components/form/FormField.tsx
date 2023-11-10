@@ -33,7 +33,7 @@ export const FormField = (
     const { registerField } = useContext(FormContext);
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const { save, clearStorage } = useLocalStorage(`${pageIdentifier}-${id}`);
+    const { save, clearStorage, getStoredValue } = useLocalStorage(`${pageIdentifier}-${id}`);
     const focusElement = useFocusElement();
 
     const validation = useValidation({ validator, inputRef, setErrorMessage });
@@ -54,9 +54,9 @@ export const FormField = (
 
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.value = window.localStorage.getItem(`${pageIdentifier}-${id}`) ?? "";
+            inputRef.current.value = getStoredValue();
         }
-    }, [id, pageIdentifier]);
+    }, [getStoredValue]);
 
     const onBlur = useCallback(() => {
         if (errorMessage !== "") {
