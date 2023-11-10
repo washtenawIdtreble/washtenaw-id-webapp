@@ -2,6 +2,7 @@ import React, { RefObject, useCallback, useContext, useEffect, useRef, useState 
 import { useValidation, Validator } from "../../hooks/form-validation/useValidation";
 import { FormContext } from "../../contexts/FormContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useFocusElement } from "../../hooks/focus/useFocusElement";
 
 export enum FormFieldType {
     INPUT,
@@ -33,6 +34,7 @@ export const FormField = (
     const inputRef = useRef<FormFieldElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const { save, clearStorage } = useLocalStorage(`${pageIdentifier}-${id}`);
+    const focusElement = useFocusElement();
 
     const validation = useValidation({ validator, inputRef, setErrorMessage });
     const clear = useCallback(() => {
@@ -42,9 +44,13 @@ export const FormField = (
         }
     }, [clearStorage]);
 
+    const focus = useCallback(() => {
+        focusElement(inputRef);
+    }, [focusElement]);
+
     useEffect(() => {
-        registerField({ validation, inputRef, clear });
-    }, [clear, registerField, validation]);
+        registerField({ validation, clear, focus });
+    }, [clear, focus, registerField, validation]);
 
     useEffect(() => {
         if (inputRef.current) {

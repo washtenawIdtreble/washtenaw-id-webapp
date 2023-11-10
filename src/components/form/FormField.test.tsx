@@ -41,7 +41,8 @@ describe(FormField.name, () => {
     describe("under normal circumstances - input", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormWithField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
+            render(<FormWithField id={id} name={name} validator={() => errorMessage} autoComplete={"tel"}
+                                  pageIdentifier={pageIdentifier}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -53,13 +54,13 @@ describe(FormField.name, () => {
         test("passes name to input", () => {
             expect(textBox.name).toEqual(name);
         });
-        test("error message container is not present", () => {
+        test("error message container is not present by default", () => {
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
         test("passes autocomplete to the input", () => {
             expect(textBox.autocomplete).toEqual("tel");
         });
-        test("writes to local storage when input changes", async() => {
+        test("writes to local storage when input changes", async () => {
             const typedInValue = "AB";
             await user.type(textBox, typedInValue);
 
@@ -69,16 +70,16 @@ describe(FormField.name, () => {
 
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
         });
-        test("error message container is not present", async () => {
+        test("error message container is not present after blur", async () => {
             textBox.focus();
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
-        test("clears value and local storage when onClear observable fires", async() => {
+        test("clears value and local storage when context tells it to", async () => {
             await user.type(textBox, "some email");
-            const clearButton = screen.getByRole("button", {name: "CLEAR"});
+            const clearButton = screen.getByRole("button", { name: "CLEAR" });
             await user.click(clearButton);
-            
+
             expect(textBox.value).toBe("");
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toBe(null);
         });
@@ -87,7 +88,8 @@ describe(FormField.name, () => {
     describe("under normal circumstances - textarea", () => {
         const errorMessage = "error message";
         beforeEach(() => {
-            render(<FormWithField id={id} name={name} validator={() => errorMessage} inputType={FormFieldType.TEXTAREA} autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
+            render(<FormWithField id={id} name={name} validator={() => errorMessage} inputType={FormFieldType.TEXTAREA}
+                                  autoComplete={"tel"} pageIdentifier={pageIdentifier}/>);
             textBox = screen.getByRole("textbox");
         });
         test("shows an input", () => {
@@ -99,13 +101,13 @@ describe(FormField.name, () => {
         test("passes name to input", () => {
             expect(textBox.name).toEqual(name);
         });
-        test("error message container is not present", () => {
+        test("error message container is not present by default", () => {
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
         test("passes autocomplete to the input", () => {
             expect(textBox.autocomplete).toEqual("tel");
         });
-        test("writes to local storage when input changes", async() => {
+        test("writes to local storage when input changes", async () => {
             const typedInValue = "AB";
             await user.type(textBox, typedInValue);
 
@@ -115,16 +117,16 @@ describe(FormField.name, () => {
 
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toEqual("ABC");
         });
-        test("error message container is not present", async () => {
+        test("error message container is not present after blur", async () => {
             textBox.focus();
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
-        test("clears value and local storage when onClear observable fires", async() => {
+        test("clears value and local storage when when context tells it to", async () => {
             await user.type(textBox, "some email");
-            const clearButton = screen.getByRole("button", {name: "CLEAR"});
+            const clearButton = screen.getByRole("button", { name: "CLEAR" });
             await user.click(clearButton);
-            
+
             expect(textBox.value).toBe("");
             expect(window.localStorage.getItem(`${pageIdentifier}-${id}`)).toBe(null);
         });
@@ -147,9 +149,9 @@ describe(FormField.name, () => {
             textBox = screen.getByRole("textbox");
         });
 
-        test(`shows the error message`, async () => {
+        test(`shows the error message and focuses the input`, async () => {
             await user.type(textBox, invalidValue);
-            await user.click(screen.getByRole("button", {name: "SUBMIT"}));
+            await user.click(screen.getByRole("button", { name: "SUBMIT" }));
             let errorMessage: HTMLSpanElement;
 
             await waitFor(() => {
@@ -173,7 +175,7 @@ describe(FormField.name, () => {
             test("removes error message if it has been fixed", async () => {
                 // add value and validate to create multiple error messages
                 await user.type(textBox, invalidValue);
-                await user.click(screen.getByRole("button", {name: "SUBMIT"}));
+                await user.click(screen.getByRole("button", { name: "SUBMIT" }));
                 await waitFor(() => {
                     expect(textBox).toHaveFocus();
                 });
@@ -206,10 +208,10 @@ const FormWithField = (props: FormFieldProps) => {
     const onSubmit = useCallback(() => {
         onSubmitObservable.notify();
     }, [onSubmitObservable]);
-    
-    const onClear = useCallback(()=> {
+
+    const onClear = useCallback(() => {
         onClearObservable.notify();
-    },[]);
+    }, [onClearObservable]);
 
     return (<>
         <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
