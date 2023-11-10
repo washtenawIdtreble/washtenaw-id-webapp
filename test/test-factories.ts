@@ -2,13 +2,30 @@ import { AccessibilityFormData } from "../src/pages/accessibility-issues/Accessi
 import { Business, CategorizedBusinesses } from "../src/hooks/useBusinesses";
 import { faker } from "@faker-js/faker";
 import { Category } from "../src/hooks/useCategories";
+import { IdRefusedFormData } from "../src/pages/report-id-refusal/ReportIdRefused";
 
 export const stubAccessibilityFormData = (attributes: Partial<AccessibilityFormData> = {}): AccessibilityFormData => {
     return {
-        name: attributes.name === undefined ? "Stub Name" : attributes.name,
-        email: attributes.email === undefined ? "stub_email@example.com" : attributes.email,
-        phone: attributes.phone === undefined ? "9999999999" : attributes.phone,
-        description: attributes.description === undefined ? "Stub Description" : attributes.description,
+        name: attributes.name === undefined ? faker.name.fullName() : attributes.name,
+        email: attributes.email === undefined ? faker.internet.email() : attributes.email,
+        phone: attributes.phone === undefined ? faker.phone.number("##########") : attributes.phone,
+        description: attributes.description === undefined ? faker.lorem.paragraph(3) : attributes.description,
+    };
+};
+
+export const stubRefusedIdData = (attributes: Partial<IdRefusedFormData> = {}): IdRefusedFormData => {
+    return {
+        name: attributes.name === undefined ? faker.name.fullName() : attributes.name,
+        email: attributes.email === undefined ? faker.internet.email() : attributes.email,
+        phone: attributes.phone === undefined ? faker.phone.number("##########") : attributes.phone,
+
+        businessName: attributes.businessName === undefined ? generateBusinessName() : attributes.businessName,
+        businessStreet: attributes.businessStreet === undefined ? faker.address.street() : attributes.businessStreet,
+        businessCity: attributes.businessCity === undefined ? faker.address.city() : attributes.businessCity,
+        whenRefused: attributes.whenRefused === undefined ? faker.helpers.arrayElement(["under 18", "over 55"]) : attributes.whenRefused,
+        ageRange: attributes.ageRange === undefined ? "" : attributes.ageRange,
+
+        description: attributes.description === undefined ? faker.lorem.paragraph(3) : attributes.description,
     };
 };
 
@@ -20,9 +37,8 @@ export const stubCategory = (attributes: Partial<Category> = {}): Category => {
 };
 
 export const stubBusiness = (attributes: Partial<Business> = {}): Business => {
-    const name = toTitleCase(`${faker.word.adjective()} ${faker.word.noun()}`);
     return {
-        name: attributes.name === undefined ? `${name} ${faker.company.companySuffix()}` : attributes.name,
+        name: attributes.name === undefined ? generateBusinessName() : attributes.name,
         address: attributes.address === undefined ? faker.address.streetAddress() : attributes.address,
         city: attributes.city === undefined ? faker.address.city() : attributes.city,
         state: attributes.state === undefined ? faker.address.stateAbbr() : attributes.state,
@@ -46,4 +62,8 @@ const toTitleCase = (input: string) => {
         words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
     }
     return words.join(" ");
+};
+
+const generateBusinessName = () => {
+    return toTitleCase(`${faker.word.adjective()} ${faker.word.noun()} ${faker.company.companySuffix()}`);
 };

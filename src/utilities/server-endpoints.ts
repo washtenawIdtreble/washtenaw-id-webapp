@@ -3,4 +3,5 @@ export const SERVER_ENDPOINTS = {
     BUSINESSES: "businesses",
     CATEGORIES: "categories",
     CONTACT_US: "contact-us",
+    ID_REFUSED: "id-refused",
 };
