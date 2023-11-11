@@ -60,7 +60,7 @@ export const AccessibilityIssues = () => {
                         />
                     </label>
                     <label htmlFor={"description"}>
-                        What do you want to tell us? (required)
+                        Questions/Comments (required)
                         <FormField
                             id={"description"}
                             pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
