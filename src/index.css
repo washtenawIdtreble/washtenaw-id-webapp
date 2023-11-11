@@ -61,6 +61,10 @@ textarea {
     padding: 0.5rem 0.66rem;
 }
 
+fieldset {
+    border-radius: 6px;
+}
+
 .visually-hidden {
     height: 1px;
     overflow: hidden;

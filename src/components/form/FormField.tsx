@@ -84,9 +84,8 @@ export const FormField = (
         />;
 
     const errorClass = invalid ? "invalid-form-field" : "";
-    const containerClass = inputType === FormFieldType.TEXTAREA ? "flex-grow-field" : "";
 
-    return (<div className={`form-field ${containerClass} ${errorClass}`}>
+    return (<div className={`form-field ${errorClass}`}>
         {invalid && <span id={errorMessageId} className={"form-field-error-message"}>{errorMessage}</span>}
         {input}
     </div>);

@@ -31,44 +31,46 @@ export const ContactUs = () => {
                 ariaLabelledBy={MAIN_HEADING_ID}
                 submitEndpoint={SERVER_ENDPOINTS.CONTACT_US}
             >
-                <label className={"form-label"}>
-                    Your Name (optional)
-                    <FormField
-                        id={"name"}
-                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                        autoComplete={"name"}
-                        name={"name"}/>
-                </label>
-                <label htmlFor={"email"} className={"form-label"}>
-                    Your email (optional)
-                    <FormField
-                        id={"email"}
-                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                        name={"email"}
-                        validator={validateEmail}
-                        autoComplete={"email"}
-                    />
-                </label>
-                <label htmlFor={"phone"} className={"form-label"}>
-                    Your phone number (optional)
-                    <FormField
-                        id={"phone"}
-                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                        name={"phone"}
-                        validator={validatePhone}
-                        autoComplete={"tel"}
-                    />
-                </label>
-                <label htmlFor={"description"} className={"form-label textarea-label"}>
-                    What do you want to tell us? (required)
-                    <FormField
-                        id={"description"}
-                        pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                        name={"description"}
-                        validator={validateRequired}
-                        inputType={FormFieldType.TEXTAREA}
-                    />
-                </label>
+                <div className={"form-column-full"}>
+                    <label>
+                        Your Name (optional)
+                        <FormField
+                            id={"name"}
+                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                            autoComplete={"name"}
+                            name={"name"}/>
+                    </label>
+                    <label htmlFor={"email"}>
+                        Your email (optional)
+                        <FormField
+                            id={"email"}
+                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                            name={"email"}
+                            validator={validateEmail}
+                            autoComplete={"email"}
+                        />
+                    </label>
+                    <label htmlFor={"phone"}>
+                        Your phone number (optional)
+                        <FormField
+                            id={"phone"}
+                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                            name={"phone"}
+                            validator={validatePhone}
+                            autoComplete={"tel"}
+                        />
+                    </label>
+                    <label htmlFor={"description"}>
+                        What do you want to tell us? (required)
+                        <FormField
+                            id={"description"}
+                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                            name={"description"}
+                            validator={validateRequired}
+                            inputType={FormFieldType.TEXTAREA}
+                        />
+                    </label>
+                </div>
             </Form>
         </>
     );
