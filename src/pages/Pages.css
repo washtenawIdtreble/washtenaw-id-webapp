@@ -6,6 +6,10 @@
     padding: 1.5rem 1rem;
 }
 
+.inline-link {
+    outline-offset: 4px;
+}
+
 .loading {
     font-size: 2rem;
     text-align: center;

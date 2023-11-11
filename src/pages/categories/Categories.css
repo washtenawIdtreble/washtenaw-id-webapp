@@ -27,14 +27,11 @@
     font-size: 3rem;
     height: 100%;
     justify-content: center;
+    outline-offset: -8px;
     padding: 0;
     text-align: center;
     text-decoration: none;
     width: 100%;
-}
-
-.category-link:focus {
-    outline-offset: -8px;
 }
 
 @media (min-width: 1200px) {

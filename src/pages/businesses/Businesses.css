@@ -53,10 +53,6 @@
     width: 60%;
 }
 
-.business-card-link:focus {
-    outline-offset: 4px;
-}
-
 @media (min-width: 1200px) {
     .category-section {
         display: flex;

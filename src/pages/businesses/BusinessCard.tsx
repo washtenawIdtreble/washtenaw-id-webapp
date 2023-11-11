@@ -16,21 +16,21 @@ export const BusinessCard = ({ business }: BusinessCardProps) => {
 
             <div className={"bussines-card-row"}>
                 <span className={"business-card-label"}>Address</span>
-                <OpensInANewTabLink href={mapsUrl} className={"business-card-link business-card-value"}>
+                <OpensInANewTabLink href={mapsUrl} className={"inline-link business-card-value"}>
                     {businessAddress}
                 </OpensInANewTabLink>
             </div>
 
             <div className={"bussines-card-row"}>
                 <span className={"business-card-label"}>Website</span>
-                <OpensInANewTabLink href={business.website} className={"business-card-link business-card-value"}>
+                <OpensInANewTabLink href={business.website} className={"inline-link business-card-value"}>
                     {shortWebsite}
                 </OpensInANewTabLink>
             </div>
 
             <div className={"bussines-card-row"}>
                 <span className={"business-card-label"}>Phone</span>
-                <a href={`tel:${business.phone}`} className={"business-card-link business-card-value"}>
+                <a href={`tel:${business.phone}`} className={"inline-link business-card-value"}>
                     {business.phone}
                 </a>
             </div>
