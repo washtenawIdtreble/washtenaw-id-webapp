@@ -15,7 +15,7 @@ export type IdRefusedFormData = {
     phone?: string;
     businessName: string;
     businessStreet: string;
-    businessCity?: string;
+    businessCity: string;
     whenRefused?: string
     ageRange?: string;
     description?: string;

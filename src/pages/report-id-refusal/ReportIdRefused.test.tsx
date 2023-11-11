@@ -54,7 +54,7 @@ describe(`${ReportIdRefused.name} form`, () => {
     });
 
     test("has an h1 that can be focused programmatically", () => {
-        const h1 = screen.getByRole("heading", { level: 1, name: ID_REFUSED_PAGE_HEADING.toLocaleLowerCase() });
+        const h1 = screen.getByRole("heading", { level: 1, name: ID_REFUSED_PAGE_HEADING });
         expect(h1).toBeVisible();
         expect(h1.hasAttribute("tabindex")).toBe(true);
         expect(h1.tabIndex).toBe(-1);
