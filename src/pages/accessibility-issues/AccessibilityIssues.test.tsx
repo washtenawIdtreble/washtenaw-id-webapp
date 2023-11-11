@@ -76,8 +76,13 @@ describe(`${AccessibilityIssues.name} form`, () => {
             const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
             const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
             const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
+            const commentsInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
+
+            await user.tab();
+            expect(commentsInput).toHaveFocus();
+            const comments = "There was an input that didn't have a label";
+            await user.keyboard(comments);
 
             await user.tab();
             expect(nameInput).toHaveFocus();
@@ -95,16 +100,11 @@ describe(`${AccessibilityIssues.name} form`, () => {
             await user.keyboard(phone);
 
             await user.tab();
-            expect(descriptionInput).toHaveFocus();
-            const description = "There was an input that didn't have a label";
-            await user.keyboard(description);
-
-            await user.tab();
             expect(submit).toHaveFocus();
 
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
-            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments: description }));
+            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments }));
 
             await waitFor(() => {
                 expect(screen.getByText(successMessage)).toBeInTheDocument();
@@ -115,15 +115,22 @@ describe(`${AccessibilityIssues.name} form`, () => {
     describe("when the form data is invalid", () => {
         let emailInput: HTMLInputElement;
         let phoneInput: HTMLInputElement;
-        let descriptionInput: HTMLTextAreaElement;
+        let commentsInput: HTMLTextAreaElement;
         let submit: HTMLButtonElement;
         beforeEach(async () => {
             emailInput = within(form).getByRole("textbox", { name: "Your email (optional)" });
             phoneInput = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            descriptionInput = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
+            commentsInput = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             submit = within(form).getByRole("button", { name: "Submit" });
 
-            await user.type(descriptionInput, "non-empty value");
+            await user.type(commentsInput, "non-empty value");
+        });
+        test("shows error message for required comments", async () => {
+            await user.clear(commentsInput);
+            await user.click(submit);
+            await waitFor(() => {
+                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
+            });
         });
         test("shows error message for email", async () => {
             await user.type(emailInput, "invalid@email");
@@ -139,15 +146,8 @@ describe(`${AccessibilityIssues.name} form`, () => {
                 expect(screen.getByText(INVALID_PHONE_MESSAGE)).toBeVisible();
             });
         });
-        test("shows error message for required description", async () => {
-            await user.clear(descriptionInput);
-            await user.click(submit);
-            await waitFor(() => {
-                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
-            });
-        });
         test("doesn't submit the form", async () => {
-            await user.clear(descriptionInput);
+            await user.clear(commentsInput);
             await user.click(submit);
             expect(capturedFormData).toBeNull();
         });

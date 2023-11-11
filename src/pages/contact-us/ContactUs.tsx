@@ -31,7 +31,20 @@ export const ContactUs = () => {
                 ariaLabelledBy={MAIN_HEADING_ID}
                 submitEndpoint={SERVER_ENDPOINTS.CONTACT_US}
             >
-                <div className={"form-column-full"}>
+                <div className={"form-column-two-thirds"}>
+                    <label htmlFor={"comments"}>
+                        Questions/Comments (required)
+                        <FormField
+                            id={"comments"}
+                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
+                            name={"comments"}
+                            validator={validateRequired}
+                            inputType={FormFieldType.TEXTAREA}
+                        />
+                    </label>
+                </div>
+                
+                <div className={"form-column-one-third"}>
                     <label>
                         Your Name (optional)
                         <FormField
@@ -58,16 +71,6 @@ export const ContactUs = () => {
                             name={"phone"}
                             validator={validatePhone}
                             autoComplete={"tel"}
-                        />
-                    </label>
-                    <label htmlFor={"comments"}>
-                        Questions/Comments (required)
-                        <FormField
-                            id={"comments"}
-                            pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                            name={"comments"}
-                            validator={validateRequired}
-                            inputType={FormFieldType.TEXTAREA}
                         />
                     </label>
                 </div>
