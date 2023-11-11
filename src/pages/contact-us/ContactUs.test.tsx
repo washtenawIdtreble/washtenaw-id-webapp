@@ -17,7 +17,7 @@ import { CONTACT_PAGE_HEADING, CONTACT_PAGE_IDENTIFIER, ContactFormData, Contact
 import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
 
 describe(`${ContactUs.name} form`, () => {
-    const formLabelText = "Contact Us";
+    const formLabelText = "General Contact";
     const successMessage = "Your message has been sent, thank you!";
     let capturedFormData: ContactFormData;
     let user: UserEvent;
@@ -45,7 +45,7 @@ describe(`${ContactUs.name} form`, () => {
     });
 
     test("exports its page heading", () => {
-        expect(CONTACT_PAGE_HEADING).toBe("Contact Us");
+        expect(CONTACT_PAGE_HEADING).toBe("General Contact");
     });
 
     test("has an h1 that can be focused programmatically", () => {
@@ -72,7 +72,7 @@ describe(`${ContactUs.name} form`, () => {
             const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
             const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
             const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
 
             await user.tab();
@@ -116,7 +116,7 @@ describe(`${ContactUs.name} form`, () => {
         beforeEach(async () => {
             emailInput = within(form).getByRole("textbox", { name: "Your email (optional)" });
             phoneInput = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            descriptionInput = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            descriptionInput = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             submit = within(form).getByRole("button", { name: "Submit" });
 
             await user.type(descriptionInput, "non-empty value");

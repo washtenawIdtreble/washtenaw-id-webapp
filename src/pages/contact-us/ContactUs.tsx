@@ -15,8 +15,8 @@ export type ContactFormData = {
     description: string;
 };
 
-export const CONTACT_PAGE_HEADING = "Contact Us";
-export const CONTACT_PAGE_IDENTIFIER = "contact-us";
+export const CONTACT_PAGE_HEADING = "General Contact";
+export const CONTACT_PAGE_IDENTIFIER = "general-contact";
 
 export const ContactUs = () => {
     const [successMessage] = useState("Your message has been sent, thank you!");
@@ -61,7 +61,7 @@ export const ContactUs = () => {
                         />
                     </label>
                     <label htmlFor={"description"}>
-                        What do you want to tell us? (required)
+                        Questions/Comments (required)
                         <FormField
                             id={"description"}
                             pageIdentifier={CONTACT_PAGE_IDENTIFIER}

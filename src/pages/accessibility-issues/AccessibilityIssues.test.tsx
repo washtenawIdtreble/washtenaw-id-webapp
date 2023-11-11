@@ -76,7 +76,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
             const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
             const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
             const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
 
             await user.tab();
@@ -120,7 +120,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
         beforeEach(async () => {
             emailInput = within(form).getByRole("textbox", { name: "Your email (optional)" });
             phoneInput = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-            descriptionInput = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            descriptionInput = within(form).getByRole("textbox", { name: "Questions/Comments (required)" });
             submit = within(form).getByRole("button", { name: "Submit" });
 
             await user.type(descriptionInput, "non-empty value");
