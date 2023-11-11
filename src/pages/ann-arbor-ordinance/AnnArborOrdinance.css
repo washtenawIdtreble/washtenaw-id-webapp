@@ -7,6 +7,8 @@
 }
 
 .ordinance-paragraph {
+    display: inline-block;
+    line-height: 2rem;
     margin: 0 0 1rem 0;
 }
 

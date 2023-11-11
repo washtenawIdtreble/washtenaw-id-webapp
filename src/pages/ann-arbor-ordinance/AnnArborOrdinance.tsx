@@ -13,13 +13,13 @@ export const AnnArborOrdinance = () => {
         <div className={"content-container"}>
             <p className={"ordinance-paragraph"}>All businesses in Ann Arbor are required to accept the Washtenaw County
                 ID as proof of identity.</p>
-            <p className={"ordinance-paragraph"}><OpensInANewTabLink
-                href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN"}>See
+            <p className={"ordinance-paragraph"}><OpensInANewTabLink className={"inline-link"}
+                                                                     href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN"}>See
                 the law on Municode</OpensInANewTabLink></p>
             <p className={"ordinance-paragraph"}>
                 If a business in Ann Arbor refused to accept your Washtenaw County ID, please tell us about your
                 experience.&nbsp;
-                <AppLink to={PAGE_ENDPOINTS.reportIdRefused}>
+                <AppLink to={PAGE_ENDPOINTS.reportIdRefused} className={"inline-link"}>
                     Click here to contact us.
                 </AppLink>
             </p>
