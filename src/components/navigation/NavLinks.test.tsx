@@ -14,6 +14,7 @@ describe(NavLinks.name, () => {
         expect(LINK_TEXT.annArborOrdinance).toEqual("Washtenaw ID in Ann Arbor");
         expect(LINK_TEXT.businesses).toEqual("All Businesses");
         expect(LINK_TEXT.categories).toEqual("Business Categories");
+        expect(LINK_TEXT.reportIdRefused).toEqual("My ID was Refused");
         expect(LINK_TEXT.contactUs).toEqual("Contact Us");
         expect(LINK_TEXT.accessibilityIssues).toEqual("Accessibility Issues");
     });
@@ -21,7 +22,7 @@ describe(NavLinks.name, () => {
         const list = screen.getByRole("list");
         const listItems = within(list).getAllByRole("listitem");
         const links = listItems.map(listItem => within(listItem).getByRole("link"));
-        expect(links.length).toBeGreaterThan(0);
+        expect(links.length).toEqual(5);
     });
     test("has a link to the washtenaw ID website", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: `${LINK_TEXT.aboutTheId} ${OPENS_IN_A_NEW_TAB}` });
@@ -30,6 +31,10 @@ describe(NavLinks.name, () => {
     test("has a link to the Ann Arbor Ordinance Page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborOrdinance });
         expect(link.href.endsWith(PAGE_ENDPOINTS.annArborOrdinance)).toBe(true);
+    });
+    test("has a link to the id refused form page", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.reportIdRefused });
+        expect(link.href.endsWith(PAGE_ENDPOINTS.reportIdRefused)).toBe(true);
     });
     test("has a link to the contact us page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: "contact us" });

@@ -10,6 +10,7 @@ export const LINK_TEXT = {
     categories: "Business Categories",
     contactUs: "Contact Us",
     accessibilityIssues: "Accessibility Issues",
+    reportIdRefused: "My ID was Refused",
 };
 
 export const NavLinks = () => {
@@ -22,6 +23,11 @@ export const NavLinks = () => {
         <li className={"nav-list-item"}>
             <AppLink className={"nav-link"} to={PAGE_ENDPOINTS.annArborOrdinance}>
                 {LINK_TEXT.annArborOrdinance}
+            </AppLink>
+        </li>
+        <li className={"nav-list-item"}>
+            <AppLink to={PAGE_ENDPOINTS.reportIdRefused} className={"nav-link light-focus-outline"}>
+                {LINK_TEXT.reportIdRefused}
             </AppLink>
         </li>
         <li className={"nav-list-item"}>

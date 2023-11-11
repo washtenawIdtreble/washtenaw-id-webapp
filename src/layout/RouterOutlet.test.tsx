@@ -14,6 +14,7 @@ import { ORDINANCE_PAGE_HEADING } from "../pages/ann-arbor-ordinance/AnnArborOrd
 import { LINK_TEXT } from "../components/navigation/NavLinks";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
 import { faker } from "@faker-js/faker";
+import { ID_REFUSED_PAGE_HEADING } from "../pages/report-id-refusal/ReportIdRefused";
 
 const unknownPageLinkName = "UNKNOWN PAGE";
 
@@ -30,8 +31,9 @@ describe(RouterOutlet.name, () => {
         expect(PAGE_ENDPOINTS.annArborOrdinance).toBe("/");
         expect(PAGE_ENDPOINTS.categories).toBe("/categories");
         expect(PAGE_ENDPOINTS.businesses).toBe("/businesses");
-        expect(PAGE_ENDPOINTS.accessibilityIssues).toBe("/accessibility-issues");
+        expect(PAGE_ENDPOINTS.reportIdRefused).toBe("/id-refused");
         expect(PAGE_ENDPOINTS.contactUs).toBe("/contact-us");
+        expect(PAGE_ENDPOINTS.accessibilityIssues).toBe("/accessibility-issues");
     });
 
     describe("when the user lands on the home page", () => {
@@ -70,24 +72,6 @@ describe(RouterOutlet.name, () => {
             });
         });
 
-        describe("Accessibility Issues Page", () => {
-            beforeEach(async () => {
-                await user.click(screen.getByRole("link", { name: LINK_TEXT.accessibilityIssues }));
-                h1 = await screen.findByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
-            });
-            test("they see the accessibility issues page", () => {
-                expect(h1).toBeVisible();
-            });
-            test("the document title is correct", () => {
-                expect(document.title).toEqual(`${ACCESSIBILITY_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
-            });
-            test("the main heading is focused", async () => {
-                await waitFor(() => {
-                    expect(h1).toHaveFocus();
-                });
-            });
-        });
-
         describe("Contact Us Page", () => {
             beforeEach(async () => {
                 await user.click(screen.getByRole("link", { name: LINK_TEXT.contactUs }));
@@ -98,6 +82,42 @@ describe(RouterOutlet.name, () => {
             });
             test("the document title is correct", () => {
                 expect(document.title).toEqual(`${CONTACT_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+            });
+            test("the main heading is focused", async () => {
+                await waitFor(() => {
+                    expect(h1).toHaveFocus();
+                });
+            });
+        });
+
+        describe("ID Refused Page", () => {
+            beforeEach(async () => {
+                await user.click(screen.getByRole("link", { name: LINK_TEXT.reportIdRefused }));
+                h1 = await screen.findByRole("heading", { level: 1, name: ID_REFUSED_PAGE_HEADING });
+            });
+            test("they see the contact us page", () => {
+                expect(h1).toBeVisible();
+            });
+            test("the document title is correct", () => {
+                expect(document.title).toEqual(`${ID_REFUSED_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+            });
+            test("the main heading is focused", async () => {
+                await waitFor(() => {
+                    expect(h1).toHaveFocus();
+                });
+            });
+        });
+
+        describe("Accessibility Issues Page", () => {
+            beforeEach(async () => {
+                await user.click(screen.getByRole("link", { name: LINK_TEXT.accessibilityIssues }));
+                h1 = await screen.findByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
+            });
+            test("they see the accessibility issues page", () => {
+                expect(h1).toBeVisible();
+            });
+            test("the document title is correct", () => {
+                expect(document.title).toEqual(`${ACCESSIBILITY_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
             });
             test("the main heading is focused", async () => {
                 await waitFor(() => {
@@ -136,6 +156,7 @@ const TestingRouterWithLinks = () => {
                 <AppLink to={PAGE_ENDPOINTS.businesses}>{LINK_TEXT.businesses}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.accessibilityIssues}>{LINK_TEXT.accessibilityIssues}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.contactUs}>{LINK_TEXT.contactUs}</AppLink>
+                <AppLink to={PAGE_ENDPOINTS.reportIdRefused}>{LINK_TEXT.reportIdRefused}</AppLink>
                 <AppLink to={faker.random.alpha(10)}>{unknownPageLinkName}</AppLink>
             </DocumentStateContext.Provider>
         </MemoryRouter>
