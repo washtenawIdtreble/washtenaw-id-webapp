@@ -46,17 +46,17 @@ export const RadioButtonGroup = (
     const radioButtons = options.map((option, index) => {
         const id = `${groupName}${index}`;
         const optionValue = option.value ?? option.label;
-        return (
-            <label htmlFor={id} key={option.label}>
+        return (<div className={"radio-option"} key={option.label}>
+            <label htmlFor={id} className={"radio-label"}>
                 <input id={id} type={"radio"} value={optionValue} name={groupName}
-                       onChange={onChange} checked={selectedValue === optionValue}/>
+                       onChange={onChange} checked={selectedValue === optionValue} className={"radio-input"}/>
                 {option.label}
             </label>
-        );
+        </div>);
     });
 
     return (<>
-        <fieldset>
+        <fieldset className={"radio-group"}>
             <legend>{legend}</legend>
             {radioButtons}
         </fieldset>

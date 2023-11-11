@@ -37,94 +37,99 @@ export const ReportIdRefused = () => {
                 ariaLabelledBy={MAIN_HEADING_ID}
                 submitEndpoint={SERVER_ENDPOINTS.ID_REFUSED}
             >
-                <label className={"form-label"}>
-                    Your Name (optional)
-                    <FormField
-                        id={"name"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        autoComplete={"name"}
-                        name={"name"}/>
-                </label>
-                <label htmlFor={"email"} className={"form-label"}>
-                    Your email (optional)
-                    <FormField
-                        id={"email"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        name={"email"}
-                        validator={validateEmail}
-                        autoComplete={"email"}
-                    />
-                </label>
-                <label htmlFor={"phone"} className={"form-label"}>
-                    Your phone number (optional)
-                    <FormField
-                        id={"phone"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        name={"phone"}
-                        validator={validatePhone}
-                        autoComplete={"tel"}
-                    />
-                </label>
+                <div className={"form-colum-half"}>
+                    <label htmlFor={"business-name"}>
+                        Name of Business (required)
+                        <FormField
+                            id={"business-name"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            validator={validateRequired}
+                            name={"businessName"}/>
+                    </label>
+                    <label htmlFor={"business-street"}>
+                        What street is the business on? (required)
+                        <FormField
+                            id={"business-street"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            validator={validateRequired}
+                            name={"businessStreet"}
+                        />
+                    </label>
+                    <label htmlFor={"business-city"}>
+                        What city is the business in? (required)
+                        <FormField
+                            id={"business-city"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            validator={validateRequired}
+                            name={"businessCity"}
+                        />
+                    </label>
+                    <label htmlFor={"when-refused"}>
+                        When did this happen? (day and time) (optional)
+                        <FormField
+                            id={"when-refused"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            name={"whenRefused"}
+                        />
+                    </label>
+                </div>
 
-                <label htmlFor={"business-name"} className={"form-label"}>
-                    Name of Business (required)
-                    <FormField
-                        id={"business-name"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        validator={validateRequired}
-                        name={"businessName"}/>
-                </label>
-                <label htmlFor={"business-street"} className={"form-label"}>
-                    What street is the business on? (required)
-                    <FormField
-                        id={"business-street"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        validator={validateRequired}
-                        name={"businessStreet"}
-                    />
-                </label>
-                <label htmlFor={"business-city"} className={"form-label"}>
-                    What city is the business in? (required)
-                    <FormField
-                        id={"business-city"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        validator={validateRequired}
-                        name={"businessCity"}
-                    />
-                </label>
-                <label htmlFor={"when-refused"} className={"form-label"}>
-                    When did this happen? (day and time) (optional)
-                    <FormField
-                        id={"when-refused"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        name={"whenRefused"}
-                    />
-                </label>
+                <div className={"form-colum-half"}>
+                    <label>
+                        Your Name (optional)
+                        <FormField
+                            id={"name"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            autoComplete={"name"}
+                            name={"name"}/>
+                    </label>
+                    <label htmlFor={"email"}>
+                        Your email (optional)
+                        <FormField
+                            id={"email"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            name={"email"}
+                            validator={validateEmail}
+                            autoComplete={"email"}
+                        />
+                    </label>
+                    <label htmlFor={"phone"}>
+                        Your phone number (optional)
+                        <FormField
+                            id={"phone"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            name={"phone"}
+                            validator={validatePhone}
+                            autoComplete={"tel"}
+                        />
+                    </label>
+                    <label htmlFor={"age-range"}>
+                        <RadioButtonGroup
+                            legend={"Your age (optional)"}
+                            groupName={"ageRange"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            options={[
+                                { label: "Under 18" },
+                                { label: "18 to 21" },
+                                { label: "22 to 35" },
+                                { label: "36 to 55" },
+                                { label: "Over 55" },
+                            ]}
+                        />
+                    </label>
+                </div>
 
-                <label htmlFor={"age-range"} className={"form-label"}>
-                    <RadioButtonGroup
-                        legend={"Your age (optional)"}
-                        groupName={"ageRange"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        options={[
-                            { label: "under 18" },
-                            { label: "18 to 21" },
-                            { label: "22 to 35" },
-                            { label: "36 to 55" },
-                            { label: "over 55" },
-                        ]}
-                    />
-                </label>
-
-                <label htmlFor={"description"} className={"form-label textarea-label"}>
-                    Tell us about what happened (optional)
-                    <FormField
-                        id={"description"}
-                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        name={"description"}
-                        inputType={FormFieldType.TEXTAREA}
-                    />
-                </label>
+                <div className={"form-column-full"}>
+                    <label htmlFor={"description"}>
+                        Tell us about what happened (optional)
+                        <FormField
+                            id={"description"}
+                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                            name={"description"}
+                            inputType={FormFieldType.TEXTAREA}
+                        />
+                    </label>
+                </div>
             </Form>
         </>
     );

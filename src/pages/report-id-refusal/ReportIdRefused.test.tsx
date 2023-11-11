@@ -66,16 +66,14 @@ describe(`${ReportIdRefused.name} form`, () => {
 
     describe("when the form data is valid", () => {
         test("stores values in local storage and sends form contents to the server", async () => {
-            const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
-            const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
-            const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
-
             const businessNameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Name of Business (required)" });
             const businessStreetInput: HTMLInputElement = within(form).getByRole("textbox", { name: "What street is the business on? (required)" });
             const businessCityInput: HTMLInputElement = within(form).getByRole("textbox", { name: "What city is the business in? (required)" });
-
             const whenRefusedInput: HTMLInputElement = within(form).getByRole("textbox", { name: "When did this happen? (day and time) (optional)" });
 
+            const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
+            const emailInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your email (optional)" });
+            const phoneInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
             const ageRangeGroup = within(form).getByRole("group");
 
             const legend = within(ageRangeGroup).getByText("Your age (optional)");
@@ -84,33 +82,15 @@ describe(`${ReportIdRefused.name} form`, () => {
 
             expect(legend).toBeVisible();
             expect(legend.nodeName).toEqual("LEGEND");
-            expect(within(ageRangeGroup).getByRole("radio", { name: "under 18" })).toBeVisible();
+            expect(within(ageRangeGroup).getByRole("radio", { name: "Under 18" })).toBeVisible();
             expect(within(ageRangeGroup).getByRole("radio", { name: "18 to 21" })).toBeVisible();
             expect(selectedAgeRangeRadioButton).toBeVisible();
             expect(within(ageRangeGroup).getByRole("radio", { name: "36 to 55" })).toBeVisible();
-            expect(within(ageRangeGroup).getByRole("radio", { name: "over 55" })).toBeVisible();
+            expect(within(ageRangeGroup).getByRole("radio", { name: "Over 55" })).toBeVisible();
 
             const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Tell us about what happened (optional)" });
 
             const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
-
-            await user.tab();
-            expect(nameInput).toHaveFocus();
-            const name = "Linda Cardellini";
-            await user.keyboard(name);
-            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-name`)).toEqual(name);
-
-            await user.tab();
-            expect(emailInput).toHaveFocus();
-            const email = "lcardellini@example.com";
-            await user.keyboard(email);
-            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-email`)).toEqual(email);
-
-            await user.tab();
-            expect(phoneInput).toHaveFocus();
-            const phone = "9999999999";
-            await user.keyboard(phone);
-            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-phone`)).toEqual(phone);
 
             await user.tab();
             expect(businessNameInput).toHaveFocus();
@@ -135,6 +115,24 @@ describe(`${ReportIdRefused.name} form`, () => {
             const whenRefused = "Yesterday";
             await user.keyboard(whenRefused);
             expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-when-refused`)).toEqual(whenRefused);
+
+            await user.tab();
+            expect(nameInput).toHaveFocus();
+            const name = "Linda Cardellini";
+            await user.keyboard(name);
+            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-name`)).toEqual(name);
+
+            await user.tab();
+            expect(emailInput).toHaveFocus();
+            const email = "lcardellini@example.com";
+            await user.keyboard(email);
+            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-email`)).toEqual(email);
+
+            await user.tab();
+            expect(phoneInput).toHaveFocus();
+            const phone = "9999999999";
+            await user.keyboard(phone);
+            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-phone`)).toEqual(phone);
 
             await user.tab();
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.arrows.down);

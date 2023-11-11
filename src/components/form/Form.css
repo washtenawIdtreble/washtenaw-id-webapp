@@ -38,28 +38,45 @@
 }
 
 .form-field {
-    margin-bottom: 1rem;
+    margin: 0.3rem 0 1rem 0;
     width: 100%;
-}
-
-.textarea-label {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.form-field-error-message {
-    margin: 0.5rem;
 }
 
 .invalid-form-field {
     background-color: #ffbfbf;
-    box-sizing: border-box;
     outline: 3px solid #4f2727;
+    padding-top: 0.3rem;
 }
 
-.form-label {
-    margin-bottom: 0.3rem;
+.form-field-error-message {
+    box-sizing: border-box;
+    display: block;
+    margin: 0 0.3rem 0.3rem 0.3rem;
+}
+
+.radio-group {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 0 1rem 0;
+    width: 100%;
+}
+
+.radio-option {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 50%;
+}
+
+.radio-label {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.radio-input {
+    margin: 0 0.5rem 0 0;
 }
 
 .form-input {
@@ -67,22 +84,15 @@
 }
 
 .form-textarea {
-    height: 100%;
+    min-height: 12rem;
     width: 100%;
-}
-
-.flex-grow-field {
-    -moz-box-flex: 1;
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
 }
 
 .form-submit {
     font-size: 2rem;
-    margin-top: 1rem;
     outline-offset: -6px;
     padding: 1rem 0;
+    width: 100%;
 }
 
 .disabled-form-submit {
@@ -99,23 +109,24 @@
 }
 
 @media (min-width: 1200px) {
+    .form {
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
     .form-container {
         padding: 0 12.5%;
     }
 
-    .flex-grow-field {
-        -moz-box-flex: 0;
-        -webkit-box-flex: 0;
-        -webkit-flex-grow: 0;
-        flex-grow: 0;
-        min-height: 16rem;
+    .form-column-full {
+        width: 100%;
+    }
+
+    .form-colum-half {
+        width: 48%;
     }
 
     .form-submit {
         width: 30%;
-    }
-
-    .textarea-label {
-        flex-grow: 0;
     }
 }
