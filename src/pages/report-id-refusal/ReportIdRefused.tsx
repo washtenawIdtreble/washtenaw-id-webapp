@@ -7,6 +7,7 @@ import { validateEmail } from "../../hooks/form-validation/validateEmail";
 import { validatePhone } from "../../hooks/form-validation/validatePhone";
 import { validateRequired } from "../../hooks/form-validation/validateRequired";
 import { MAIN_HEADING_ID, MainHeading } from "../../components/MainHeading";
+import { RadioButtonGroup } from "../../components/form/RadioButtonGroup";
 
 export type IdRefusedFormData = {
     name?: string;
@@ -98,11 +99,17 @@ export const ReportIdRefused = () => {
                 </label>
 
                 <label htmlFor={"age-range"} className={"form-label"}>
-                    Your age (optional)
-                    <FormField
-                        id={"age-range"}
+                    <RadioButtonGroup
+                        legend={"Your age (optional)"}
+                        groupName={"ageRange"}
                         pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                        name={"ageRange"}
+                        options={[
+                            { label: "under 18" },
+                            { label: "18 to 21" },
+                            { label: "22 to 35" },
+                            { label: "36 to 55" },
+                            { label: "over 55" },
+                        ]}
                     />
                 </label>
 

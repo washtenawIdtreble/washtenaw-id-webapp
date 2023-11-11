@@ -12,6 +12,7 @@ import { buildPostResolver, ResponseContent } from "../../mock-server/resolvers/
 import { FormField } from "./FormField";
 import { Validator } from "../../hooks/form-validation/useValidation";
 import { RadioButtonGroup, RadioOption } from "./RadioButtonGroup";
+import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
 
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
@@ -101,7 +102,7 @@ describe(Form.name, () => {
                 await user.type(ageInput, age);
 
                 submitButton.focus();
-                await user.keyboard("{Enter}");
+                await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
             });
             test("the error message is shown", async () => {
                 await waitFor(() => {
@@ -152,7 +153,7 @@ describe(Form.name, () => {
                 await user.click(radioButton);
 
                 submitButton.focus();
-                await user.keyboard("{Enter}");
+                await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
             });
 
             test("the submit button is aria-disabled", async () => {
