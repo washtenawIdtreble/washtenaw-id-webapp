@@ -71,6 +71,7 @@ export const ReportIdRefused = () => {
                     <FormField
                         id={"business-name"}
                         pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                        validator={validateRequired}
                         name={"businessName"}/>
                 </label>
                 <label htmlFor={"business-street"} className={"form-label"}>
@@ -78,6 +79,7 @@ export const ReportIdRefused = () => {
                     <FormField
                         id={"business-street"}
                         pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                        validator={validateRequired}
                         name={"businessStreet"}
                     />
                 </label>
@@ -86,6 +88,7 @@ export const ReportIdRefused = () => {
                     <FormField
                         id={"business-city"}
                         pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                        validator={validateRequired}
                         name={"businessCity"}
                     />
                 </label>
