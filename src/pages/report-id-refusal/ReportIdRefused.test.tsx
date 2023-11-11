@@ -175,14 +175,23 @@ describe(`${ReportIdRefused.name} form`, () => {
     describe("when the form data is invalid", () => {
         let emailInput: HTMLInputElement;
         let phoneInput: HTMLInputElement;
+        let businessNameInput: HTMLInputElement;
+        let businessCityInput: HTMLInputElement;
+        let businessStreeInput: HTMLInputElement;
         let descriptionInput: HTMLTextAreaElement;
         let submit: HTMLButtonElement;
         beforeEach(async () => {
             emailInput = within(form).getByRole("textbox", { name: "Your email (optional)" });
             phoneInput = within(form).getByRole("textbox", { name: "Your phone number (optional)" });
+            businessNameInput = within(form).getByRole("textbox", { name: "Name of Business (required)" });
+            businessCityInput = within(form).getByRole("textbox", { name: "What street is the business on? (required)" });
+            businessStreeInput = within(form).getByRole("textbox", { name: "What city is the business in? (required)" });
             descriptionInput = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
             submit = within(form).getByRole("button", { name: "Submit" });
 
+            await user.type(businessNameInput, "non-empty value");
+            await user.type(businessCityInput, "non-empty value");
+            await user.type(businessStreeInput, "non-empty value");
             await user.type(descriptionInput, "non-empty value");
         });
         test("shows error message for email", async () => {
@@ -199,8 +208,29 @@ describe(`${ReportIdRefused.name} form`, () => {
                 expect(screen.getByText(INVALID_PHONE_MESSAGE)).toBeVisible();
             });
         });
-        test("shows error message for required description", async () => {
+        test("shows error message when missing required description", async () => {
             await user.clear(descriptionInput);
+            await user.click(submit);
+            await waitFor(() => {
+                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
+            });
+        });
+        test("shows error message when missing required business name", async () => {
+            await user.clear(businessNameInput);
+            await user.click(submit);
+            await waitFor(() => {
+                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
+            });
+        });
+        test("shows error message when missing required business city", async () => {
+            await user.clear(businessCityInput);
+            await user.click(submit);
+            await waitFor(() => {
+                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
+            });
+        });
+        test("shows error message when missing required business street", async () => {
+            await user.clear(businessStreeInput);
             await user.click(submit);
             await waitFor(() => {
                 expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
