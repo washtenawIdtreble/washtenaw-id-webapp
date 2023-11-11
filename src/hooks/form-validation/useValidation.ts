@@ -3,6 +3,7 @@ import { FormFieldElement } from "../../components/form/FormField";
 
 export type Validator = (value: string) => string;
 export type Validation = () => string;
+export const NO_OP_VALIDATION = () => "";
 
 type UseValidationInput = {
     validator?: Validator

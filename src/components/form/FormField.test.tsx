@@ -75,7 +75,7 @@ describe(FormField.name, () => {
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
-        test("clears value and local storage when context tells it to", async () => {
+        test("clears value and local storage when the form context tells it to", async () => {
             await user.type(textBox, "some email");
             const clearButton = screen.getByRole("button", { name: "CLEAR" });
             await user.click(clearButton);
@@ -122,7 +122,7 @@ describe(FormField.name, () => {
             await user.tab();
             expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
         });
-        test("clears value and local storage when when context tells it to", async () => {
+        test("clears value and local storage when the form context tells it to", async () => {
             await user.type(textBox, "some email");
             const clearButton = screen.getByRole("button", { name: "CLEAR" });
             await user.click(clearButton);

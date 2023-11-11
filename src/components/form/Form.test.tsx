@@ -11,6 +11,7 @@ import { BASE_URL } from "../../utilities/base-url";
 import { buildPostResolver, ResponseContent } from "../../mock-server/resolvers/post-resolver";
 import { FormField } from "./FormField";
 import { Validator } from "../../hooks/form-validation/useValidation";
+import { RadioButtonGroup, RadioOption } from "./RadioButtonGroup";
 
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
@@ -82,6 +83,7 @@ describe(Form.name, () => {
         let submitButton: HTMLButtonElement;
         const name = "Martin Starr";
         const age = "47";
+        const color = "yellow";
 
         describe("with errors", () => {
             const nameErrorMessage = "name is incorrect";
@@ -142,10 +144,12 @@ describe(Form.name, () => {
 
                 nameInput = within(form).getByRole("textbox", { name: "Name" });
                 ageInput = within(form).getByRole("textbox", { name: "Age" });
+                const radioButton: HTMLInputElement = within(form).getByRole("radio", { name: color });
                 submitButton = within(form).getByRole("button", { name: "Submit" });
 
                 await user.type(nameInput, name);
                 await user.type(ageInput, age);
+                await user.click(radioButton);
 
                 submitButton.focus();
                 await user.keyboard("{Enter}");
@@ -175,7 +179,7 @@ describe(Form.name, () => {
             });
 
             test("the form's data is sent to the server", async () => {
-                expect(capturedFormData).toEqual({ name, age });
+                expect(capturedFormData).toEqual({ name, age, color });
             });
 
             describe("when form submission succeeds", () => {
@@ -272,6 +276,7 @@ describe(Form.name, () => {
 });
 
 const FormWithInputs = (props: { validator?: Validator }) => {
+    const radioOptions: RadioOption[] = [{ label: "yellow" }];
     return (
         <>
             <span id="form-label">{formLabelText}</span>
@@ -280,6 +285,8 @@ const FormWithInputs = (props: { validator?: Validator }) => {
                 <FormField id={"name"} name={"name"} validator={props.validator} pageIdentifier={pageIdentifier}/>
                 <label htmlFor={"age"}>Age</label>
                 <FormField id={"age"} name={"age"} pageIdentifier={pageIdentifier}/>
+                <RadioButtonGroup legend={"What's your favorite color?"} groupName={"color"} options={radioOptions}
+                                  pageIdentifier={pageIdentifier}/>
             </Form>
         </>
     );
