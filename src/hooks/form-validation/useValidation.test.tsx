@@ -1,4 +1,4 @@
-import { useValidation, Validator } from "./useValidation";
+import { NO_OP_VALIDATION, useValidation, Validator } from "./useValidation";
 import { render, screen, waitFor } from "@testing-library/react";
 import React, { useRef, useState } from "react";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -9,6 +9,12 @@ describe(useValidation.name, () => {
     beforeEach(() => {
         user = userEvent.setup();
     });
+
+    test("has a no-op validation", () => {
+        const errorMessage = NO_OP_VALIDATION();
+        expect(errorMessage).toEqual("");
+    });
+
     test("returns a validation that runs the validator passed in", async () => {
         const validator = jest.fn().mockReturnValue("name is invalid");
 

@@ -1,5 +1,7 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { FormContext } from "../../contexts/FormContext";
+import { NO_OP_VALIDATION } from "../../hooks/form-validation/useValidation";
 
 export type RadioOption = {
     label: string;
@@ -23,8 +25,21 @@ export const RadioButtonGroup = (
 ) => {
     const { save, clearStorage, getStoredValue } = useLocalStorage(`${pageIdentifier}-${groupName}`);
     const [selectedValue, setSelectedValue] = useState(getStoredValue());
+    const { registerField } = useContext(FormContext);
+
+    const clear = useCallback(() => {
+        setSelectedValue("");
+        clearStorage();
+    }, [clearStorage]);
+
+    const focus = useCallback(() => {}, []);
+
+    useEffect(() => {
+        registerField({ validation: NO_OP_VALIDATION, clear, focus });
+    }, [clear, focus, registerField]);
 
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setSelectedValue(event.target.value);
         save(event.target.value);
     }, [save]);
 
@@ -33,8 +48,8 @@ export const RadioButtonGroup = (
         const optionValue = option.value ?? option.label;
         return (
             <label htmlFor={id} key={option.label}>
-                <input id={id} type={"radio"} value={optionValue} onChange={onChange}
-                       checked={selectedValue === optionValue}/>
+                <input id={id} type={"radio"} value={optionValue} name={groupName}
+                       onChange={onChange} checked={selectedValue === optionValue}/>
                 {option.label}
             </label>
         );

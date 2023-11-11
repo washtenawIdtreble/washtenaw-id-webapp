@@ -1,12 +1,14 @@
 import { RadioButtonGroup, RadioButtonGroupProps, RadioOption } from "./RadioButtonGroup";
 import { render, screen, within } from "@testing-library/react";
-import React, { useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import userEvent from "@testing-library/user-event";
+import { Observable } from "../../utilities/observable";
+import { FormProvider } from "../../contexts/FormContext";
 
+const groupName = "color";
 describe(RadioButtonGroup.name, () => {
     const legend = "What is your favorite color?";
-    const groupName = "color";
     const pageIdentifier = "radio-page";
     let options: RadioOption[];
     let fieldset: HTMLFieldSetElement;
@@ -61,6 +63,24 @@ describe(RadioButtonGroup.name, () => {
 
             expect(window.localStorage.getItem(`${pageIdentifier}-${groupName}`)).toEqual(options[1].value);
         });
+        test("form can extract value from selected radio button", async () => {
+            await user.click(screen.getByLabelText(options[0].label));
+            await user.click(screen.getByRole("button", { name: "SUBMIT" }));
+
+            expect(await screen.findByText(`submitted color: ${options[0].label}`)).toBeInTheDocument();
+        });
+        test("clears value and local storage when the form context tells it to", async () => {
+            await user.click(screen.getByLabelText(options[0].label));
+
+            const clearButton = screen.getByRole("button", { name: "CLEAR" });
+            await user.click(clearButton);
+
+            const inputs: HTMLInputElement[] = screen.getAllByRole("radio");
+            const anyRadioButtonChecked = inputs.some((element) => element.checked);
+            expect(anyRadioButtonChecked).toBe(false);
+
+            expect(window.localStorage.getItem(`${pageIdentifier}-${groupName}`)).toBe(null);
+        });
     });
 
     describe("when there's a value already in local storage", () => {
@@ -100,9 +120,30 @@ describe(RadioButtonGroup.name, () => {
 
 const ShowsRadioButtonGroup = (props: RadioButtonGroupProps) => {
     const valueRef = useRef<string>(null);
+    const [onClearObservable] = useState(new Observable());
+    const [onSubmitObservable] = useState(new Observable());
+    const [submittedColor, setSubmittedColor] = useState("");
+
+    const onClear = useCallback(() => {
+        onClearObservable.notify();
+    }, [onClearObservable]);
+
+    const onSubmit = useCallback(() => {
+        const form: HTMLFormElement = document.getElementById("form") as HTMLFormElement;
+        const formData = new FormData(form);
+
+        setSubmittedColor(formData.get(groupName) as string ?? "");
+    }, []);
 
     return (<>
-        <p>selected value: {valueRef!.current}</p>
-        <RadioButtonGroup {...props}/>
+        <FormProvider onSubmit={onSubmitObservable} onClear={onClearObservable}>
+            <form id={"form"}>
+                <p>selected value: {valueRef!.current}</p>
+                <RadioButtonGroup {...props}/>
+                <button type={"button"} onClick={onClear}>CLEAR</button>
+                <button type={"button"} onClick={onSubmit}>SUBMIT</button>
+            </form>
+            <span>submitted color: {submittedColor}</span>
+        </FormProvider>
     </>);
 };
