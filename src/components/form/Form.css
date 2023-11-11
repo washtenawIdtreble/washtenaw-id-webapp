@@ -93,8 +93,14 @@
     width: 100%;
 }
 
+.form-input {
+    outline-offset: -4px;
+    width: 100%;
+}
+
 .form-textarea {
     min-height: 12rem;
+    outline-offset: -4px;
     width: 100%;
 }
 
