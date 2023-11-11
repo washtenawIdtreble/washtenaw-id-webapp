@@ -19,7 +19,7 @@ export const AnnArborOrdinance = () => {
             <p className={"ordinance-paragraph"}>
                 If a business in Ann Arbor refused to accept your Washtenaw County ID, please tell us about your
                 experience.&nbsp;
-                <AppLink to={PAGE_ENDPOINTS.contactUs}>
+                <AppLink to={PAGE_ENDPOINTS.reportIdRefused}>
                     Click here to contact us.
                 </AppLink>
             </p>
