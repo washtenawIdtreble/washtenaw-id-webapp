@@ -19,6 +19,7 @@ import {
     IdRefusedFormData,
     ReportIdRefused
 } from "./ReportIdRefused";
+import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
 
 describe(`${ReportIdRefused.name} form`, () => {
     const formLabelText = "Report Refusal of ID";
@@ -62,7 +63,7 @@ describe(`${ReportIdRefused.name} form`, () => {
     test("labels the form with the page heading text", () => {
         expect(screen.getByLabelText(formLabelText)).toBe(form);
     });
-    
+
     describe("when the form data is valid", () => {
         test("stores values in local storage and sends form contents to the server", async () => {
             const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
@@ -75,8 +76,19 @@ describe(`${ReportIdRefused.name} form`, () => {
 
             const whenRefusedInput: HTMLInputElement = within(form).getByRole("textbox", { name: "When did this happen? (day and time) (optional)" });
 
-            // const ageInput: HTMLInputElement = within(form).getByRole("radio", { name: "Your age (optional)" });
-            const ageInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your age (optional)" });
+            const ageRangeGroup = within(form).getByRole("group");
+
+            const legend = within(ageRangeGroup).getByText("Your age (optional)");
+            const ageRange = "22 to 35";
+            const selectedAgeRangeRadioButton = within(ageRangeGroup).getByRole("radio", { name: ageRange });
+
+            expect(legend).toBeVisible();
+            expect(legend.nodeName).toEqual("LEGEND");
+            expect(within(ageRangeGroup).getByRole("radio", { name: "under 18" })).toBeVisible();
+            expect(within(ageRangeGroup).getByRole("radio", { name: "18 to 21" })).toBeVisible();
+            expect(selectedAgeRangeRadioButton).toBeVisible();
+            expect(within(ageRangeGroup).getByRole("radio", { name: "36 to 55" })).toBeVisible();
+            expect(within(ageRangeGroup).getByRole("radio", { name: "over 55" })).toBeVisible();
 
             const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
 
@@ -125,8 +137,11 @@ describe(`${ReportIdRefused.name} form`, () => {
             expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-when-refused`)).toEqual(whenRefused);
 
             await user.tab();
-            expect(ageInput).toHaveFocus();
-            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-age`)).toBeNull();
+            await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.arrows.down);
+            await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.arrows.down);
+            expect(selectedAgeRangeRadioButton).toHaveFocus();
+            await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.spaceBar);
+            expect(window.localStorage.getItem(`${ID_REFUSED_PAGE_IDENTIFIER}-ageRange`)).toEqual(ageRange);
 
             await user.tab();
             expect(descriptionInput).toHaveFocus();
@@ -137,17 +152,18 @@ describe(`${ReportIdRefused.name} form`, () => {
             await user.tab();
             expect(submit).toHaveFocus();
 
-            await user.keyboard("{Enter}");
+            await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
             expect(capturedFormData).toEqual(stubRefusedIdData({
                 name,
                 email,
                 phone,
-                description,
                 businessName,
                 businessStreet,
                 businessCity,
-                whenRefused
+                whenRefused,
+                ageRange,
+                description,
             }));
 
             await waitFor(() => {

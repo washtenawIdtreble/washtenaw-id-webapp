@@ -1,4 +1,9 @@
-import { ACCESSIBILITY_PAGE_HEADING, AccessibilityFormData, AccessibilityIssues, ACCESSIBILITY_PAGE_IDENTIFIER } from "./AccessibilityIssues";
+import {
+    ACCESSIBILITY_PAGE_HEADING,
+    ACCESSIBILITY_PAGE_IDENTIFIER,
+    AccessibilityFormData,
+    AccessibilityIssues
+} from "./AccessibilityIssues";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 import { rest } from "msw";
@@ -14,6 +19,7 @@ import { INVALID_EMAIL_MESSAGE } from "../../hooks/form-validation/validateEmail
 import { INVALID_PHONE_MESSAGE } from "../../hooks/form-validation/validatePhone";
 import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRequired";
 import { Container } from "react-dom";
+import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
 
 describe(`${AccessibilityIssues.name} form`, () => {
     const successMessage = "Your issue has been reported, thank you!";
@@ -57,7 +63,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
         expect(screen.getByLabelText(ACCESSIBILITY_PAGE_HEADING)).toBe(form);
     });
 
-    test("saves to local storage with correct key", async() => {
+    test("saves to local storage with correct key", async () => {
         const nameInput: HTMLInputElement = within(form).getByRole("textbox", { name: "Your Name (optional)" });
         const input: string = "Seth";
         await user.type(nameInput, input);
@@ -96,7 +102,7 @@ describe(`${AccessibilityIssues.name} form`, () => {
             await user.tab();
             expect(submit).toHaveFocus();
 
-            await user.keyboard("{Enter}");
+            await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
             expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, description }));
 
