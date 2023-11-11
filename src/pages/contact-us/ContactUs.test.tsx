@@ -100,7 +100,7 @@ describe(`${ContactUs.name} form`, () => {
 
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
-            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, description }));
+            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments: description }));
 
             await waitFor(() => {
                 expect(screen.getByText(successMessage)).toBeInTheDocument();

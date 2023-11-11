@@ -2,7 +2,7 @@ import { buildPostResolver, RequestCaveats } from "./post-resolver";
 import { ContactFormData } from "../../pages/contact-us/ContactUs";
 
 const descriptionMissingException: RequestCaveats<ContactFormData> = (data) => {
-    if (!data.description) {
+    if (!data.comments) {
         return {
             statusCode: 400,
             body: {

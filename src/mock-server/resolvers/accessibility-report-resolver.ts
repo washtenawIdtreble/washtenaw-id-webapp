@@ -2,7 +2,7 @@ import { AccessibilityFormData } from "../../pages/accessibility-issues/Accessib
 import { buildPostResolver, RequestCaveats } from "./post-resolver";
 
 const descriptionMissingException: RequestCaveats<AccessibilityFormData> = (data) => {
-    if (!data.description) {
+    if (!data.comments) {
         return {
             statusCode: 400,
             body: {

@@ -12,7 +12,7 @@ export type ContactFormData = {
     name?: string;
     email?: string;
     phone?: string;
-    description: string;
+    comments: string;
 };
 
 export const CONTACT_PAGE_HEADING = "General Contact";
@@ -60,12 +60,12 @@ export const ContactUs = () => {
                             autoComplete={"tel"}
                         />
                     </label>
-                    <label htmlFor={"description"}>
+                    <label htmlFor={"comments"}>
                         Questions/Comments (required)
                         <FormField
-                            id={"description"}
+                            id={"comments"}
                             pageIdentifier={CONTACT_PAGE_IDENTIFIER}
-                            name={"description"}
+                            name={"comments"}
                             validator={validateRequired}
                             inputType={FormFieldType.TEXTAREA}
                         />

@@ -9,7 +9,7 @@ export const stubAccessibilityFormData = (attributes: Partial<AccessibilityFormD
         name: attributes.name === undefined ? faker.name.fullName() : attributes.name,
         email: attributes.email === undefined ? faker.internet.email() : attributes.email,
         phone: attributes.phone === undefined ? faker.phone.number("##########") : attributes.phone,
-        description: attributes.description === undefined ? faker.lorem.paragraph(3) : attributes.description,
+        comments: attributes.comments === undefined ? faker.lorem.paragraph(3) : attributes.comments,
     };
 };
 
