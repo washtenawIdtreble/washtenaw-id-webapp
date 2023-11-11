@@ -90,7 +90,7 @@ describe(`${ReportIdRefused.name} form`, () => {
             expect(within(ageRangeGroup).getByRole("radio", { name: "36 to 55" })).toBeVisible();
             expect(within(ageRangeGroup).getByRole("radio", { name: "over 55" })).toBeVisible();
 
-            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            const descriptionInput: HTMLTextAreaElement = within(form).getByRole("textbox", { name: "Tell us about what happened (optional)" });
 
             const submit: HTMLButtonElement = within(form).getByRole("button", { name: "Submit" });
 
@@ -186,7 +186,7 @@ describe(`${ReportIdRefused.name} form`, () => {
             businessNameInput = within(form).getByRole("textbox", { name: "Name of Business (required)" });
             businessCityInput = within(form).getByRole("textbox", { name: "What street is the business on? (required)" });
             businessStreeInput = within(form).getByRole("textbox", { name: "What city is the business in? (required)" });
-            descriptionInput = within(form).getByRole("textbox", { name: "What do you want to tell us? (required)" });
+            descriptionInput = within(form).getByRole("textbox", { name: "Tell us about what happened (optional)" });
             submit = within(form).getByRole("button", { name: "Submit" });
 
             await user.type(businessNameInput, "non-empty value");
@@ -206,13 +206,6 @@ describe(`${ReportIdRefused.name} form`, () => {
             await user.click(submit);
             await waitFor(() => {
                 expect(screen.getByText(INVALID_PHONE_MESSAGE)).toBeVisible();
-            });
-        });
-        test("shows error message when missing required description", async () => {
-            await user.clear(descriptionInput);
-            await user.click(submit);
-            await waitFor(() => {
-                expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeVisible();
             });
         });
         test("shows error message when missing required business name", async () => {

@@ -117,12 +117,11 @@ export const ReportIdRefused = () => {
                 </label>
 
                 <label htmlFor={"description"} className={"form-label textarea-label"}>
-                    What do you want to tell us? (required)
+                    Tell us about what happened (optional)
                     <FormField
                         id={"description"}
                         pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
                         name={"description"}
-                        validator={validateRequired}
                         inputType={FormFieldType.TEXTAREA}
                     />
                 </label>
