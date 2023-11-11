@@ -48,6 +48,6 @@ describe(AnnArborOrdinance.name, () => {
 
         const link: HTMLAnchorElement = within(paragraph).getByRole("link", { name: "Click here to contact us." });
         expect(link).toBeVisible();
-        expect(link.href).toContain(PAGE_ENDPOINTS.contactUs);
+        expect(link.href).toContain(PAGE_ENDPOINTS.reportIdRefused);
     });
 });
