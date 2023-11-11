@@ -70,13 +70,23 @@
 
 .radio-label {
     align-items: center;
+    box-sizing: border-box;
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
+    padding: 0 1rem;
+}
+
+.radio-label:focus-within {
+    outline: 3px dashed #a98332;
+    outline-offset: -4px;
 }
 
 .radio-input {
     margin: 0 0.5rem 0 0;
+}
+
+.radio-input:focus {
+    outline: 0;
 }
 
 .form-input {
