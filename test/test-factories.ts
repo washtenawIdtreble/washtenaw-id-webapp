@@ -22,8 +22,8 @@ export const stubRefusedIdData = (attributes: Partial<IdRefusedFormData> = {}): 
         businessName: attributes.businessName === undefined ? generateBusinessName() : attributes.businessName,
         businessStreet: attributes.businessStreet === undefined ? faker.address.street() : attributes.businessStreet,
         businessCity: attributes.businessCity === undefined ? faker.address.city() : attributes.businessCity,
-        whenRefused: attributes.whenRefused === undefined ? faker.helpers.arrayElement(["under 18", "over 55"]) : attributes.whenRefused,
-        ageRange: attributes.ageRange === undefined ? "" : attributes.ageRange,
+        whenRefused: attributes.whenRefused === undefined ? faker.lorem.word() : attributes.whenRefused,
+        ageRange: attributes.ageRange === undefined ? faker.helpers.arrayElement(["under 18", "over 55"]) : attributes.ageRange,
 
         description: attributes.description === undefined ? faker.lorem.paragraph(3) : attributes.description,
     };
