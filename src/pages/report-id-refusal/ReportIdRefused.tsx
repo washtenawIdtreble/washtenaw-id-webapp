@@ -28,7 +28,7 @@ export const ReportIdRefused = () => {
     const [successMessage] = useState("Your message has been sent, thank you!");
     return (
         <>
-            <MainHeading ariaLabel={ID_REFUSED_PAGE_HEADING.toLocaleLowerCase()}>
+            <MainHeading>
                 {ID_REFUSED_PAGE_HEADING}
             </MainHeading>
 
