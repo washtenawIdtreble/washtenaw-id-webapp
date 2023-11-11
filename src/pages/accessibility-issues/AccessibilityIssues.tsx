@@ -31,7 +31,20 @@ export const AccessibilityIssues = () => {
                 ariaLabelledBy={MAIN_HEADING_ID}
                 submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}
             >
-                <div className={"form-column-full"}>
+                <div className={"form-column-two-thirds"}>
+                    <label htmlFor={"comments"}>
+                        Questions/Comments (required)
+                        <FormField
+                            id={"comments"}
+                            pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
+                            name={"comments"}
+                            validator={validateRequired}
+                            inputType={FormFieldType.TEXTAREA}
+                        />
+                    </label>
+                </div>
+
+                <div className={"form-column-one-third"}>
                     <label htmlFor={"name"}>
                         Your Name (optional)
                         <FormField id={"name"}
@@ -57,16 +70,6 @@ export const AccessibilityIssues = () => {
                             name={"phone"}
                             validator={validatePhone}
                             autoComplete={"tel"}
-                        />
-                    </label>
-                    <label htmlFor={"comments"}>
-                        Questions/Comments (required)
-                        <FormField
-                            id={"comments"}
-                            pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
-                            name={"comments"}
-                            validator={validateRequired}
-                            inputType={FormFieldType.TEXTAREA}
                         />
                     </label>
                 </div>
