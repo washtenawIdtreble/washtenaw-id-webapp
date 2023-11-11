@@ -25,6 +25,7 @@
 .skip-nav:focus {
     height: 3rem;
     outline: 3px dashed #062d47;
+    outline-offset: -4px;
     top: 0;
     width: 100vw;
 }
