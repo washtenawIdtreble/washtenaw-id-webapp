@@ -12,7 +12,7 @@ export type AccessibilityFormData = {
     name?: string;
     email?: string;
     phone?: string;
-    description: string;
+    comments: string;
 };
 
 export const ACCESSIBILITY_PAGE_HEADING = "Report Accessibility Issues";
@@ -59,12 +59,12 @@ export const AccessibilityIssues = () => {
                             autoComplete={"tel"}
                         />
                     </label>
-                    <label htmlFor={"description"}>
+                    <label htmlFor={"comments"}>
                         Questions/Comments (required)
                         <FormField
-                            id={"description"}
+                            id={"comments"}
                             pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
-                            name={"description"}
+                            name={"comments"}
                             validator={validateRequired}
                             inputType={FormFieldType.TEXTAREA}
                         />
