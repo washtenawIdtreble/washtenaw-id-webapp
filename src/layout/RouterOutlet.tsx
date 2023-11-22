@@ -5,15 +5,17 @@ import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
 import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
 import { ID_REFUSED_PAGE_HEADING, ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
+import { ANN_ARBOR_LAW_SUMMARY_HEADING, AnnArborLawSummary } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 
 export const PAGE_ENDPOINTS = {
     home: "/",
     welcomePage: "/",
+    annArborLaw: "/ann-arbor-law",
     categories: "/categories",
     businesses: "/businesses",
     accessibilityIssues: "/accessibility-issues",
     contactUs: "/contact-us",
-    reportIdRefused: "/id-refused"
+    reportIdRefused: "/id-refused",
 };
 
 export const RouterOutlet = () => {
@@ -23,6 +25,10 @@ export const RouterOutlet = () => {
                 <Route path={PAGE_ENDPOINTS.welcomePage}
                        element={<Page title={WELCOME_PAGE_HEADING}
                                       key={WELCOME_PAGE_HEADING}><WelcomePage/></Page>}/>
+
+                <Route path={PAGE_ENDPOINTS.annArborLaw}
+                       element={<Page title={ANN_ARBOR_LAW_SUMMARY_HEADING}
+                                      key={ANN_ARBOR_LAW_SUMMARY_HEADING}><AnnArborLawSummary/></Page>}/>
 
                 <Route path={PAGE_ENDPOINTS.reportIdRefused}
                        element={<Page title={ID_REFUSED_PAGE_HEADING}
