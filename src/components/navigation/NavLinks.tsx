@@ -5,7 +5,7 @@ import { OpensInANewTabLink } from "../OpensInNewTab/OpensInANewTabLink";
 
 export const LINK_TEXT = {
     aboutTheId: "About the ID",
-    annArborOrdinance: "Washtenaw ID in Ann Arbor",
+    welcomePage: "Home",
     businesses: "All Businesses",
     categories: "Business Categories",
     contactUs: "Contact Us",
@@ -21,8 +21,8 @@ export const NavLinks = () => {
             </OpensInANewTabLink>
         </li>
         <li className={"nav-list-item"}>
-            <AppLink className={"nav-link"} to={PAGE_ENDPOINTS.annArborOrdinance}>
-                {LINK_TEXT.annArborOrdinance}
+            <AppLink className={"nav-link"} to={PAGE_ENDPOINTS.welcomePage}>
+                {LINK_TEXT.welcomePage}
             </AppLink>
         </li>
         <li className={"nav-list-item"}>

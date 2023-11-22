@@ -10,7 +10,7 @@ import { ACCESSIBILITY_PAGE_HEADING } from "../pages/accessibility-issues/Access
 import { DocumentStateContext } from "../contexts/DocumentStateContext";
 import { AppLink } from "../components/navigation/AppLink";
 import { asyncTimeout } from "../../test/async-timeout";
-import { ORDINANCE_PAGE_HEADING } from "../pages/ann-arbor-ordinance/AnnArborOrdinance";
+import { WELCOME_PAGE_HEADING } from "../pages/welcome/WelcomePage";
 import { LINK_TEXT } from "../components/navigation/NavLinks";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
 import { faker } from "@faker-js/faker";
@@ -28,7 +28,7 @@ describe(RouterOutlet.name, () => {
 
     test("has the correct page endpoints", () => {
         expect(PAGE_ENDPOINTS.home).toBe("/");
-        expect(PAGE_ENDPOINTS.annArborOrdinance).toBe("/");
+        expect(PAGE_ENDPOINTS.welcomePage).toBe("/");
         expect(PAGE_ENDPOINTS.categories).toBe("/categories");
         expect(PAGE_ENDPOINTS.businesses).toBe("/businesses");
         expect(PAGE_ENDPOINTS.reportIdRefused).toBe("/id-refused");
@@ -38,11 +38,11 @@ describe(RouterOutlet.name, () => {
 
     describe("when the user lands on the home page", () => {
         test("they see the correct page", async () => {
-            h1 = await screen.findByRole("heading", { level: 1, name: ORDINANCE_PAGE_HEADING });
+            h1 = await screen.findByRole("heading", { level: 1, name: WELCOME_PAGE_HEADING });
             expect(h1).toBeVisible();
         });
         test("the document title is correct", () => {
-            expect(document.title).toEqual(`${ORDINANCE_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+            expect(document.title).toEqual(`${WELCOME_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
         });
         test("the main heading is NOT focused because the document is new", async () => {
             await asyncTimeout(getIntegerEnvVar(ENVIRONMENT_VARIABLES.REACT_APP_FOCUS_TIMEOUT) + 1);
@@ -51,19 +51,19 @@ describe(RouterOutlet.name, () => {
     });
 
     describe("when the user navigates to each page - ", () => {
-        describe("Ann Arbor Ordinance", () => {
+        describe("Welcome Page", () => {
             beforeEach(async () => {
-                // navigate away from the ordinance page and back
+                // navigate away from the welcome page and back
                 await user.click(screen.getByRole("link", { name: LINK_TEXT.accessibilityIssues }));
                 await screen.findByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
-                await user.click(screen.getByRole("link", { name: LINK_TEXT.annArborOrdinance }));
-                h1 = await screen.findByRole("heading", { level: 1, name: ORDINANCE_PAGE_HEADING });
+                await user.click(screen.getByRole("link", { name: LINK_TEXT.welcomePage }));
+                h1 = await screen.findByRole("heading", { level: 1, name: WELCOME_PAGE_HEADING });
             });
-            test("they see the ordinance page", () => {
+            test("they see the welcome page", () => {
                 expect(h1).toBeVisible();
             });
             test("the document title is correct", () => {
-                expect(document.title).toEqual(`${ORDINANCE_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+                expect(document.title).toEqual(`${WELCOME_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
             });
             test("the main heading is focused", async () => {
                 await waitFor(() => {
@@ -133,9 +133,9 @@ describe(RouterOutlet.name, () => {
                 await screen.findByRole("heading", { level: 1, name: ACCESSIBILITY_PAGE_HEADING });
 
                 await user.click(screen.getByRole("link", { name: unknownPageLinkName }));
-                h1 = await screen.findByRole("heading", { level: 1, name: ORDINANCE_PAGE_HEADING });
+                h1 = await screen.findByRole("heading", { level: 1, name: WELCOME_PAGE_HEADING });
             });
-            test("they see the ordinance page", () => {
+            test("they see the welcome page", () => {
                 expect(h1).toBeVisible();
             });
         });
@@ -151,7 +151,7 @@ const TestingRouterWithLinks = () => {
         <MemoryRouter initialEntries={["/"]}>
             <DocumentStateContext.Provider value={{ documentIsNew, documentHasBeenLoaded }}>
                 <RouterOutlet/>
-                <AppLink to={PAGE_ENDPOINTS.annArborOrdinance}>{LINK_TEXT.annArborOrdinance}</AppLink>
+                <AppLink to={PAGE_ENDPOINTS.welcomePage}>{LINK_TEXT.welcomePage}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.categories}>{LINK_TEXT.categories}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.businesses}>{LINK_TEXT.businesses}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.accessibilityIssues}>{LINK_TEXT.accessibilityIssues}</AppLink>
