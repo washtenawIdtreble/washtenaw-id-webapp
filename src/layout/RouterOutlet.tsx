@@ -3,12 +3,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { ACCESSIBILITY_PAGE_HEADING, AccessibilityIssues } from "../pages/accessibility-issues/AccessibilityIssues";
 import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
-import { AnnArborOrdinance, ORDINANCE_PAGE_HEADING } from "../pages/ann-arbor-ordinance/AnnArborOrdinance";
+import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
 import { ID_REFUSED_PAGE_HEADING, ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
 
 export const PAGE_ENDPOINTS = {
     home: "/",
-    annArborOrdinance: "/",
+    welcomePage: "/",
     categories: "/categories",
     businesses: "/businesses",
     accessibilityIssues: "/accessibility-issues",
@@ -20,10 +20,10 @@ export const RouterOutlet = () => {
     return (
         <div className={"router-outlet"} data-testid={"router-outlet"}>
             <Routes>
-                <Route path={PAGE_ENDPOINTS.annArborOrdinance}
-                       element={<Page title={ORDINANCE_PAGE_HEADING}
-                                      key={ORDINANCE_PAGE_HEADING}><AnnArborOrdinance/></Page>}/>
-                
+                <Route path={PAGE_ENDPOINTS.welcomePage}
+                       element={<Page title={WELCOME_PAGE_HEADING}
+                                      key={WELCOME_PAGE_HEADING}><WelcomePage/></Page>}/>
+
                 <Route path={PAGE_ENDPOINTS.reportIdRefused}
                        element={<Page title={ID_REFUSED_PAGE_HEADING}
                                       key={ID_REFUSED_PAGE_HEADING}><ReportIdRefused/></Page>}/>

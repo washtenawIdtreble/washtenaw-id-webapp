@@ -1,4 +1,4 @@
-import { AnnArborOrdinance, ORDINANCE_PAGE_HEADING } from "./AnnArborOrdinance";
+import { WELCOME_PAGE_HEADING, WelcomePage } from "./WelcomePage";
 import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { axe } from "jest-axe";
@@ -7,14 +7,14 @@ import { OPENS_IN_A_NEW_TAB } from "../../components/OpensInNewTab/OpensInANewTa
 import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
 import { MemoryRouter } from "react-router-dom";
 
-describe(AnnArborOrdinance.name, () => {
+describe(WelcomePage.name, () => {
     let container: Container;
 
     beforeEach(() => {
-        ({ container } = render(<AnnArborOrdinance/>, { wrapper: MemoryRouter }));
+        ({ container } = render(<WelcomePage/>, { wrapper: MemoryRouter }));
     });
     test("exports its page heading", () => {
-        expect(ORDINANCE_PAGE_HEADING).toBe("Washtenaw ID in Ann Arbor");
+        expect(WELCOME_PAGE_HEADING).toBe("Washtenaw ID in Ann Arbor");
     });
     test("has no AxE violations", async () => {
         const page = await axe(container as Element);
@@ -23,7 +23,7 @@ describe(AnnArborOrdinance.name, () => {
     test("has an h1 that can be focused programmatically", () => {
         const h1 = screen.getByRole("heading", {
             level: 1,
-            name: ORDINANCE_PAGE_HEADING,
+            name: WELCOME_PAGE_HEADING,
         });
         expect(h1).toBeVisible();
         expect(h1.hasAttribute("tabindex")).toBe(true);
