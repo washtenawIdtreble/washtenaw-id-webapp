@@ -12,6 +12,7 @@ describe(NavLinks.name, () => {
     test("exports link text", () => {
         expect(LINK_TEXT.aboutTheId).toEqual("About the ID");
         expect(LINK_TEXT.welcomePage).toEqual("Home");
+        expect(LINK_TEXT.annArborLaw).toEqual("Ann Arbor Law");
         expect(LINK_TEXT.businesses).toEqual("All Businesses");
         expect(LINK_TEXT.categories).toEqual("Business Categories");
         expect(LINK_TEXT.reportIdRefused).toEqual("My ID was Refused");
@@ -22,7 +23,7 @@ describe(NavLinks.name, () => {
         const list = screen.getByRole("list");
         const listItems = within(list).getAllByRole("listitem");
         const links = listItems.map(listItem => within(listItem).getByRole("link"));
-        expect(links.length).toEqual(5);
+        expect(links.length).toEqual(6);
     });
     test("has a link to the washtenaw ID website", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: `${LINK_TEXT.aboutTheId} ${OPENS_IN_A_NEW_TAB}` });
@@ -31,6 +32,10 @@ describe(NavLinks.name, () => {
     test("has a link to the Welcome Page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.welcomePage });
         expect(link.href.endsWith(PAGE_ENDPOINTS.welcomePage)).toBe(true);
+    });
+    test("has a link to the Ann Arbor Law Summary Page", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborLaw });
+        expect(link.href.endsWith(PAGE_ENDPOINTS.annArborLaw)).toBe(true);
     });
     test("has a link to the id refused form page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.reportIdRefused });

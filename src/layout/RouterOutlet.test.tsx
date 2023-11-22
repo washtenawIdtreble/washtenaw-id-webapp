@@ -15,6 +15,7 @@ import { LINK_TEXT } from "../components/navigation/NavLinks";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
 import { faker } from "@faker-js/faker";
 import { ID_REFUSED_PAGE_HEADING } from "../pages/report-id-refusal/ReportIdRefused";
+import { ANN_ARBOR_LAW_SUMMARY_HEADING } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 
 const unknownPageLinkName = "UNKNOWN PAGE";
 
@@ -29,6 +30,7 @@ describe(RouterOutlet.name, () => {
     test("has the correct page endpoints", () => {
         expect(PAGE_ENDPOINTS.home).toBe("/");
         expect(PAGE_ENDPOINTS.welcomePage).toBe("/");
+        expect(PAGE_ENDPOINTS.annArborLaw).toBe("/ann-arbor-law");
         expect(PAGE_ENDPOINTS.categories).toBe("/categories");
         expect(PAGE_ENDPOINTS.businesses).toBe("/businesses");
         expect(PAGE_ENDPOINTS.reportIdRefused).toBe("/id-refused");
@@ -64,6 +66,24 @@ describe(RouterOutlet.name, () => {
             });
             test("the document title is correct", () => {
                 expect(document.title).toEqual(`${WELCOME_PAGE_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+            });
+            test("the main heading is focused", async () => {
+                await waitFor(() => {
+                    expect(h1).toHaveFocus();
+                });
+            });
+        });
+
+        describe("Ann Arbor Law Summary Page", () => {
+            beforeEach(async () => {
+                await user.click(screen.getByRole("link", { name: LINK_TEXT.annArborLaw }));
+                h1 = await screen.findByRole("heading", { level: 1, name: ANN_ARBOR_LAW_SUMMARY_HEADING });
+            });
+            test("they see the contact us page", () => {
+                expect(h1).toBeVisible();
+            });
+            test("the document title is correct", () => {
+                expect(document.title).toEqual(`${ANN_ARBOR_LAW_SUMMARY_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
             });
             test("the main heading is focused", async () => {
                 await waitFor(() => {
@@ -152,6 +172,7 @@ const TestingRouterWithLinks = () => {
             <DocumentStateContext.Provider value={{ documentIsNew, documentHasBeenLoaded }}>
                 <RouterOutlet/>
                 <AppLink to={PAGE_ENDPOINTS.welcomePage}>{LINK_TEXT.welcomePage}</AppLink>
+                <AppLink to={PAGE_ENDPOINTS.annArborLaw}>{LINK_TEXT.annArborLaw}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.categories}>{LINK_TEXT.categories}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.businesses}>{LINK_TEXT.businesses}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.accessibilityIssues}>{LINK_TEXT.accessibilityIssues}</AppLink>

@@ -3,7 +3,6 @@ import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { axe } from "jest-axe";
 import { Container } from "react-dom";
-import { OPENS_IN_A_NEW_TAB } from "../../components/OpensInNewTab/OpensInANewTabLink";
 import { PAGE_ENDPOINTS } from "../../layout/RouterOutlet";
 import { MemoryRouter } from "react-router-dom";
 
@@ -33,10 +32,10 @@ describe(WelcomePage.name, () => {
         const info = screen.getByText("All businesses in Ann Arbor are required to accept the Washtenaw County ID as proof of identity.");
         expect(info).toBeVisible();
     });
-    test("has a link to Ann Arbor's law", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: `See the law on Municode ${OPENS_IN_A_NEW_TAB}` });
+    test("has a link to a summary of Ann Arbor's law", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: "Learn more about Ann Arbor's law" });
         expect(link).toBeVisible();
-        expect(link.href).toEqual("https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN");
+        expect(link.href.endsWith(PAGE_ENDPOINTS.annArborLaw)).toBe(true);
     });
     test("has a call-to-action about businesses that don't accept the ID", () => {
         const nonBreakingSpace = `\xa0`;
