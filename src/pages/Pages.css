@@ -15,3 +15,29 @@
     text-align: center;
     width: 100vw;
 }
+
+.text-page-container {
+    background-color: #fafafa;
+    border: 2px solid black;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    padding: 1rem;
+}
+
+.text-page-paragraph {
+    display: inline-block;
+    line-height: 1.6rem;
+    margin: 0 0 1rem 0;
+}
+
+@media (min-width: 961px) {
+    .text-page-container {
+        align-self: center;
+        max-width: 66%;
+        font-size: 1.5rem;
+    }
+
+    .text-page-paragraph {
+        line-height: 2rem;
+    }
+}

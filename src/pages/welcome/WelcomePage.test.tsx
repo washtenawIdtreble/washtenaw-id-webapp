@@ -33,7 +33,7 @@ describe(WelcomePage.name, () => {
         expect(info).toBeVisible();
     });
     test("has a link to a summary of Ann Arbor's law", () => {
-        const link: HTMLAnchorElement = screen.getByRole("link", { name: "Learn more about Ann Arbor's law" });
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: "Click here to learn more about Ann Arbor's law" });
         expect(link).toBeVisible();
         expect(link.href.endsWith(PAGE_ENDPOINTS.annArborLaw)).toBe(true);
     });
