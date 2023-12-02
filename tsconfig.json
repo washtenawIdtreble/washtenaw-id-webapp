@@ -25,7 +25,6 @@
     "./src/**/*"
   ],
   "exclude": [
-    "./src/mock-server/**/*",
-    "./**/*.test*"
+    "./src/mock-server/**/*"
   ]
 }
