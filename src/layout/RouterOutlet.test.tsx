@@ -15,7 +15,10 @@ import { LINK_TEXT } from "../components/navigation/NavLinks";
 import { ENVIRONMENT_VARIABLES, getIntegerEnvVar } from "../utilities/environment-variables";
 import { faker } from "@faker-js/faker";
 import { ID_REFUSED_PAGE_HEADING } from "../pages/report-id-refusal/ReportIdRefused";
-import { ANN_ARBOR_LAW_SUMMARY_HEADING } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
+import {
+    ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE,
+    ANN_ARBOR_LAW_SUMMARY_HEADING
+} from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 
 const unknownPageLinkName = "UNKNOWN PAGE";
 
@@ -83,7 +86,7 @@ describe(RouterOutlet.name, () => {
                 expect(h1).toBeVisible();
             });
             test("the document title is correct", () => {
-                expect(document.title).toEqual(`${ANN_ARBOR_LAW_SUMMARY_HEADING}${DOCUMENT_TITLE_SUFFIX}`);
+                expect(document.title).toEqual(`${ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE}${DOCUMENT_TITLE_SUFFIX}`);
             });
             test("the main heading is focused", async () => {
                 await waitFor(() => {

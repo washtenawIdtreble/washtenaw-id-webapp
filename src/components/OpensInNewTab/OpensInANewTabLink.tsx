@@ -7,9 +7,10 @@ type NewTabLinkProps = Omit<React.HTMLProps<HTMLAnchorElement>, "target" | "rel"
 export const OPENS_IN_A_NEW_TAB = "opens in a new tab";
 
 export const OpensInANewTabLink = ({ children, className, color = "#0000ee", ...props }: NewTabLinkProps) => {
-    return (<>
-        <a target={"_blank"} rel={"noreferrer"}
-           className={`opens-in-new-tab-link ${className ?? ""}`} {...props}>{children}
-            <OpensInNewTabIcon color={color}/></a>
-    </>);
+    return (
+        <a target={"_blank"} rel={"noreferrer"} className={`${className ?? ""}`}{...props}>
+            <span>{children}</span>
+            <OpensInNewTabIcon color={color}/>
+        </a>
+    );
 };

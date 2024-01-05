@@ -81,13 +81,20 @@ describe(WelcomePage.name, () => {
         });
         test("has a transcript of the video", () => {
             expect(within(transcriptContainer).getByText("The video above contains interviews with people involved in the Washtenaw ID Project. While each person is talking, we see them speaking directly to the camera.")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Keta Cowan - Co-Founder and Chair, The Washtenaw ID Project: \"40,000 individuals both citizens and undocumented folks lack an ID card in Washtenaw County. The Washtenaw ID Project is a local initiative to provide a government-issued ID card to those who cannot access a state ID.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Jerry L. Clayton - Sheriff, Washtenaw County: \"My grandparents came up to live with my parents from the south. They didn't have a birth certificate. They didn't have a Social Security card.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Yousef Rabhi - Michigan State Representative, 53rd District: \"You don't have those privileges. You don't have those advantages.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Janelle Zini - Co-Founder, Washtenaw ID Project: \"Think about where you get asked for your ID - it's almost daily.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Sheriff Clayton: \"Not being able to get a bank account, not being able to um sometimes secure uh a house or an apartment or a job.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Laura Radzik - AVP, Old National Bank: \"Old National accepts the Washtenaw ID as a primary form of identification meaning it works the same as if you had a driver's license or a passport.\"")).toBeVisible();
-            expect(within(transcriptContainer).getByText("Rep. Rabhi: \"This ID card is really in my opinion the most American thing that we could do. It is the most in line with our values of who we are as a country.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Keta Cowan - Co-Founder and Chair, The Washtenaw ID Project:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"40,000 individuals both citizens and undocumented folks lack an ID card in Washtenaw County. The Washtenaw ID Project is a local initiative to provide a government-issued ID card to those who cannot access a state ID.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Jerry L. Clayton - Sheriff, Washtenaw County:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"My grandparents came up to live with my parents from the south. They didn't have a birth certificate. They didn't have a Social Security card.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Yousef Rabhi - Michigan State Representative, 53rd District:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"You don't have those privileges. You don't have those advantages.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Janelle Zini - Co-Founder, Washtenaw ID Project:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"Think about where you get asked for your ID - it's almost daily.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Sheriff Clayton:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"Not being able to get a bank account, not being able to um sometimes secure uh a house or an apartment or a job.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Laura Radzik - Assistant Vice President, Old National Bank:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"Old National accepts the Washtenaw ID as a primary form of identification meaning it works the same as if you had a driver's license or a passport.\"")).toBeVisible();
+            expect(within(transcriptContainer).getByText("Rep. Rabhi:")).toBeVisible();
+            expect(within(transcriptContainer).getByText("\"This ID card is really in my opinion the most American thing that we could do. It is the most in line with our values of who we are as a country.\"")).toBeVisible();
         });
     });
 

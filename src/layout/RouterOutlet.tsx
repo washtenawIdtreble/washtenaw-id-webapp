@@ -5,7 +5,11 @@ import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
 import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
 import { ID_REFUSED_PAGE_HEADING, ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
-import { ANN_ARBOR_LAW_SUMMARY_HEADING, AnnArborLawSummary } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
+import {
+    ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE,
+    ANN_ARBOR_LAW_SUMMARY_HEADING,
+    AnnArborLawSummary
+} from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 
 export const PAGE_ENDPOINTS = {
     home: "/",
@@ -27,7 +31,7 @@ export const RouterOutlet = () => {
                                       key={WELCOME_PAGE_HEADING}><WelcomePage/></Page>}/>
 
                 <Route path={PAGE_ENDPOINTS.annArborLaw}
-                       element={<Page title={ANN_ARBOR_LAW_SUMMARY_HEADING}
+                       element={<Page title={ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE}
                                       key={ANN_ARBOR_LAW_SUMMARY_HEADING}><AnnArborLawSummary/></Page>}/>
 
                 <Route path={PAGE_ENDPOINTS.reportIdRefused}

@@ -14,3 +14,9 @@ h1 {
 h1:focus {
     outline-offset: 4px;
 }
+
+@media (min-width: 961px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+}
