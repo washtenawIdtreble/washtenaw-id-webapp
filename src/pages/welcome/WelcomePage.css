@@ -18,7 +18,11 @@
 
 .transcript-heading {
     align-self: center;
-    margin-top: 0;
+    margin: 0;
+}
+
+.transcript-speaker-name {
+    font-weight: bold;
 }
 
 @media (min-width: 961px) {

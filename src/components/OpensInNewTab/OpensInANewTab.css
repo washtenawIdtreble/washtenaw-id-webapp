@@ -2,11 +2,6 @@
     height: 0.8rem;
     margin-left: 0.33rem;
     min-height: 0.8rem;
-    min-width: 0.8rem;
-    width: 0.8rem;
-}
-
-.opens-in-new-tab-link {
-    align-items: center;
-    display: flex;
+    min-width: 1rem;
+    display: inline;
 }
