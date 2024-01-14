@@ -22,7 +22,7 @@ export const AnnArborLawSummary = () => {
 
                 <nav aria-labelledby={"table-of-contents-heading"}>
                     <h2 className={"table-of-contents-heading"} id={"table-of-contents-heading"}>Table of Contents</h2>
-                    <ol type={"I"} className={"table-of-contents-list"}>
+                    <ol className={"table-of-contents-list"}>
                         <li className={"table-of-contents-list-item"}>
                             <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID}`}>
                                 Refusing the Washtenaw ID is against the law in Ann Arbor
@@ -58,7 +58,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        I. Refusing the Washtenaw ID is against the law in Ann Arbor
+                        1. Refusing the Washtenaw ID is against the law in Ann Arbor
                     </h2>
 
                     <p className={"text-page-paragraph"}>
@@ -86,7 +86,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        II. The Washtenaw ID is a valid government-issued ID card. By statute it is equivalent to all
+                        2. The Washtenaw ID is a valid government-issued ID card. By statute it is equivalent to all
                         other state and federal issued ID
                     </h2>
                     <p className={"text-page-paragraph"}>
@@ -107,7 +107,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        III. Lack of familiarity with the Washtenaw ID is not a legal justification for denying equal
+                        3. Lack of familiarity with the Washtenaw ID is not a legal justification for denying equal
                         access to goods and services
                     </h2>
                     <p className={"text-page-paragraph"}>
@@ -129,7 +129,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        IV. Alcohol can be purchased with the Washtenaw ID
+                        4. Alcohol can be purchased with the Washtenaw ID
                     </h2>
                     <p className={"text-page-paragraph"}>
                         You do not need a state ID to purchase alcohol in Michigan. MI law requires a "...bona fide
@@ -153,7 +153,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        V. Prescription medication and cold medicine can be purchased with the Washtenaw ID
+                        5. Prescription medication and cold medicine can be purchased with the Washtenaw ID
                     </h2>
                     <p className={"text-page-paragraph"}>
                         You do not need a state ID to purchase restricted prescribed medication nor is a state ID
@@ -174,7 +174,7 @@ export const AnnArborLawSummary = () => {
 
                 <div className={"law-page-section"} data-testid={"section-6"}>
                     <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID} className={"law-page-section-heading"} tabIndex={-1}>
-                        VI. Washtenaw ID discrimination is investigated by the city's Human Rights Commission
+                        6. Washtenaw ID discrimination is investigated by the city's Human Rights Commission
                     </h2>
                     <p className={"text-page-paragraph"}>
                         The City of Ann Arbor's Human Rights Commission is authorized to "Receive and review complaints
