@@ -32,16 +32,15 @@ describe(useFocusHashOrMainHeading.name, () => {
         user = userEvent.setup();
 
         HTMLElement.prototype.scrollIntoView = jest.fn();
-
-        mocked(useLocation).mockReturnValue({
-            hash: `#${fragmentValue}`
-        } as Location);
     });
 
     describe("when the user has navigated from within the app", () => {
-
         describe("and there is NO fragment in the URL", () => {
-            test("focuses the childrens' h1 element after a delay", async () => {
+            test("focuses the childrens' h1 element", async () => {
+                mocked(useLocation).mockReturnValue({
+                    hash: ""
+                } as Location);
+
                 render(
                     <ContextProvider freshDocument={false}>
                         <h1 tabIndex={-1}>{heading1}</h1>
@@ -49,7 +48,7 @@ describe(useFocusHashOrMainHeading.name, () => {
                 );
 
                 const h1 = screen.getByRole("heading", { level: 1, name: heading1 });
-                expect(h1).not.toHaveFocus();
+
                 await waitFor(() => {
                     expect(h1).toHaveFocus();
                 });
@@ -57,6 +56,11 @@ describe(useFocusHashOrMainHeading.name, () => {
         });
 
         describe("and there is a fragment in the URL", () => {
+            beforeEach(() => {
+                mocked(useLocation).mockReturnValue({
+                    hash: `#${fragmentValue}`
+                } as Location);
+            });
 
             describe("with a matching element on the page", () => {
 
@@ -142,9 +146,9 @@ describe(useFocusHashOrMainHeading.name, () => {
             });
 
             describe("with an empty fragment", () => {
-                test("focuses the childrens' h1 element after a delay", async () => {
+                test("focuses the childrens' h1 element", async () => {
                     mocked(useLocation).mockReturnValue({
-                        hash: `#${fragmentValue}`
+                        hash: `#`
                     } as Location);
 
                     render(
@@ -154,7 +158,6 @@ describe(useFocusHashOrMainHeading.name, () => {
                     );
 
                     const h1 = screen.getByRole("heading", { level: 1, name: heading1 });
-                    expect(h1).not.toHaveFocus();
                     await waitFor(() => {
                         expect(h1).toHaveFocus();
                     });
@@ -164,9 +167,12 @@ describe(useFocusHashOrMainHeading.name, () => {
     });
 
     describe("when the user has freshly loaded the document", () => {
-
         describe("and there is NO fragment in the URL", () => {
             test("does NOT change the default focus", async () => {
+                mocked(useLocation).mockReturnValue({
+                    hash: ""
+                } as Location);
+
                 render(
                     <ContextProvider freshDocument={true}>
                         <h1 tabIndex={-1}>{heading1}</h1>
@@ -180,8 +186,12 @@ describe(useFocusHashOrMainHeading.name, () => {
         });
 
         describe("and there is a fragment in the URL", () => {
-
             describe("with a matching element on the page", () => {
+                beforeEach(() => {
+                    mocked(useLocation).mockReturnValue({
+                        hash: `#${fragmentValue}`
+                    } as Location);
+                });
 
                 describe("when loading finishes quickly", () => {
                     test("focuses the element with the fragment as its ID and scrolls it into view", async () => {
@@ -227,6 +237,11 @@ describe(useFocusHashOrMainHeading.name, () => {
             });
 
             describe("with NO matching element on the page", () => {
+                beforeEach(() => {
+                    mocked(useLocation).mockReturnValue({
+                        hash: `#${fragmentValue}`
+                    } as Location);
+                });
 
                 describe("when loading finishes quickly", () => {
                     test("does NOT change the default focus", async () => {
@@ -264,11 +279,11 @@ describe(useFocusHashOrMainHeading.name, () => {
             describe("with an empty fragment", () => {
                 test("does NOT change the default focus", async () => {
                     mocked(useLocation).mockReturnValue({
-                        hash: `#${fragmentValue}`
+                        hash: "#"
                     } as Location);
 
                     render(
-                        <ContextProvider freshDocument={false}>
+                        <ContextProvider freshDocument={true}>
                             <h1 tabIndex={-1}>{heading1}</h1>
                         </ContextProvider>
                     );
