@@ -81,7 +81,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "I. Refusing the Washtenaw ID is against the law in Ann Arbor"
+                name: "1. Refusing the Washtenaw ID is against the law in Ann Arbor"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID);
@@ -106,7 +106,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "II. The Washtenaw ID is a valid government-issued ID card. By statute it is equivalent to all other state and federal issued ID"
+                name: "2. The Washtenaw ID is a valid government-issued ID card. By statute it is equivalent to all other state and federal issued ID"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID);
@@ -129,7 +129,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "III. Lack of familiarity with the Washtenaw ID is not a legal justification for denying equal access to goods and services"
+                name: "3. Lack of familiarity with the Washtenaw ID is not a legal justification for denying equal access to goods and services"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID);
@@ -152,7 +152,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "IV. Alcohol can be purchased with the Washtenaw ID"
+                name: "4. Alcohol can be purchased with the Washtenaw ID"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID);
@@ -177,7 +177,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "V. Prescription medication and cold medicine can be purchased with the Washtenaw ID"
+                name: "5. Prescription medication and cold medicine can be purchased with the Washtenaw ID"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID);
@@ -200,7 +200,7 @@ describe(AnnArborLawSummary.name, () => {
         test("has a heading", () => {
             let heading = screen.getByRole("heading", {
                 level: 2,
-                name: "VI. Washtenaw ID discrimination is investigated by the city's Human Rights Commission"
+                name: "6. Washtenaw ID discrimination is investigated by the city's Human Rights Commission"
             });
             expect(heading).toBeVisible();
             expect(heading.id).toEqual(ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID);
