@@ -103,20 +103,18 @@ export const ReportIdRefused = () => {
                             autoComplete={"tel"}
                         />
                     </label>
-                    <label htmlFor={"age-range"}>
-                        <RadioButtonGroup
-                            legend={"Your age (optional)"}
-                            groupName={"ageRange"}
-                            pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
-                            options={[
-                                { label: "Under 18" },
-                                { label: "18 to 21" },
-                                { label: "22 to 35" },
-                                { label: "36 to 55" },
-                                { label: "Over 55" },
-                            ]}
-                        />
-                    </label>
+                    <RadioButtonGroup
+                        legend={"Your age (optional)"}
+                        groupName={"ageRange"}
+                        pageIdentifier={ID_REFUSED_PAGE_IDENTIFIER}
+                        options={[
+                            { label: "Under 18" },
+                            { label: "18 to 21" },
+                            { label: "22 to 35" },
+                            { label: "36 to 55" },
+                            { label: "Over 55" },
+                        ]}
+                    />
                 </div>
 
                 <div className={"form-column-full"}>

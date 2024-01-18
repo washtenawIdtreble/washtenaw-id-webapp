@@ -7,7 +7,7 @@ export type FormContextValue = {
     registerField: (field: Field) => void;
 }
 
-const defaultValue = { registerField: () => {} };
+const defaultValue: FormContextValue = { registerField: () => {} };
 export const FormContext = React.createContext<FormContextValue>(defaultValue);
 
 type FormProviderProps = {
