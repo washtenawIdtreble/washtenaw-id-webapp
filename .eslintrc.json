@@ -1,0 +1,60 @@
+{
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "rules": {
+    "jest/valid-title": "off",
+    "testing-library/no-render-in-setup": "off",
+    "testing-library/no-node-access": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "msw*"
+            ],
+            "message": "Do not import from msw in production code - it is a dev dependency and will cause issues"
+          }
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "controlComponents": [
+          "FormField",
+          "RadioButtonGroup"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "jsx-a11y": {
+      "components": {
+        "FormField": "input",
+        "MainHeading": "h1"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.test.ts*",
+        "**/mock-server/*"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "off",
+          "msw"
+        ]
+      }
+    }
+  ]
+}

@@ -165,6 +165,7 @@ describe(Page.name, () => {
                 render(
                     <ContextProvider freshDocument={documentState}>
                         <Page title={pageTitle}>
+                            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
                             <h1 tabIndex={0}>Bad Page</h1>
                         </Page>
                     </ContextProvider>
