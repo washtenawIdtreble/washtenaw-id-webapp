@@ -1,7 +1,13 @@
 {
-  "name": "washtenaw-id-webapp",
   "license": "GPL-3.0-only",
-  "version": "0.1.0",
+  "bugs": {
+    "url": "https://github.com/washtenawIdtreble/washtenaw-id-webapp/issues",
+    "email": "info@local-gov.id"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/washtenawIdtreble/washtenaw-id-webapp.git"
+  },
   "private": true,
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
