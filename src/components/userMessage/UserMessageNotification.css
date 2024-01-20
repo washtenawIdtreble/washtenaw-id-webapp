@@ -1,15 +1,7 @@
 .user-message {
-    -webkit-align-items: center;
     align-items: center;
-    -moz-box-align: center;
-    -webkit-box-align: center;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
     display: flex;
-    -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
     margin-bottom: 1.5rem;
     padding: 1rem;

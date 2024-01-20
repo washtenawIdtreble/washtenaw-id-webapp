@@ -1,37 +1,12 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: >0.01% and not dead and not op_mini all
-*/
-
 .form-container {
-    -moz-box-direction: normal;
-    -webkit-box-direction: normal;
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
     display: flex;
-    -webkit-flex-flow: column nowrap;
     flex-flow: column nowrap;
     height: 100%;
 }
 
 .form {
-    -moz-box-direction: normal;
-    -webkit-box-direction: normal;
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
-    display: -moz-box;
     display: flex;
-
-    display: -webkit-box;
-    display: -webkit-flex;
-    -webkit-flex-flow: column nowrap;
     flex-flow: column nowrap;
     font-weight: normal;
     height: 100%;

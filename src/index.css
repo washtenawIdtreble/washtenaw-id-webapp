@@ -10,9 +10,7 @@ a:focus, a:hover {
 body {
     background-color: #eeeeec;
     font-family: Karla, sans-serif;
-    -webkit-font-smoothing: antialiased;
     margin: 0;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 :focus {
