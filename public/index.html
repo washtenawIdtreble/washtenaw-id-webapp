@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!--Don't change the order of these tags-->
         <meta charset="utf-8"/>
-        <link href="%PUBLIC_URL%/favicon.ico" rel="icon"/>
-        <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <meta content="#000000" name="theme-color"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!---->
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#000000"/>
         <meta
-                content="Web site created using create-react-app"
                 name="description"
+                content="Find out where to use your Washtenaw County ID and report businesses that refuse to accept it"
         />
-        <link href="%PUBLIC_URL%/logo192.png" rel="apple-touch-icon"/>
-        <link href="%PUBLIC_URL%/manifest.json" rel="manifest"/>
-        <title>React App</title>
+        <title>Washtenaw ID Project</title>
         <script>
             if (window.location.host.endsWith("local-gov.id") && window.location.protocol === "http:") {
                 window.location.assign("https://washtenaw.local-gov.id");
