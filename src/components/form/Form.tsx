@@ -8,6 +8,7 @@ import { FormProvider } from "../../contexts/FormContext";
 import { Observable } from "../../utilities/observable";
 import { SubmitLoadingIcon } from "./SubmitLoadingIcon";
 import { useLiveRegionText } from "../../hooks/useLiveRegionText";
+import { now } from "../../utilities/date-utilities";
 
 type FormProps = ChildrenProps & {
     ariaLabelledBy: string
@@ -23,6 +24,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
     const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [liveRegionText, setLiveRegionText] = useLiveRegionText("");
+    const [timeBeganFillingForm, setTimeBeganFillingForm] = useState(now());
 
     const postFormData = usePOST(submitEndpoint);
 
@@ -55,6 +57,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
             setLiveRegionText("submitting");
 
             const formData = extractFormData(form);
+            formData.timeToFillForm = `${now() - timeBeganFillingForm} milliseconds`;
 
             postFormData(formData, (ok, _, error) => {
                 setSubmitting(false);
@@ -68,7 +71,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                 }
             });
         }
-    }, [onSubmitObservable, setLiveRegionText, postFormData, onClearObservable]);
+    }, [onSubmitObservable, setLiveRegionText, postFormData, onClearObservable, timeBeganFillingForm]);
 
     return (<div className={"form-container"}>
             {showSuccessMessage &&
