@@ -4,7 +4,7 @@ import { rest } from "msw";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
-import { Form } from "./Form";
+import { Form, HoneypotFormData } from "./Form";
 import { AccessibilityFormData } from "../../pages/accessibility-issues/AccessibilityIssues";
 import { mockServer } from "../../mock-server/mock-server";
 import { BASE_URL } from "../../utilities/base-url";
@@ -25,7 +25,7 @@ const pageIdentifier = "test-page";
 jest.mock("../../utilities/date-utilities");
 
 describe(Form.name, () => {
-    let capturedFormData: AccessibilityFormData;
+    let capturedFormData: AccessibilityFormData & HoneypotFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
     let liveRegion: HTMLDivElement;
@@ -39,7 +39,7 @@ describe(Form.name, () => {
         });
 
         mockServer.use(
-            rest.post(`${BASE_URL()}/${submitEndpoint}`, buildPostResolver<AccessibilityFormData>({
+            rest.post(`${BASE_URL()}/${submitEndpoint}`, buildPostResolver<AccessibilityFormData & HoneypotFormData>({
                 captor: (requestBody) => capturedFormData = requestBody,
                 delayUntil: delayPromise,
             })),
@@ -147,12 +147,12 @@ describe(Form.name, () => {
 
             const timeFormWasRendered = 42892453216246;
             const timeFormWasSubmitted = 42892453641411;
+            const timeFormSubmissionSucceeded = 42892453683426;
+            const timeFormWasSubmittedAgain = 42892456381145;
 
             beforeEach(async () => {
-                mocked(now)
-                    .mockName("now")
-                    .mockReturnValueOnce(timeFormWasRendered)
-                    .mockReturnValueOnce(timeFormWasSubmitted);
+                mocked(now).mockName("now").mockReturnValue(timeFormWasRendered);
+
                 render(<FormWithInputs/>);
 
                 form = screen.getByRole("form");
@@ -170,6 +170,7 @@ describe(Form.name, () => {
                 await user.click(radioButton);
                 honeypotInput.value = honeypotValue;
 
+                mocked(now).mockReturnValue(timeFormWasSubmitted);
                 submitButton.focus();
                 await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
             });
@@ -220,6 +221,8 @@ describe(Form.name, () => {
             describe("when form submission succeeds", () => {
                 let successElement: HTMLSpanElement;
                 beforeEach(async () => {
+                    mocked(now).mockReturnValue(timeFormSubmissionSucceeded);
+
                     resolveRequest({ statusCode: 200 });
                     await waitFor(() => {
                         successElement = screen.getByText(successMessage);
@@ -243,6 +246,20 @@ describe(Form.name, () => {
                 test("the success message is focused", async () => {
                     await waitFor(() => {
                         expect(successElement).toHaveFocus();
+                    });
+                });
+
+                test("time tracking is reset", async () => {
+                    await user.type(nameInput, name);
+
+                    mocked(now).mockReturnValue(timeFormWasSubmittedAgain);
+                    await user.click(submitButton);
+
+                    expect(capturedFormData.timeToFillForm).toEqual(`${timeFormWasSubmittedAgain - timeFormSubmissionSucceeded} milliseconds`);
+
+                    // wait for the live region to clear before ending test and unmounting component
+                    await waitFor(() => {
+                        expect(liveRegion.textContent).toEqual("");
                     });
                 });
 
