@@ -13,12 +13,16 @@ import { FormField } from "./FormField";
 import { Validator } from "../../hooks/form-validation/useValidation";
 import { RadioButtonGroup, RadioOption } from "./RadioButtonGroup";
 import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
+import { now } from "../../utilities/date-utilities";
+import mocked = jest.mocked;
 
 const submitEndpoint = "form-submit-endpoint";
 const formLabelText = "Short information about the form";
 
 const successMessage = "Your issue has been reported, thank you!";
 const pageIdentifier = "test-page";
+
+jest.mock("../../utilities/date-utilities");
 
 describe(Form.name, () => {
     let capturedFormData: AccessibilityFormData;
@@ -141,7 +145,14 @@ describe(Form.name, () => {
             let honeypotInput: HTMLInputElement;
             const honeypotValue = "I'm a robot";
 
+            const timeFormWasRendered = 42892453216246;
+            const timeFormWasSubmitted = 42892453641411;
+
             beforeEach(async () => {
+                mocked(now)
+                    .mockName("now")
+                    .mockReturnValueOnce(timeFormWasRendered)
+                    .mockReturnValueOnce(timeFormWasSubmitted);
                 render(<FormWithInputs/>);
 
                 form = screen.getByRole("form");
@@ -197,7 +208,13 @@ describe(Form.name, () => {
             });
 
             test("the form's data is sent to the server", async () => {
-                expect(capturedFormData).toEqual({ name, age, color, honeypotValue });
+                expect(capturedFormData).toEqual({
+                    name,
+                    age,
+                    color,
+                    honeypotValue,
+                    timeToFillForm: `${timeFormWasSubmitted - timeFormWasRendered} milliseconds`
+                });
             });
 
             describe("when form submission succeeds", () => {
