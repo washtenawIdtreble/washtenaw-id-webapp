@@ -15,20 +15,21 @@ import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRe
 import { Container } from "react-dom";
 import { CONTACT_PAGE_HEADING, CONTACT_PAGE_IDENTIFIER, ContactFormData, ContactUs } from "./ContactUs";
 import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
+import { HoneypotFormData } from "../../components/form/Form";
 
 describe(`${ContactUs.name} form`, () => {
     const formLabelText = "General Contact";
     const successMessage = "Your message has been sent, thank you!";
-    let capturedFormData: ContactFormData;
+    let capturedFormData: ContactFormData & HoneypotFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
     let container: Container;
 
     beforeEach(() => {
         user = userEvent.setup();
-        capturedFormData = null as unknown as ContactFormData;
+        capturedFormData = null as unknown as ContactFormData & HoneypotFormData;
 
-        const resolver = buildPostResolver<ContactFormData>({
+        const resolver = buildPostResolver<ContactFormData & HoneypotFormData>({
             captor: (requestBody) => capturedFormData = requestBody,
         });
 
@@ -79,7 +80,7 @@ describe(`${ContactUs.name} form`, () => {
             expect(commentsInput).toHaveFocus();
             const comments = "There was an input that didn't have a label";
             await user.keyboard(comments);
-            
+
             await user.tab();
             expect(nameInput).toHaveFocus();
             const name = "Linda Cardellini";
@@ -100,7 +101,9 @@ describe(`${ContactUs.name} form`, () => {
 
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
-            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments }));
+            const { honeypotValue, timeToFillForm, ...userInputtedFormData } = capturedFormData;
+
+            expect(userInputtedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments }));
 
             await waitFor(() => {
                 expect(screen.getByText(successMessage)).toBeInTheDocument();

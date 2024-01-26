@@ -20,20 +20,21 @@ import {
     ReportIdRefused
 } from "./ReportIdRefused";
 import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
+import { HoneypotFormData } from "../../components/form/Form";
 
 describe(`${ReportIdRefused.name} form`, () => {
     const formLabelText = "Report Refusal of ID";
     const successMessage = "Your message has been sent, thank you!";
-    let capturedFormData: IdRefusedFormData;
+    let capturedFormData: IdRefusedFormData & HoneypotFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
     let container: Container;
 
     beforeEach(() => {
         user = userEvent.setup();
-        capturedFormData = null as unknown as IdRefusedFormData;
+        capturedFormData = null as unknown as IdRefusedFormData & HoneypotFormData;
 
-        const resolver = buildPostResolver<IdRefusedFormData>({
+        const resolver = buildPostResolver<IdRefusedFormData & HoneypotFormData>({
             captor: (requestBody) => capturedFormData = requestBody,
         });
 
@@ -152,7 +153,9 @@ describe(`${ReportIdRefused.name} form`, () => {
 
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
-            expect(capturedFormData).toEqual(stubRefusedIdData({
+            const { honeypotValue, timeToFillForm, ...userInputtedFormData } = capturedFormData;
+
+            expect(userInputtedFormData).toEqual(stubRefusedIdData({
                 name,
                 email,
                 phone,

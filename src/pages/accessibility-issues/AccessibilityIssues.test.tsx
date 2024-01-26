@@ -20,19 +20,20 @@ import { INVALID_PHONE_MESSAGE } from "../../hooks/form-validation/validatePhone
 import { MISSING_REQUIRED_MESSAGE } from "../../hooks/form-validation/validateRequired";
 import { Container } from "react-dom";
 import { USER_EVENT_KEYS_FOR_TESTING_ONLY } from "../../../test/user-event-keys";
+import { HoneypotFormData } from "../../components/form/Form";
 
 describe(`${AccessibilityIssues.name} form`, () => {
     const successMessage = "Your issue has been reported, thank you!";
-    let capturedFormData: AccessibilityFormData;
+    let capturedFormData: AccessibilityFormData & HoneypotFormData;
     let user: UserEvent;
     let form: HTMLFormElement;
     let container: Container;
 
     beforeEach(() => {
         user = userEvent.setup();
-        capturedFormData = null as unknown as AccessibilityFormData;
+        capturedFormData = null as unknown as AccessibilityFormData & HoneypotFormData;
 
-        const resolver = buildPostResolver<AccessibilityFormData>({
+        const resolver = buildPostResolver<AccessibilityFormData & HoneypotFormData>({
             captor: (requestBody) => capturedFormData = requestBody,
         });
 
@@ -104,7 +105,9 @@ describe(`${AccessibilityIssues.name} form`, () => {
 
             await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
 
-            expect(capturedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments }));
+            const { honeypotValue, timeToFillForm, ...userInputtedFormData } = capturedFormData;
+
+            expect(userInputtedFormData).toEqual(stubAccessibilityFormData({ name, email, phone, comments }));
 
             await waitFor(() => {
                 expect(screen.getByText(successMessage)).toBeInTheDocument();
