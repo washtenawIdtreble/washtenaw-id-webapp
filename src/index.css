@@ -68,3 +68,7 @@ fieldset {
     top: -10000px;
     width: 1px;
 }
+
+.display-none {
+    display: none;
+}

@@ -137,6 +137,10 @@ describe(Form.name, () => {
         });
 
         describe("without errors", () => {
+            let honeypotContainer: HTMLDivElement;
+            let honeypotInput: HTMLInputElement;
+            const honeypotValue = "I'm a robot";
+
             beforeEach(async () => {
                 render(<FormWithInputs/>);
 
@@ -145,15 +149,28 @@ describe(Form.name, () => {
 
                 nameInput = within(form).getByRole("textbox", { name: "Name" });
                 ageInput = within(form).getByRole("textbox", { name: "Age" });
+                honeypotContainer = within(form).getByTestId("honeypot");
+                honeypotInput = within(honeypotContainer).getByRole("textbox", { name: "Robot Input" });
                 const radioButton: HTMLInputElement = within(form).getByRole("radio", { name: color });
                 submitButton = within(form).getByRole("button", { name: "Submit" });
 
                 await user.type(nameInput, name);
                 await user.type(ageInput, age);
                 await user.click(radioButton);
+                honeypotInput.value = honeypotValue;
 
                 submitButton.focus();
                 await user.keyboard(USER_EVENT_KEYS_FOR_TESTING_ONLY.enter);
+            });
+
+            test("has a hidden honeypot input with a description in case someone finds it", () => {
+                expect(honeypotContainer.className).toContain("display-none");
+
+                let honeypotDescriptionId = "honeypot-description";
+                expect(honeypotInput.getAttribute("aria-describedby")).toEqual(honeypotDescriptionId);
+
+                const honeypotDescription = within(honeypotContainer).getByText("This field is a trap for robots to prevent spam. Please don't fill it out.");
+                expect(honeypotDescription.id).toEqual(honeypotDescriptionId);
             });
 
             test("the submit button is aria-disabled", async () => {
@@ -180,7 +197,7 @@ describe(Form.name, () => {
             });
 
             test("the form's data is sent to the server", async () => {
-                expect(capturedFormData).toEqual({ name, age, color });
+                expect(capturedFormData).toEqual({ name, age, color, honeypotValue });
             });
 
             describe("when form submission succeeds", () => {
