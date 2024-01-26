@@ -16,6 +16,8 @@ type FormProps = ChildrenProps & {
     successMessage: string
 }
 
+export type HoneypotFormData = { honeypotValue: string, timeToFillForm: string };
+
 export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage }: FormProps) => {
     const responseMessage = useRef<HTMLSpanElement>(null);
 
@@ -57,7 +59,9 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
             setLiveRegionText("submitting");
 
             const formData = extractFormData(form);
-            formData.timeToFillForm = `${now() - timeBeganFillingForm} milliseconds`;
+
+            const timeFormWasSubmitted = now();
+            formData.timeToFillForm = `${timeFormWasSubmitted - timeBeganFillingForm} milliseconds`;
 
             postFormData(formData, (ok, _, error) => {
                 setSubmitting(false);
@@ -65,6 +69,7 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
 
                 if (ok) {
                     onClearObservable.notify();
+                    setTimeBeganFillingForm(now());
                     setShowSuccessMessage(true);
                 } else {
                     setErrorMessage(error);
