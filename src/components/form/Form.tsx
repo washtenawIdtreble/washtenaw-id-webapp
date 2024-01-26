@@ -95,6 +95,15 @@ export const Form = ({ children, ariaLabelledBy, submitEndpoint, successMessage 
                         {liveRegionText}
                     </div>
                 </div>
+                <div className={"display-none"} data-testid={"honeypot"}>
+                    <label htmlFor={"robot-input"}>
+                        Robot Input
+                        <input name={"honeypotValue"} id={"robot-input"} aria-describedby={"honeypot-description"}/>
+                    </label>
+                    <p id={"honeypot-description"}>
+                        This field is a trap for robots to prevent spam. Please don't fill it out.
+                    </p>
+                </div>
             </form>
         </div>
     );
