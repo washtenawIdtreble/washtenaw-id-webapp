@@ -1,15 +1,10 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ACCESSIBILITY_PAGE_HEADING, AccessibilityIssues } from "../pages/accessibility-issues/AccessibilityIssues";
-import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
+import { ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
+import { AnnArborLawSummary } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
+import { LabelIssues } from "../pages/accessibility-presentation/LabelIssues";
 import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
-import { ID_REFUSED_PAGE_HEADING, ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
-import {
-    ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE,
-    ANN_ARBOR_LAW_SUMMARY_HEADING,
-    AnnArborLawSummary
-} from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 
 export const PAGE_ENDPOINTS = {
     home: "/",
@@ -28,24 +23,21 @@ export const RouterOutlet = () => {
             <Routes>
                 <Route path={PAGE_ENDPOINTS.welcomePage}
                        element={<Page title={WELCOME_PAGE_HEADING}
-                                      key={WELCOME_PAGE_HEADING}><WelcomePage/></Page>}/>
+                                      key={WELCOME_PAGE_HEADING}><WelcomePage /></Page>} />
 
-                <Route path={PAGE_ENDPOINTS.annArborLaw}
-                       element={<Page title={ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE}
-                                      key={ANN_ARBOR_LAW_SUMMARY_HEADING}><AnnArborLawSummary/></Page>}/>
+                <Route path={"/labels"}
+                       element={<Page title={"Doubled Labels"}
+                                      key={"Doubled Labels"}><LabelIssues /></Page>} />
 
-                <Route path={PAGE_ENDPOINTS.reportIdRefused}
-                       element={<Page title={ID_REFUSED_PAGE_HEADING}
-                                      key={ID_REFUSED_PAGE_HEADING}><ReportIdRefused/></Page>}/>
+                <Route path={"/table"}
+                       element={<Page title={"Table Issues"}
+                                      key={"Table Issues"}><AnnArborLawSummary /></Page>} />
 
-                <Route path={PAGE_ENDPOINTS.contactUs}
-                       element={<Page title={CONTACT_PAGE_HEADING} key={CONTACT_PAGE_HEADING}><ContactUs/></Page>}/>
+                <Route path={"/focus"}
+                       element={<Page title={"Focus Trap Issues"}
+                                      key={"Focus Trap Issues"}><ReportIdRefused /></Page>} />
 
-                <Route path={PAGE_ENDPOINTS.accessibilityIssues}
-                       element={<Page title={ACCESSIBILITY_PAGE_HEADING}
-                                      key={ACCESSIBILITY_PAGE_HEADING}><AccessibilityIssues/></Page>}/>
-
-                <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home}/>}/>
+                <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home} />} />
             </Routes>
         </div>
     );
