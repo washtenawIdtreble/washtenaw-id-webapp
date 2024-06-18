@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Page } from "../pages/Page";
-import { ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
 import { AnnArborLawSummary } from "../pages/ann-arbor-law-summary/AnnArborLawSummary";
 import { LabelIssues } from "../pages/accessibility-presentation/LabelIssues";
 import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
+import { ModalIssues } from "../pages/accessibility-presentation/ModalIssues";
 
 export const PAGE_ENDPOINTS = {
     home: "/",
@@ -35,7 +35,7 @@ export const RouterOutlet = () => {
 
                 <Route path={"/focus"}
                        element={<Page title={"Focus Trap Issues"}
-                                      key={"Focus Trap Issues"}><ReportIdRefused /></Page>} />
+                                      key={"Focus Trap Issues"}><ModalIssues /></Page>} />
 
                 <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home} />} />
             </Routes>

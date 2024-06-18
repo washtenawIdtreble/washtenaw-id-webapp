@@ -1,0 +1,7 @@
+.user-button {
+    height: 3rem;
+    margin-bottom: 1rem;
+    width: 50%;
+    outline-offset: -6px;
+    font-size: 1.2rem;
+}

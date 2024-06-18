@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@reach/dialog": "^0.18.0",
     "react": "^16.13.0",
     "react-app-polyfill": "^3.0.0",
     "react-dom": "^16.13.0",
