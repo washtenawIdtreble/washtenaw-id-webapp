@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Karla';
+    font-family: "Karla";
     src: local("src/assets/Karla-VariableFont_wght.ttf");
 }
 
@@ -14,7 +14,8 @@ body {
 }
 
 :focus {
-    outline: 3px dashed #a98332;
+    /*outline: 3px dashed #a98332;*/
+    outline: none;
 }
 
 .light-focus-outline:focus {

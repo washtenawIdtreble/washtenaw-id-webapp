@@ -21,13 +21,6 @@ export const LabelIssues = () => {
                 submitEndpoint={SERVER_ENDPOINTS.ACCESSIBILITY_ISSUES}
             >
                 <div className={"form-column-one-third"}>
-                    <label htmlFor={"name"}>
-                        Name (optional)
-                        <FormField id={"name"}
-                                   pageIdentifier={ACCESSIBILITY_PAGE_IDENTIFIER}
-                                   autoComplete={"name"}
-                                   name={"name"} />
-                    </label>
                     <label htmlFor={"email"}>
                         Email (optional)
                         <FormField
