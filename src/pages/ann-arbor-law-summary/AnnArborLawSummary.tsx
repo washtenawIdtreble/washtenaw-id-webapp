@@ -24,40 +24,34 @@ export const AnnArborLawSummary = () => {
                     <h2 className={"table-of-contents-heading"} id={"table-of-contents-heading"}>Table of Contents</h2>
                     <ol className={"table-of-contents-list"}>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID}`}>
-                                Refusing the Washtenaw ID is against the law in Ann Arbor
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID}`}>Refusing the Washtenaw ID is against the
+                                law in Ann Arbor</a>
                         </li>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID}`}>
-                                The Washtenaw ID is a valid government-issued ID card
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID}`}>The Washtenaw ID is a valid
+                                government-issued ID card</a>
                         </li>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID}`}>
-                                Unfamiliarity with the Washtenaw ID is no excuse
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID}`}>Unfamiliarity with the Washtenaw ID is no
+                                excuse</a>
                         </li>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID}`}>
-                                Alcohol can be purchased with the Washtenaw ID
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID}`}>Alcohol can be purchased with the
+                                Washtenaw ID</a>
                         </li>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID}`}>
-                                Prescription medication can be purchased with the Washtenaw ID
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID}`}>Prescription medication can be purchased
+                                with the Washtenaw ID</a>
                         </li>
                         <li className={"table-of-contents-list-item"}>
-                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID}`}>
-                                Investigation by the city's Human Rights Commission
-                            </a>
+                            <a href={`#${ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID}`}>Investigation by the city's Human Rights
+                                Commission</a>
                         </li>
                     </ol>
                 </nav>
 
-                <div className={"law-page-section"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_1_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         1. Refusing the Washtenaw ID is against the law in Ann Arbor
                     </h2>
 
@@ -72,8 +66,7 @@ export const AnnArborLawSummary = () => {
                         The relevant part of the law states that: "(6) No person shall discriminate against individuals
                         based on their use of a government-issued identification card and all persons shall accept a
                         government-issued identification card as valid identification..." absent very specific statutory
-                        mandate not present in everyday transactions.
-                        <span className={"citation-link-container"}>
+                        mandate not present in everyday transactions. <span className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_155OTPRPR"}
                                 className={"citation-link"}
@@ -84,8 +77,8 @@ export const AnnArborLawSummary = () => {
                     </p>
                 </div>
 
-                <div className={"law-page-section"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_2_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         2. The Washtenaw ID is a valid government-issued ID card. By statute it is equivalent to all
                         other state and federal issued ID
                     </h2>
@@ -93,8 +86,8 @@ export const AnnArborLawSummary = () => {
                         The law, in relevant part provides that: "A government-issued identification card is any
                         identification document displaying an individual's photograph and identifying information issued
                         by a federal, state, or local government (including a Washtenaw County identification card) to
-                        an individual for the purpose of identification of that individual."
-                        <span className={"citation-link-container"}>
+                        an individual for the purpose of identification of that individual." <span
+                        className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_151DE"}
                                 className={"citation-link"}
@@ -105,8 +98,8 @@ export const AnnArborLawSummary = () => {
                     </p>
                 </div>
 
-                <div className={"law-page-section"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_3_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         3. Lack of familiarity with the Washtenaw ID is not a legal justification for denying equal
                         access to goods and services
                     </h2>
@@ -115,8 +108,7 @@ export const AnnArborLawSummary = () => {
                         (including local government ID cards like the Washtenaw ID) are entitled to full and equal
                         access to goods and services. Lack of familiarity with a particular government-issued ID does
                         not constitute legitimate grounds for the human rights violation inherent in withholding access
-                        to necessary goods and services.
-                        <span className={"citation-link-container"}>
+                        to necessary goods and services. <span className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIXPORE_CH112NSC_9_150IN"}
                                 className={"citation-link"}
@@ -127,8 +119,8 @@ export const AnnArborLawSummary = () => {
                     </p>
                 </div>
 
-                <div className={"law-page-section"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_4_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         4. Alcohol can be purchased with the Washtenaw ID
                     </h2>
                     <p className={"text-page-paragraph"}>
@@ -139,8 +131,8 @@ export const AnnArborLawSummary = () => {
                     >
                         A relevant part the statute requires that sellers make "...a diligent good faith effort to
                         determine the age of the person, which includes at least an examination of...bona fide picture
-                        identification which establishes the identity and age of the person."
-                        <span className={"citation-link-container"}>
+                        identification which establishes the identity and age of the person." <span
+                        className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://www.legislature.mi.gov/(S(rvyziyt3emr4l2nydyymkrko))/mileg.aspx?page=getObject&objectName=mcl-436-1701"}
                                 className={"citation-link"}
@@ -151,8 +143,8 @@ export const AnnArborLawSummary = () => {
                     </p>
                 </div>
 
-                <div className={"law-page-section"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_5_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         5. Prescription medication and cold medicine can be purchased with the Washtenaw ID
                     </h2>
                     <p className={"text-page-paragraph"}>
@@ -160,8 +152,7 @@ export const AnnArborLawSummary = () => {
                         required for ephedrine or pseudoephedrine at adult doses in Michigan. MI law requires "...a
                         valid government-issued photo identification that includes the individual's name and date of
                         birth." The pharmacy is required to document the type of ID used, the purchasers information,
-                        and may ask the purchaser to sign a log.
-                        <span className={"citation-link-container"}>
+                        and may ask the purchaser to sign a log. <span className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://www.legislature.mi.gov/(S(rvyziyt3emr4l2nydyymkrko))/mileg.aspx?page=getObject&objectName=mcl-333-17766e"}
                                 className={"citation-link"}
@@ -172,16 +163,16 @@ export const AnnArborLawSummary = () => {
                     </p>
                 </div>
 
-                <div className={"law-page-section"} data-testid={"section-6"}>
-                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID} className={"law-page-section-heading"} tabIndex={-1}>
+                <div className={"text-page-section"} data-testid={"section-6"}>
+                    <h2 id={ANN_ARBOR_LAW_SUMMARY_SECTION_6_ID} className={"text-page-section-heading"} tabIndex={-1}>
                         6. Washtenaw ID discrimination is investigated by the city's Human Rights Commission
                     </h2>
                     <p className={"text-page-paragraph"}>
                         The City of Ann Arbor's Human Rights Commission is authorized to "Receive and review complaints
                         from individuals alleging violations of Ann Arbor's human rights ordinance and take appropriate
                         action, including but not limited to referral of complaints to appropriate agencies or to the
-                        City Attorney mediation of complaints, or dismissal of complaints"
-                        <span className={"citation-link-container"}>
+                        City Attorney mediation of complaints, or dismissal of complaints" <span
+                        className={"citation-link-container"}>
                             <OpensInANewTabLink
                                 href={"https://library.municode.com/mi/ann_arbor/codes/code_of_ordinances?nodeId=TITIAD_CH8ORBOCO_1_222SAUT"}
                                 className={"citation-link"}
@@ -199,15 +190,14 @@ export const AnnArborLawSummary = () => {
                             794-6291</a></li>
                         <li className={"contact-list-item"}>Email:&nbsp;<a
                             href={"mailto:hrc@a2gov.org"}>hrc@a2gov.org</a></li>
-                        <li className={"contact-list-item"}>Ann Arbor city staff liaison Kennedi Blair
-                            Cummings: &nbsp;<a
+                        <li className={"contact-list-item"}>Ann Arbor city staff liaison Kennedi Blair Cummings: &nbsp;
+                            <a
                                 href={"mailto:kcummings@a2gov.org"}>kcummings@a2gov.org</a></li>
                     </ul>
                     <p className={"text-page-paragraph"}>
-                        You can also contact the Washtenaw ID Project directly through this website.&nbsp;
-                        <AppLink to={PAGE_ENDPOINTS.reportIdRefused} className={"inline-link"}>
-                            Click here to contact us.
-                        </AppLink>
+                        You can also contact the Washtenaw ID Project directly through this website.&nbsp;<AppLink
+                        to={PAGE_ENDPOINTS.reportIdRefused} className={"inline-link"}> Click here to contact
+                        us. </AppLink>
                     </p>
                 </div>
             </div>

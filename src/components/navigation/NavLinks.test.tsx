@@ -7,21 +7,24 @@ import { OPENS_IN_A_NEW_TAB } from "../OpensInNewTab/OpensInANewTabLink";
 
 describe(NavLinks.name, () => {
     beforeEach(() => {
-        render(<NavLinks/>, { wrapper: MemoryRouter });
+        render(<NavLinks />, { wrapper: MemoryRouter });
     });
     test("exports link text", () => {
         expect(LINK_TEXT.aboutTheId).toEqual("About the ID");
         expect(LINK_TEXT.welcomePage).toEqual("Home");
         expect(LINK_TEXT.annArborLaw).toEqual("Ann Arbor Law");
+        expect(LINK_TEXT.dhsSubpoenas).toEqual("DHS Subpoena");
+        expect(LINK_TEXT.idRefusalUpdates).toEqual("ID Refusal Updates");
         expect(LINK_TEXT.reportIdRefused).toEqual("My ID was Refused");
         expect(LINK_TEXT.contactUs).toEqual("Contact Us");
         expect(LINK_TEXT.accessibilityIssues).toEqual("Accessibility Issues");
+
     });
     test("displays all links in an unordered list", () => {
         const list = screen.getByRole("list");
         const listItems = within(list).getAllByRole("listitem");
         const links = listItems.map(listItem => within(listItem).getByRole("link"));
-        expect(links.length).toEqual(6);
+        expect(links.length).toEqual(8);
     });
     test("has a link to the washtenaw ID website", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: `${LINK_TEXT.aboutTheId} ${OPENS_IN_A_NEW_TAB}` });
@@ -34,6 +37,14 @@ describe(NavLinks.name, () => {
     test("has a link to the Ann Arbor Law Summary Page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.annArborLaw });
         expect(link.href.endsWith(PAGE_ENDPOINTS.annArborLaw)).toBe(true);
+    });
+    test("has a link to the DHS Subpoena Page", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.dhsSubpoenas });
+        expect(link.href.endsWith(PAGE_ENDPOINTS.dhsSubpoenas)).toBe(true);
+    });
+    test("has a link to the ID Refusal Updates Page", () => {
+        const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.idRefusalUpdates });
+        expect(link.href.endsWith(PAGE_ENDPOINTS.idRefusalUpdates)).toBe(true);
     });
     test("has a link to the id refused form page", () => {
         const link: HTMLAnchorElement = screen.getByRole("link", { name: LINK_TEXT.reportIdRefused });
