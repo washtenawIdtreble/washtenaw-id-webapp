@@ -17,15 +17,31 @@
 }
 
 .text-page-container {
-    background-color: #fafafa;
+    background-color: #FAFAFA;
     border: 2px solid black;
     border-radius: 6px;
-    font-size: 1.25rem;
-    padding: 1rem;
     box-sizing: border-box;
     display: flex;
     flex-flow: column wrap;
+    font-size: 1.25rem;
+    padding: 1rem;
     row-gap: 1rem;
+}
+
+.text-page-section {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 1rem;
+    row-gap: 1rem;
+}
+
+.text-page-section-heading {
+    display: inline;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0.25rem 0.25rem 0 0.25rem;
+    outline-offset: 4px;
+
 }
 
 .text-page-paragraph {
@@ -39,5 +55,13 @@
         align-self: center;
         max-width: 66%;
         padding: 1rem 2rem;
+    }
+
+    .text-page-section {
+        box-sizing: border-box;
+    }
+
+    .text-page-section > p {
+        padding: 0 2rem;
     }
 }

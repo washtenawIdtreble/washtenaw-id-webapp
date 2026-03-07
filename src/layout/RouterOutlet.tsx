@@ -5,6 +5,8 @@ import { CONTACT_PAGE_HEADING, ContactUs } from "../pages/contact-us/ContactUs";
 import { Page } from "../pages/Page";
 import { WELCOME_PAGE_HEADING, WelcomePage } from "../pages/welcome/WelcomePage";
 import { ID_REFUSED_PAGE_HEADING, ReportIdRefused } from "../pages/report-id-refusal/ReportIdRefused";
+import { DHS_SUBPOENAS_HEADING, DhsSubpoenas } from "../pages/dhs-subpoenas/DhsSubpoenas";
+import { ID_REFUSAL_UPDATES_HEADING, IdRefusalUpdates } from "../pages/id-refusal-updates/IdRefusalUpdates";
 import {
     ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE,
     ANN_ARBOR_LAW_SUMMARY_HEADING,
@@ -18,33 +20,41 @@ export const PAGE_ENDPOINTS = {
     accessibilityIssues: "/accessibility-issues",
     contactUs: "/contact-us",
     reportIdRefused: "/id-refused",
+    dhsSubpoenas: "/id-news/dhs-subpoenas",
+    idRefusalUpdates: "/id-news/refusal-updates",
 };
 
 export const RouterOutlet = () => {
     return (
         <div className={"router-outlet"} data-testid={"router-outlet"}>
-            <Routes>
-                <Route path={PAGE_ENDPOINTS.welcomePage}
-                       element={<Page title={WELCOME_PAGE_HEADING}
-                                      key={WELCOME_PAGE_HEADING}><WelcomePage/></Page>}/>
+            <Routes> <Route path={PAGE_ENDPOINTS.welcomePage}
+                            element={<Page title={WELCOME_PAGE_HEADING}
+                                           key={WELCOME_PAGE_HEADING}><WelcomePage /></Page>} />
 
                 <Route path={PAGE_ENDPOINTS.annArborLaw}
                        element={<Page title={ANN_ARBOR_LAW_SUMMARY_DOCUMENT_TITLE}
-                                      key={ANN_ARBOR_LAW_SUMMARY_HEADING}><AnnArborLawSummary/></Page>}/>
+                                      key={ANN_ARBOR_LAW_SUMMARY_HEADING}><AnnArborLawSummary /></Page>} />
 
                 <Route path={PAGE_ENDPOINTS.reportIdRefused}
                        element={<Page title={ID_REFUSED_PAGE_HEADING}
-                                      key={ID_REFUSED_PAGE_HEADING}><ReportIdRefused/></Page>}/>
+                                      key={ID_REFUSED_PAGE_HEADING}><ReportIdRefused /></Page>} />
+
+                <Route path={PAGE_ENDPOINTS.dhsSubpoenas}
+                       element={<Page title={DHS_SUBPOENAS_HEADING}
+                                      key={DHS_SUBPOENAS_HEADING}><DhsSubpoenas /></Page>} />
+
+                <Route path={PAGE_ENDPOINTS.idRefusalUpdates}
+                       element={<Page title={ID_REFUSAL_UPDATES_HEADING}
+                                      key={ID_REFUSAL_UPDATES_HEADING}><IdRefusalUpdates /></Page>} />
 
                 <Route path={PAGE_ENDPOINTS.contactUs}
-                       element={<Page title={CONTACT_PAGE_HEADING} key={CONTACT_PAGE_HEADING}><ContactUs/></Page>}/>
+                       element={<Page title={CONTACT_PAGE_HEADING} key={CONTACT_PAGE_HEADING}><ContactUs /></Page>} />
 
                 <Route path={PAGE_ENDPOINTS.accessibilityIssues}
                        element={<Page title={ACCESSIBILITY_PAGE_HEADING}
-                                      key={ACCESSIBILITY_PAGE_HEADING}><AccessibilityIssues/></Page>}/>
+                                      key={ACCESSIBILITY_PAGE_HEADING}><AccessibilityIssues /></Page>} />
 
-                <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home}/>}/>
-            </Routes>
+                <Route path={"*"} element={<Navigate to={PAGE_ENDPOINTS.home} />} /> </Routes>
         </div>
     );
 };

@@ -7,6 +7,8 @@ export const LINK_TEXT = {
     aboutTheId: "About the ID",
     welcomePage: "Home",
     annArborLaw: "Ann Arbor Law",
+    dhsSubpoenas: "DHS Subpoena",
+    idRefusalUpdates: "ID Refusal Updates",
     contactUs: "Contact Us",
     accessibilityIssues: "Accessibility Issues",
     reportIdRefused: "My ID was Refused",
@@ -32,6 +34,16 @@ export const NavLinks = () => {
         <li className={"nav-list-item"}>
             <AppLink to={PAGE_ENDPOINTS.reportIdRefused} className={"nav-link light-focus-outline"}>
                 {LINK_TEXT.reportIdRefused}
+            </AppLink>
+        </li>
+        <li className={"nav-list-item"}>
+            <AppLink to={PAGE_ENDPOINTS.dhsSubpoenas} className={"nav-link light-focus-outline"}>
+                {LINK_TEXT.dhsSubpoenas}
+            </AppLink>
+        </li>
+        <li className={"nav-list-item"}>
+            <AppLink to={PAGE_ENDPOINTS.idRefusalUpdates} className={"nav-link light-focus-outline"}>
+                {LINK_TEXT.idRefusalUpdates}
             </AppLink>
         </li>
         <li className={"nav-list-item"}>
