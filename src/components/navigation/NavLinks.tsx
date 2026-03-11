@@ -7,8 +7,6 @@ export const LINK_TEXT = {
     aboutTheId: "About the ID",
     welcomePage: "Home",
     annArborLaw: "Ann Arbor Law",
-    businesses: "All Businesses",
-    categories: "Business Categories",
     contactUs: "Contact Us",
     accessibilityIssues: "Accessibility Issues",
     reportIdRefused: "My ID was Refused",

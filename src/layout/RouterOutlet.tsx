@@ -15,8 +15,6 @@ export const PAGE_ENDPOINTS = {
     home: "/",
     welcomePage: "/",
     annArborLaw: "/ann-arbor-law",
-    categories: "/categories",
-    businesses: "/businesses",
     accessibilityIssues: "/accessibility-issues",
     contactUs: "/contact-us",
     reportIdRefused: "/id-refused",
