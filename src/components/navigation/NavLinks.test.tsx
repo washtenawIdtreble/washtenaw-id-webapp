@@ -13,8 +13,6 @@ describe(NavLinks.name, () => {
         expect(LINK_TEXT.aboutTheId).toEqual("About the ID");
         expect(LINK_TEXT.welcomePage).toEqual("Home");
         expect(LINK_TEXT.annArborLaw).toEqual("Ann Arbor Law");
-        expect(LINK_TEXT.businesses).toEqual("All Businesses");
-        expect(LINK_TEXT.categories).toEqual("Business Categories");
         expect(LINK_TEXT.reportIdRefused).toEqual("My ID was Refused");
         expect(LINK_TEXT.contactUs).toEqual("Contact Us");
         expect(LINK_TEXT.accessibilityIssues).toEqual("Accessibility Issues");

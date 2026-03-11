@@ -39,7 +39,7 @@ describe(`${NavMenu.name} (Integration Test)`, () => {
             links = within(linkList).getAllByRole("link");
         });
         test("closes the navigation menu", async () => {
-            await user.click(links.find(link => link.href.includes(PAGE_ENDPOINTS.businesses))!);
+            await user.click(links.find(link => link.href.includes(PAGE_ENDPOINTS.accessibilityIssues))!);
 
             await waitFor(() => {
                 expect(linkList).not.toBeVisible();

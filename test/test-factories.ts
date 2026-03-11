@@ -1,7 +1,5 @@
 import { AccessibilityFormData } from "../src/pages/accessibility-issues/AccessibilityIssues";
-import { Business, CategorizedBusinesses } from "../src/hooks/useBusinesses";
 import { faker } from "@faker-js/faker";
-import { Category } from "../src/hooks/useCategories";
 import { IdRefusedFormData } from "../src/pages/report-id-refusal/ReportIdRefused";
 
 export const stubAccessibilityFormData = (attributes: Partial<AccessibilityFormData> = {}): AccessibilityFormData => {
@@ -26,33 +24,6 @@ export const stubRefusedIdData = (attributes: Partial<IdRefusedFormData> = {}): 
         ageRange: attributes.ageRange === undefined ? faker.helpers.arrayElement(["Under 18", "Over 55"]) : attributes.ageRange,
 
         description: attributes.description === undefined ? faker.lorem.paragraph(3) : attributes.description,
-    };
-};
-
-export const stubCategory = (attributes: Partial<Category> = {}): Category => {
-    return {
-        name: attributes.name === undefined ? "stub category name" : attributes.name,
-        displayName: attributes.displayName === undefined ? "Stub Category Display Name" : attributes.displayName,
-    };
-};
-
-export const stubBusiness = (attributes: Partial<Business> = {}): Business => {
-    return {
-        name: attributes.name === undefined ? generateBusinessName() : attributes.name,
-        address: attributes.address === undefined ? faker.address.streetAddress() : attributes.address,
-        city: attributes.city === undefined ? faker.address.city() : attributes.city,
-        state: attributes.state === undefined ? faker.address.stateAbbr() : attributes.state,
-        zip: attributes.zip === undefined ? faker.address.zipCode() : attributes.zip,
-        website: attributes.website === undefined ? faker.internet.url() : attributes.website,
-        phone: attributes.phone === undefined ? faker.phone.number().replace(/ x.*$/g, "") : attributes.phone,
-        description: attributes.description === undefined ? faker.lorem.paragraph(4) : attributes.description,
-    };
-};
-
-export const stubCategorizedBusinesses = (attributes: Partial<CategorizedBusinesses> = {}): CategorizedBusinesses => {
-    return {
-        category: attributes.category ?? stubCategory(),
-        businesses: attributes.businesses ?? [stubBusiness()],
     };
 };
 

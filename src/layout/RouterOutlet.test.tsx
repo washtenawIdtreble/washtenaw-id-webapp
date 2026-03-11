@@ -34,8 +34,6 @@ describe(RouterOutlet.name, () => {
         expect(PAGE_ENDPOINTS.home).toBe("/");
         expect(PAGE_ENDPOINTS.welcomePage).toBe("/");
         expect(PAGE_ENDPOINTS.annArborLaw).toBe("/ann-arbor-law");
-        expect(PAGE_ENDPOINTS.categories).toBe("/categories");
-        expect(PAGE_ENDPOINTS.businesses).toBe("/businesses");
         expect(PAGE_ENDPOINTS.reportIdRefused).toBe("/id-refused");
         expect(PAGE_ENDPOINTS.contactUs).toBe("/contact-us");
         expect(PAGE_ENDPOINTS.accessibilityIssues).toBe("/accessibility-issues");
@@ -176,8 +174,6 @@ const TestingRouterWithLinks = () => {
                 <RouterOutlet/>
                 <AppLink to={PAGE_ENDPOINTS.welcomePage}>{LINK_TEXT.welcomePage}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.annArborLaw}>{LINK_TEXT.annArborLaw}</AppLink>
-                <AppLink to={PAGE_ENDPOINTS.categories}>{LINK_TEXT.categories}</AppLink>
-                <AppLink to={PAGE_ENDPOINTS.businesses}>{LINK_TEXT.businesses}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.accessibilityIssues}>{LINK_TEXT.accessibilityIssues}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.contactUs}>{LINK_TEXT.contactUs}</AppLink>
                 <AppLink to={PAGE_ENDPOINTS.reportIdRefused}>{LINK_TEXT.reportIdRefused}</AppLink>
